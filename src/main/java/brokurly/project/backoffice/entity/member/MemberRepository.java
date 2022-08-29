@@ -1,8 +1,8 @@
-package brokurly.project.backoffice.Repository;
+package brokurly.project.backoffice.entity.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import brokurly.project.backoffice.Entity.Member.MemberEntity;
+import brokurly.project.backoffice.entity.member.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
