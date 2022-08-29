@@ -24,4 +24,5 @@ public class MemberController {
 		System.out.println(members);
 		return members;
 	}
+	// 깃 커밋 테스트를 위한 주석
 }
