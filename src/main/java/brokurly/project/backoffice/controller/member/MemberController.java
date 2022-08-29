@@ -4,6 +4,7 @@ package brokurly.project.backoffice.controller.member;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,11 @@ public class MemberController {
 		System.out.println(members);
 		return members;
 	}
-	// 깃 커밋 테스트를 위한 주석
+	
+	// POSTMAN에서 HTTP PUT 요청보내고 확인
+	@PostMapping("/add")
+	public void add() {
+		MemberEntity member = new MemberEntity("길동쓰", "홍길동");
+		memberRepository.save(member);
+	}
 }
