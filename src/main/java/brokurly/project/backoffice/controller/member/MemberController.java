@@ -35,7 +35,6 @@ public class MemberController {
 		System.out.println("상품 전체 조회 : " + products);
 		return products;
 	}
-	// deploy branch test
 	
 	// POSTMAN에서 HTTP PUT 요청보내고 확인
 //	@PostMapping("/add")
