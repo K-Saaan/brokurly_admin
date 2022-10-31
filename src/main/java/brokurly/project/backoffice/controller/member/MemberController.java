@@ -3,6 +3,7 @@ package brokurly.project.backoffice.controller.member;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,14 @@ public class MemberController {
 		List products = productRepository.findAll();
 		System.out.println("상품 전체 조회 : " + products);
 		return products;
+	}
+	@RequestMapping("/show")
+	public String jspPage(Model model) {
+		return "member/show";
+	}
+	@GetMapping("/index.do")
+	public String indexPage(Model model) {
+		return "member/index";
 	}
 	
 	// POSTMAN에서 HTTP PUT 요청보내고 확인
