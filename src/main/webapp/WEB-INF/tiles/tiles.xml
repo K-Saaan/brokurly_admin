@@ -4,11 +4,14 @@
 	<definition name="layout-basic" template="/WEB-INF/views/common/layout-basic.jsp">
 		<put-attribute name="include" value="/WEB-INF/views/common/include.jsp" />
 		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
-		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp"/>
 		<put-attribute name="body" value=""/>
+		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp"/>
 	</definition>
-	
-	<definition name="/*/*.do" extends="layout-basic">
+
+	<definition name="*" extends="layout-basic">
+		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	<definition name="*/*" extends="layout-basic">
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 </tiles-definitions>
