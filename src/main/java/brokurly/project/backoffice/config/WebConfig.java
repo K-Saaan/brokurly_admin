@@ -1,4 +1,4 @@
-package config;
+package brokurly.project.backoffice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
