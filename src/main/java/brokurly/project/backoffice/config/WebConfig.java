@@ -2,6 +2,7 @@ package brokurly.project.backoffice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
@@ -24,5 +25,9 @@ public class WebConfig implements WebMvcConfigurer {
 		tilesViewResolver.setViewClass(TilesView.class);
 		tilesViewResolver.setOrder(1);
 		return tilesViewResolver;
+	}
+	
+	public void addResourcesHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/").setCachePeriod(20);
 	}
 }
