@@ -8,6 +8,15 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations:
+        classpath:/static/
+      add-mappings: true
+  devtools:
+    livereload:
+      enabled: true
   datasource:
     url:
       jdbc:mysql://brokurly-mysql.cf0nispgstvu.ap-northeast-2.rds.amazonaws.com:3306/cs?useUnicode=true\&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&autoReconnection=true
