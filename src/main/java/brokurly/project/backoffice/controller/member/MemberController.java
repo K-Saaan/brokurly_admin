@@ -30,7 +30,7 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping("/showMember")
 	public List<MemberEntity> findAllMember(){
-		List members = memberRepository.findAll();
+		List<MemberEntity> members = memberRepository.findAll();
 		System.out.println("멤버 전체 조회 : " + members);
 		return members;
 	}
@@ -45,6 +45,10 @@ public class MemberController {
 	@GetMapping("/show")
 	public String show() {
 		return "member/show";
+	}
+	@GetMapping("/test")
+	public String test() {
+		return "member/test";
 	}
 	
 	// POSTMAN에서 HTTP PUT 요청보내고 확인
