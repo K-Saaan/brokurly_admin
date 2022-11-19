@@ -9,6 +9,9 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
     static-path-pattern: /static/**
+  profiles:
+    include:
+      secret
   web:
     resources:
       static-locations:
@@ -17,15 +20,6 @@ spring:
   devtools:
     livereload:
       enabled: true
-  datasource:
-    url:
-      jdbc:mysql://brokurly-mysql.cibbkywj3asc.ap-northeast-2.rds.amazonaws.com:3306/cs?useUnicode=true\&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&autoReconnection=true
-    username: 
-      root
-    password:
-      brokurly1!
-    driver-class-name: 
-      com.mysql.cj.jdbc.Driver
   jpa:
     database: 
       mysql
