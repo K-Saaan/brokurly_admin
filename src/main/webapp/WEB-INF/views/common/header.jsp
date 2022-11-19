@@ -22,7 +22,7 @@
                 </ul>
                 <form class="d-flex m-2">
                     <input class="form-control me-2" type="text" placeholder="검색" aria-label="Search">
-                    <input value="검색" type="button" class="submit btn btn-outline-dark">
+                    <input value="검색" type="button" class="submit btn btn-outline" style="background-color: white; margin-left: 10px;">
                   </form>
             </div>
         </div>

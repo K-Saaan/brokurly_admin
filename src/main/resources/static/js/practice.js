@@ -1,8 +1,6 @@
 /**
  * 
  */
- 
-console.log("Hello");
 
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('realgrid');
