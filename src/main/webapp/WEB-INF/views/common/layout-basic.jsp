@@ -5,10 +5,14 @@
 <html>
 <head>
 <link type="text/css" href="../static/css/realgrid-style.css" rel="stylesheet" />
+<link type="text/css" href="../static/css/bootstrap.css" rel="stylesheet" />
+<link type="text/css" href="../static/css/bootstrap.min.css" rel="stylesheet" />
 <script type="text/javascript" src="../static/js/realgrid.2.6.0.min.js"></script>
 <script type="text/javascript" src="../static/js/realgrid-lic.js"></script>
 <script type="text/javascript" src="../static/js/libs/jszip.min.js"></script>
 <script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../static/js/bootstrap.js"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../static/js/practice.js"></script>
 	
 <style>
@@ -23,7 +27,14 @@
 </head>
 <body>
 	<tiles:insertAttribute name="header"/>
-	<tiles:insertAttribute name="side"/>
-	<tiles:insertAttribute name="body"/>
+	<div class="container">
+		<div class="d-flex flex-nowrap">
+			<tiles:insertAttribute name="side"/>
+			<div style="width: 100%;">
+				<tiles:insertAttribute name="body"/>
+			</div>
+		</div>
+	</div>
+	<tiles:insertAttribute name="footer"/>
 </body>
 </html>
