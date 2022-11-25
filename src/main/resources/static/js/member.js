@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	};
 	// 고객정보조회 조회버튼 클릭시
 	$("#memberSearch").click(function(){
-		ajax("/showMember", param, function(returnData){
+		ajax("/member/showMember", param, function(returnData){
 			var gridData = returnData.members;
 			console.log(gridData);
 		})
-	})
+	});
 
 });
