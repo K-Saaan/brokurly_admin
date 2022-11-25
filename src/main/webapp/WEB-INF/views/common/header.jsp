@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark" style="background-color: purple;">
         <div class="container">
-            <a href="#" class="navbar-brand">BROKURLY</a>
+            <a href="${pageContext.request.contextPath}/home" class="navbar-brand">BROKURLY</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav-menu"
                 aria-controls="navbarNav-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

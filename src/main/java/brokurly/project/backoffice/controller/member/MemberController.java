@@ -46,11 +46,6 @@ public class MemberController {
 	public String show() {
 		return "member/show";
 	}
-	@GetMapping("/test")
-	public String test() {
-		return "member/test";
-	}
-	
 	// POSTMAN에서 HTTP PUT 요청보내고 확인
 //	@PostMapping("/add")
 //	public void add() {

@@ -11,13 +11,13 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/js/realgrid.2.6.0.min.js"></script>
-<script type="text/javascript" src="../static/js/realgrid-lic.js"></script>
-<script type="text/javascript" src="../static/js/libs/jszip.min.js"></script>
-<script type="text/javascript" src="../static/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../static/js/bootstrap.js"></script>
-<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/js/practice.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/realgrid.2.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/realgrid-lic.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/libs/jszip.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common.js"></script>
 <style>
 	
 </style>
@@ -35,5 +35,6 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/practice.js"></script>
 </body>
 </html>
