@@ -36,7 +36,6 @@ public class MemberController {
 	@GetMapping("/showMember")
 	public List<MemberEntity> findAllMember(){
 		List<MemberEntity> members = memberRepository.findAll();
-		System.out.println("멤버 전체 조회 : " + members);
 		return members;
 	}
 	// 전체 상품 조회
@@ -44,7 +43,6 @@ public class MemberController {
 	@GetMapping("/showProduct")
 	public List<ProductEntity> findAllProduct(){
 		List products = productRepository.findAll();
-		System.out.println("상품 전체 조회 : " + products);
 		return products;
 	}
 	@GetMapping("/show")
