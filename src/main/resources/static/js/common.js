@@ -1,7 +1,8 @@
 function ajax(paramUrl, paramData, returnCallBack, uiType){
 	$.ajax({
 		url:	paramUrl,
-		type:	"GET",
+		method:	"POST",
+		type:	"POST",
 		data:	JSON.stringify(paramData),
 		dataType:	"json",
 		async:	true,

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 아무런 값도 갖지 않는 의미 없는 객체의 생성을 막아줌
 @Table(name = "cust_info", catalog = "cs")
 public class MemberEntity {
 	@Id
@@ -51,13 +51,13 @@ public class MemberEntity {
 	private Timestamp chgrdate;
 	
 	// new 예약어를 사용하는 생성자의 경우 파라미터 파악이 힘드므로 @Builder 사용
-	@Builder
+	@Builder // 컨트롤러에서 값 실어줄때 builder를 이용하여 쉽게 작업
 	public MemberEntity(String custcode, String custgrad, String delilocc, String custnm,
 			String custtel, String custemail, String custbirth, String custaddr, String custaddrdtl, String regid,
 			Timestamp regdate, String chgrid, Timestamp chgrdate) {
 		this.custcode = custcode;
-		this.custgradecode = custgradecode;
-		this.deliloccode = deliloccode;
+		this.custgradecode = custgrad;
+		this.deliloccode = delilocc;
 		this.custnm = custnm;
 		this.custtel = custtel;
 		this.custemail = custemail;

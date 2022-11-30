@@ -1,7 +1,9 @@
 package brokurly.project.backoffice.controller.member;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,11 +36,19 @@ public class MemberController {
 	
 	// 전체 멤버 조회
 	@ResponseBody
-	@GetMapping("/showMember")
-	public List<MemberEntity> findAllMember(){
-		List<MemberEntity> members = memberRepository.findAll();
-		return members;
+	@PostMapping(value = "/showMember", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findAllMember(Model model, HttpServletRequest request) throws Throwable {
+		List<MemberEntity> gridDataList = memberRepository.findAll();
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
 	}
+//	@ResponseBody
+//	@GetMapping(value = "/showMember", produces = "application/json;charset=utf-8")
+//	public List<MemberEntity> findAllMember(){
+//		List<MemberEntity> members = memberRepository.findAll();
+//		return members;
+//	}
 	// 전체 상품 조회
 	@ResponseBody
 	@GetMapping("/showProduct")

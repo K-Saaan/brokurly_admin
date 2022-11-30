@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('realgrid');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
+    
     gridView.setDataSource(provider);
 
 	provider.setFields([
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 고객정보조회 조회버튼 클릭시
 	$("#memberSearch").click(function(){
 		ajax("/member/showMember", param, function(returnData){
-			var gridData = returnData.members;
+			var gridData = returnData.codeList;
 			console.log(gridData);
 		})
 	});
