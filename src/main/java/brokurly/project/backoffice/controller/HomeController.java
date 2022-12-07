@@ -11,12 +11,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // final 객체를 Constructor Injection 해줌. Autowired 필요없음
 public class HomeController {
 
-	@GetMapping("/")
-	public String loginPage() {
-		return "login";
-	}
-	@GetMapping("/home")
-	public String homePage() {
-		return "home";
-	}
+//	@GetMapping("/")
+//	public String loginPage() {
+//		return "login";
+//	}
+//	@GetMapping("/home")
+//	public String homePage() {
+//		return "home";
+//	}
 }
