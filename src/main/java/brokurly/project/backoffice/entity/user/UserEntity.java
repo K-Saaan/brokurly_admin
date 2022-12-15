@@ -25,11 +25,10 @@ import lombok.ToString;
 @Table(name = "user_info", catalog = "co")
 public class UserEntity {
 	
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	
-	//@Column(name = "USER_ID")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String userId;
+	
 	@Column(name = "CUST_CODE")
 	private String custCode;
 	@Column(name = "CREATE_DATE")
