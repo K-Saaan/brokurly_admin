@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/login.js"></script>
 <style>
    
    html,
@@ -61,7 +60,7 @@
                <input type="checkbox" value="remember-me"> 아이디 저장
             </label>
          </div>
-         <button class="w-100 btn btn-lg btn-primary" id="login" type="submit">로그인</button>
+         <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
          <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
       </form>
    </main>
