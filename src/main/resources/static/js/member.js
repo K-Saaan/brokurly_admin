@@ -179,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 	]);
+	
+	
 	var param = {
 			
 	};

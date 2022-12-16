@@ -20,3 +20,4 @@
 </div>
 고객 정보 조회 화면
 <div id="realgrid"></div>
+<div id="subgrid"></div>
