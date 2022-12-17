@@ -31,26 +31,43 @@ public class UserEntity {
 	
 	@Column(name = "CUST_CODE")
 	private String custCode;
+	
 	@Column(name = "CREATE_DATE")
 	private String createDate;
+	
 	@Column(name = "END_DATE")
 	private String endDate;
+	
 	@Column(name = "USER_PWD")
 	private String userPwd;
+	
 	@Column(name = "PWD_EXP_DATE")
 	private String pwdExpDate;
+	
 	@Column(name = "LOGIN_FAIL_CNT")
 	private String loginFailCnt;
+	
 	@Column(name = "RECMD_ID")
 	private String recmdId;
+	
 	@Column(name = "EVENT_NM")
 	private String eventNm;
+	
+	@Column(name = "ACNT_LOCK")
+	private String acntLock;
+	
+	@Column(name = "MAIN_URL")
+	private String mainUrl;
+	
 	@Column(name = "REG_ID")
 	private String regId;
+	
 	@Column(name = "REG_DATE")
 	private String regDate;
+	
 	@Column(name = "CHGR_ID")
 	private String chgrId;
+	
 	@Column(name = "CHGR_DATE")
 	private String chgrDate;
 	
