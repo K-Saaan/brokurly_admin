@@ -16,7 +16,7 @@ public class CommonUtil {
 	 *         16자리 : 1111-****-****-4444
 	 *                
 	 */
-    public static String maskHyphenCardNo(String str, boolean isMask) {
+    public static String maskCardNo(String str, boolean isMask) {
 		if(StringUtils.isEmpty(str)) {
 			return str;
 		}
@@ -46,7 +46,7 @@ public class CommonUtil {
 	 * @param isMask : 마스킹 여부
 	 * @return : 010-1**-22**, 010-11**-22** 
 	 */
-	public static String maskHyphenCPhone(String str, boolean isMask) {
+	public static String maskTelNo(String str, boolean isMask) {
 		if(StringUtils.isEmpty(str)) {
 			return str;
 		}
@@ -97,7 +97,7 @@ public class CommonUtil {
 	 * @param isMask : 마스킹 여부
 	 * @return 
 	 */
-    public static String maskHyphenRegNo(String str, boolean isMask) {
+    public static String maskRegNo(String str, boolean isMask) {
 		if(StringUtils.isEmpty(str)) {
 			return str;
 		}
@@ -109,5 +109,29 @@ public class CommonUtil {
     	}
 		return str;
     }
+    
+    /**
+	 * 이름 마스킹
+	 * @param str : 이름
+	 * @return : 2자 이름: 끝 '*' 마스킹 처리
+	 * 				3자 이름: 중간 '*' 마스킹 처리
+	 * 				4자이상 이름: 성 뒤 2글자 '*' 마스킹 처리
+	 */
+    public static String maskName(String str) {
+		if(StringUtils.isEmpty(str)) {
+			return str;
+		}
+		
+		StringBuilder sb = new StringBuilder(str);
+		
+		if(sb.length() > 1) {
+			sb.setCharAt(1, '*');
+			if(sb.length() > 3) {
+				sb.setCharAt(2, '*');
+			}
+		}
+		
+		return sb.toString();
+	}
 
 }

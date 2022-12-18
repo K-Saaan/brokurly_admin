@@ -15,14 +15,17 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
+@Component
+@Configuration
 public class AES256Util {
-
-	@Value("${spring.aesKey}")
-	static String key;
 	
 	public static byte[] ivBytes = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-	
+//	@Value("${aesKey}")
+	private static String key = "abcdefghabcdefghabcdefghabcdefgh";
 	
 	/* 암호화
 	 * @param str
@@ -38,7 +41,7 @@ public class AES256Util {
 	public static String enCode(String str) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
 	NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,	
 	IllegalBlockSizeException, BadPaddingException {
-		
+		System.out.println("key : " + key);
 		String secretKey = key.substring(0, 32);
 		byte[] textBytes = str.getBytes("UTF-8");
 		AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
@@ -61,7 +64,7 @@ public class AES256Util {
 	 * @throws IllegalBlockSizeException
 	 * @throws BadPaddingException
 	*/
-	public static String deCode(String str) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
+	public static String deCode(String str, String key) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
 	NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,	
 	IllegalBlockSizeException, BadPaddingException {
 		
