@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
+	// 메인그리드를 그리기 위한 사전 설정
     const container = document.getElementById('realgrid');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
+    // 서브그리드를 그리기 위한 사전 설정
+    const subcontainer = document.getElementById('subgrid');
+    const subprovider = new RealGrid.LocalDataProvider(false);
+    const subgridView = new RealGrid.GridView(subcontainer);
     
     gridView.setDataSource(provider);
-
+    subgridView.setDataSource(subprovider);
+    
+    // 메인그리드 컬럼
 	provider.setFields([
 		{
 			fieldName: "chgrdate",
@@ -179,31 +186,198 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 	]);
+	// 서브그리드 컬럼
+	subprovider.setFields([
+		{
+			fieldName: "custCode",
+			dataType: "text",
+		},
+		{
+			fieldName: "ageYn",
+			dataType: "text",
+		},
+		{
+			fieldName: "agreEmail",
+			dataType: "text",
+		},
+		{
+			fieldName: "agrePrivacyEss",
+			dataType: "text",
+		},
+		{
+			fieldName: "agrePrivacyOpt",
+			dataType: "text",
+		},
+		{
+			fieldName: "agreSms",
+			dataType: "text",
+		},
+		{
+			fieldName: "agreTerms",
+			dataType: "text",
+		},
+		{
+			fieldName: "chgrDate",
+			dataType: "text",
+		},
+		{
+			fieldName: "chgrId",
+			dataType: "text",
+		},
+		{
+			fieldName: "regDate",
+			dataType: "text",
+		},
+		{
+			fieldName: "regId",
+			dataType: "text",
+		},
+		]);
+	
+	subgridView.setColumns([
+		{
+			name: "custCode",
+			fieldName: "custCode",
+			type: "data",
+			width: "120",
+			header: {
+				text: "고객코드",
+			},
+		},
+		{
+			name: "ageYn",
+			fieldName: "ageYn",
+			type: "data",
+			width: "120",
+			header: {
+				text: "이용약관동의",
+			},
+		},
+		{
+			name: "agreEmail",
+			fieldName: "agreEmail",
+			type: "data",
+			width: "120",
+			header: {
+				text: "광고성\n수신여부\n(이메일)",
+			},
+		},
+		{
+			name: "agreTerms",
+			fieldName: "agreTerms",
+			type: "data",
+			width: "120",
+			header: {
+				text: "이용약관동의",
+			},
+		},
+		{
+			name: "agreSms",
+			fieldName: "agreSms",
+			type: "data",
+			width: "120",
+			header: {
+				text: "광고성\n수신여부\n(SMS)",
+			},
+		},
+		{
+			name: "agrePrivacyEss",
+			fieldName: "agrePrivacyEss",
+			type: "data",
+			width: "120",
+			header: {
+				text: "개인정보\n수집이용동의\n(필수)",
+			},
+		},
+		{
+			name: "agrePrivacyOpt",
+			fieldName: "agrePrivacyOpt",
+			type: "data",
+			width: "120",
+			header: {
+				text: "개인정보\n수집이용동의\n(필수)",
+			},
+		},
+		{
+			name: "chgrDate",
+			fieldName: "chgrDate",
+			type: "data",
+			width: "120",
+			header: {
+				text: "수정일시",
+			},
+		},
+		{
+			name: "chgrId",
+			fieldName: "chgrId",
+			type: "data",
+			width: "120",
+			header: {
+				text: "수정자아이디",
+			},
+		},
+		{
+			name: "regDate",
+			fieldName: "regDate",
+			type: "data",
+			width: "120",
+			header: {
+				text: "등록일시",
+			},
+		},
+		{
+			name: "regId",
+			fieldName: "regId",
+			type: "data",
+			width: "120",
+			header: {
+				text: "등록자아이디",
+			},
+		},
+		]);
 	
 	
 	var param = {
 			
 	};
+	var countData = 0;
 	// 고객정보조회 조회버튼 클릭시
 	$("#memberSearch").click(function(){
-		ajax("/member/showMember", param, function(returnData){
-			var gridData = returnData.codeList;
-			var countData = gridData.length;
+		ajax("/member/showMemberCnt", param, function(returnData){
+			countData = returnData.countData;
+//			console.log("카운트 : ")
+//			console.log(countData)
+			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0){
-				provider.fillJsonData(gridData, { fillMode : "set"});
-				gridCellClicked();
-				console.log("데이터가 있습니다.");
+				ajax("/member/showMember", param, function(returnData){
+					var gridData = returnData.codeList;
+					provider.fillJsonData(gridData, { fillMode : "set"});
+					gridCellClicked();
+//					console.log("데이터가 있습니다.");
+				})
 			} else {
-				console.log("데이터가 없습니다.");
+//				console.log("데이터가 없습니다.");
 			}
 		})
 	});
 	
+	// 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			console.log("클릭한 그리드의 데이터")
-			console.log(selectOneData)
+//			console.log("클릭한 그리드의 데이터")
+//			console.log(selectOneData)
+//			console.log(selectOneData.custcode)
+			var custCode = selectOneData.custcode;
+			var param = {
+					CUSTCODE	:	custCode
+			}
+			ajax("/member/showMemberDtl", param, function(returnData){
+				var detailData = returnData.codeList;
+//				console.log("세부정보 확인 : ")
+//				console.log(detailData)
+				subprovider.fillJsonData(detailData, { fillMode : "set"});
+			})
 		}
 	}
 

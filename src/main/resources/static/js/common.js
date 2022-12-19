@@ -9,17 +9,18 @@ function ajax(paramUrl, paramData, returnCallBack, uiType){
 		contentType:	"application/json;charset=utf-8",
 		cache:	false,
 		success:	function(returnData){
-			console.log("success!")
-			console.log(returnData)
+//			console.log("success!")
+//			console.log(returnData)
+//			console.log(JSON.stringify(paramData))
 			returnCallBack(returnData);
 		},
 		complete:	function(xhr, status){
-			console.log("complete!")
-			console.log(status)
+//			console.log("complete!")
+//			console.log(status)
 		},
 		error:	function(xhr, status, errorThrow){
-			console.log("error!")
-			console.log(errorThrow)
+//			console.log("error!")
+//			console.log(errorThrow)
 		}
 	});
 }

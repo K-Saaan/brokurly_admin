@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <nav class="navbar navbar-expand-md navbar-dark"
-style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; height: 60px;">
+style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 999;">
         <div class="container">
             <a href="${pageContext.request.contextPath}/home" class="navbar-brand">BROKURLY</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav-menu"
