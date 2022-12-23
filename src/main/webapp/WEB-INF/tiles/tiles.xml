@@ -13,7 +13,7 @@
 		<put-attribute name="body" value=""/>
 	</definition>
 
-	<definition name="login" extends="empty">
+	<definition name="login/loginPage" extends="empty">
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
 	</definition>
 	<definition name="*" extends="layout-basic">

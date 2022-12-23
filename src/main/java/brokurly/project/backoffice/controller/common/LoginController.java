@@ -9,6 +9,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Map;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -18,6 +20,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +42,12 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	
+	@GetMapping("/loginPage")
+	public String loginPage() {
+		return "login/loginPage";
+	}
+	
 	/**
 	 *
 	 * 로그인 프로세스.
@@ -55,15 +66,16 @@ public class LoginController {
 	 * @throws UnsupportedEncodingException 
 	 * @throws InvalidKeyException 
 	 */
-	@RequestMapping(value = "loginAction", method = RequestMethod.POST)
-	public @ResponseBody Object loginAction(
-							@RequestParam(required = false) String id,
-							@RequestParam(required = false) String pwd,
+	@ResponseBody
+	@PostMapping(value = "/loginAction", produces = "application/json;charset=utf-8")
+	public Object loginAction(@RequestBody Map<String, Object> param,
 							 Model					model,
 							 HttpServletRequest		request,
 							 HttpServletResponse	response) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		
-		//pswd = AES256Cipher.AES_Encode(pswd,Consts.ENCODE_KEY);
+		String id = (String) param.get("text_id");
+		String pwd = (String) param.get("text_nm");
+		logger.info("pwd >>>> " + pwd);
 		pwd = AES256Util.enCode(pwd);
 		return loginService.updateLogin(id, pwd, request);
 	}

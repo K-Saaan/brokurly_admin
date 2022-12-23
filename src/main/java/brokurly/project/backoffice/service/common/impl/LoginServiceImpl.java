@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import brokurly.project.backoffice.common.DateUtil;
 import brokurly.project.backoffice.entity.user.UserEntity;
 import brokurly.project.backoffice.entity.user.UserRepository;
@@ -31,38 +34,60 @@ public class LoginServiceImpl implements LoginService{
 		
 		Map<String,Object> resultMap= new HashMap<String, Object>();
 		
-		// input data null check
+		// Null 체크
 		if ("".equals(id) || "".equals(pwd)) {
 			resultMap.put("RESULT", "INPUT_NULL");
-			resultMap.put("GO_MAIN", "");
+			resultMap.put("URL", "");
 			return resultMap;
 		}
 		
-		UserEntity user = userRepository.findByUser(id, pwd);
+		List<UserEntity> user = userRepository.findByUser(id, pwd);
 		
-		if(user != null) {
+		if(user != null || user.size() != 0) {
 			logger.info("login success >>>>>>>");
 			
-			if(user.getAcntLock().equals("Y")) {
+			// 계정잠김 여부 확인
+			if(user.get(0).getAcntLock().equals("Y")) {
 				resultMap.put("RESULT", "LOCK_ACCOUNT");
-				resultMap.put("GO_MAIN", "");
+				resultMap.put("URL", "");
 				return resultMap;
 			}
 			String today = DateUtil.getTodayYYYYMMDD();
-			String pwdExpDate = user.getPwdExpDate();
+			String pwdExpDate = user.get(0).getPwdExpDate();
+			
+			// 만료일자 확인
 			if(!DateUtil.beforeDate(today, pwdExpDate)) {
 				resultMap.put("RESULT", "OVER_PASSWORD_DUE_DATE");
-				resultMap.put("GO_MAIN", "");
+				resultMap.put("URL", "");
 				return resultMap;
 			}
 			
+			// 메인으로 이동
+			resultMap.put("RESULT", "GO_MAIN");
+			resultMap.put("URL", user.get(0).getMainUrl());
 			
-			
-			resultMap.put("GO_MAIN", user.getMainUrl());
+			// 로그인 시간 update
+			UserEntity userEntity = UserEntity.builder().userId(id).loginFailCnt(0).chgrDate(today).build();
+			userRepository.save(userEntity);
 			
 		}else {
+			
+			List<UserEntity> idCheck = userRepository.findByUserId(id);
+			String today = DateUtil.getTodayYYYYMMDD();
+			if(idCheck != null) {
+				int failCnt = idCheck.get(0).getLoginFailCnt() + 1;
+				
+				resultMap.put("RESULT", "PWD_FAIL");
+				resultMap.put("URL", "");
+				resultMap.put("FAILCNT", failCnt);
+				
+				UserEntity userEntity = UserEntity.builder().userId(id).loginFailCnt(failCnt+1).chgrDate(today).build();
+				userRepository.save(userEntity);
+			}
+			
+			// 로그인 실패
 			resultMap.put("RESULT", "LOGIN_FAIL");
-			resultMap.put("GO_MAIN", "");
+			resultMap.put("URL", "");
 		}
 		
 		

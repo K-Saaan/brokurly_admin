@@ -49,7 +49,7 @@ public class UserController {
 		users = userRepository.findAll();
 		ObjectMapper mapper = new ObjectMapper();
 			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
-			String pw = users.get(0).getUserPwd();
+			String pw = users.get(1).getUserPwd();
 			logger.info("UserPwd 조회 logger : " + pw);
 			String encodePw = AES256Util.enCode(pw);
 			logger.info("encodePwd 조회 logger : " + encodePw);
@@ -80,7 +80,7 @@ public class UserController {
 			if(userRepository.findById("testtest").isPresent()) {
 				logger.info("동일한 값이 이미 있습니");
 			}else {
-				UserEntity userEntity = UserEntity.builder().userPwd(encodePw).custCode("C000000003").userId("testtest").build();
+				UserEntity userEntity = UserEntity.builder().userPwd(encodePw).userId("testtest").build();
 				logger.info("userEntity 조회 logger : " + userEntity);
 				userRepository.save(userEntity);
 			}

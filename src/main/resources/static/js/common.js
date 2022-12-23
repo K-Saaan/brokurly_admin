@@ -26,16 +26,16 @@ function ajax(paramUrl, paramData, returnCallBack, uiType){
 }
 
 
-
-
 /**
- * url을 이용한 페이지 이동
- * 
- * @param url
+ * Post 방식으로 페이지를 이동한다. 
+ * uri : 이동할 페이지
  */
-function goMainPage(url) {
-	if(url==null || url=='')return;
-	var f = makeform(url);
+
+function goMainPage(uri) {
+	var form = document.createElement('form');
 	
-	f.submit();
+	form.setAttribute('method', 'post');
+	form.setAttribute('action', uri);
+	document.body.appendChild(form);
+	form.submit();
 }

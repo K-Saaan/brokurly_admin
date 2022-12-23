@@ -29,8 +29,8 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String userId;
 	
-	@Column(name = "CUST_CODE")
-	private String custCode;
+	@Column(name = "USER_PWD")
+	private String userPwd;
 	
 	@Column(name = "CREATE_DATE")
 	private String createDate;
@@ -38,20 +38,11 @@ public class UserEntity {
 	@Column(name = "END_DATE")
 	private String endDate;
 	
-	@Column(name = "USER_PWD")
-	private String userPwd;
-	
 	@Column(name = "PWD_EXP_DATE")
 	private String pwdExpDate;
 	
 	@Column(name = "LOGIN_FAIL_CNT")
-	private String loginFailCnt;
-	
-	@Column(name = "RECMD_ID")
-	private String recmdId;
-	
-	@Column(name = "EVENT_NM")
-	private String eventNm;
+	private int loginFailCnt;
 	
 	@Column(name = "ACNT_LOCK")
 	private String acntLock;
