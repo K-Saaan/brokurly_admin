@@ -336,27 +336,27 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		]);
 	
-	
-	var param = {
-			
-	};
 	var countData = 0;
 	// 고객정보조회 조회버튼 클릭시
 	$("#memberSearch").click(function(){
+		var param = {
+				MEMBER_NAME		:	$("#memberName").val()
+		};
 		ajax("/member/showMemberCnt", param, function(returnData){
 			countData = returnData.countData;
-//			console.log("카운트 : ")
-//			console.log(countData)
+			$("#cntMember").text(countData);
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0){
-				ajax("/member/showMember", param, function(returnData){
+				var param = {
+						MEMBER_NAME		:	$("#memberName").val()
+				};
+				ajax("/member/showMemberByName", param, function(returnData){
 					var gridData = returnData.codeList;
 					provider.fillJsonData(gridData, { fillMode : "set"});
 					gridCellClicked();
-//					console.log("데이터가 있습니다.");
 				})
 			} else {
-//				console.log("데이터가 없습니다.");
+				
 			}
 		})
 	});
@@ -365,17 +365,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-//			console.log("클릭한 그리드의 데이터")
-//			console.log(selectOneData)
-//			console.log(selectOneData.custcode)
 			var custCode = selectOneData.custcode;
 			var param = {
 					CUSTCODE	:	custCode
 			}
 			ajax("/member/showMemberDtl", param, function(returnData){
 				var detailData = returnData.codeList;
-//				console.log("세부정보 확인 : ")
-//				console.log(detailData)
 				subprovider.fillJsonData(detailData, { fillMode : "set"});
 			})
 		}

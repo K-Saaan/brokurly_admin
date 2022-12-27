@@ -23,6 +23,7 @@ import brokurly.project.backoffice.entity.member.MemberEntity;
 import brokurly.project.backoffice.entity.member.MemberRepository;
 import brokurly.project.backoffice.entity.product.ProductEntity;
 import brokurly.project.backoffice.entity.product.ProductRepository;
+import brokurly.project.backoffice.service.common.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @Controller // ResponseBody 필요없음
@@ -35,22 +36,41 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	private final ProductRepository productRepository;
 	private final MemberDtlRepository memberDtlRepository;
+	private final MemberService memberService;
 	
 	// 전체 멤버 조회
 	@ResponseBody
 	@PostMapping(value = "/showMember", produces = "application/json;charset=utf-8")
-	public Map<String, Object> findAllMember(Model model, HttpServletRequest request) throws Throwable {
-		List<MemberEntity> gridDataList = memberRepository.findAll();
+	public Map<String, Object> findAllMember() throws Throwable {
+		return memberService.findAllMember();
+	}
+	// 멤버 이름으로 조회
+	@ResponseBody
+	@PostMapping(value = "/showMemberByName", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findMemberByName(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String memberName = (String)param.get("MEMBER_NAME");
 		Map<String, Object> result = new HashMap();
-		result.put("codeList", gridDataList);
+		// 고객이름 조회조건이 공란이면 전체 조회
+		if(memberName == "") {
+			result = memberService.findAllMember();
+		} else { // 고객이름 조회조건이 있으면 해당 데이터 조회
+			result = memberService.findMemberByName(memberName);
+		}
 		return result;
 	}
-	// 전체 멤버 조회(카운트)
+	// 멤버 이름으로 조회(카운트)
 	@ResponseBody
 	@PostMapping(value = "/showMemberCnt", produces = "application/json;charset=utf-8")
-	public Map<String, Object> findAllMemberCnt(Model model, HttpServletRequest request) throws Throwable {
-		int countData = Long.valueOf(memberRepository.count()).intValue();
+	public Map<String, Object> findAllMemberCnt(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String memberName = (String)param.get("MEMBER_NAME");
+		int countData;
 		Map<String, Object> result = new HashMap();
+		// 고객이름 조회조건이 공란이면 전체 카운트 조회
+		if(memberName == "") {
+			countData = Long.valueOf(memberRepository.count()).intValue();
+		} else { // 고객이름 조회조건이 있으면 해당 카운트 조회
+			countData = memberService.countByCustnm(memberName);
+		}
 		result.put("countData", countData);
 		return result;
 	}
@@ -76,10 +96,4 @@ public class MemberController {
 	public String show() {
 		return "member/show";
 	}
-	// POSTMAN에서 HTTP PUT 요청보내고 확인
-//	@PostMapping("/add")
-//	public void add() {
-//		MemberEntity member = new MemberEntity("길동쓰", "홍길동");
-//		memberRepository.save(member);
-//	}
 }
