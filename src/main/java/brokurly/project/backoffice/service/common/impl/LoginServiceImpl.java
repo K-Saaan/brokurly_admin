@@ -42,8 +42,8 @@ public class LoginServiceImpl implements LoginService{
 		}
 		
 		List<UserEntity> user = userRepository.findByUser(id, pwd);
-		
-		if(user != null || user.size() != 0) {
+		logger.info("user :: " + user);
+		if(user.size() != 0) {
 			logger.info("login success >>>>>>>");
 			
 			// 계정잠김 여부 확인
@@ -71,7 +71,7 @@ public class LoginServiceImpl implements LoginService{
 			userRepository.save(userEntity);
 			
 		}else {
-			
+			logger.info("login fail >>>>>>>");
 			List<UserEntity> idCheck = userRepository.findByUserId(id);
 			String today = DateUtil.getTodayYYYYMMDD();
 			if(idCheck != null) {

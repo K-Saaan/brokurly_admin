@@ -50,6 +50,9 @@ public class UserEntity {
 	@Column(name = "MAIN_URL")
 	private String mainUrl;
 	
+	@Column(name = "BF_PWD")
+	private String bfPwd;
+	
 	@Column(name = "REG_ID")
 	private String regId;
 	

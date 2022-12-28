@@ -70,20 +70,20 @@ public class UserController {
 			ObjectMapper mapper = new ObjectMapper();
 			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
 			String pw = users.get(0).getUserPwd();
-//			logger.info("UserPwd 조회 logger : " + pw);
-			String encodePw = AES256Util.enCode(pw);
+			logger.info("UserPwd 조회 logger : " + pw);
+			String encodePw = AES256Util.enCode("brokurly12");
 			logger.info("encodePwd 조회 logger : " + encodePw);
 			users = userRepository.findByUserId("Test");
 			String user = users.get(0).getUserId();
 			logger.info("User 조회 logger : " + user);
 			
-			if(userRepository.findById("testtest").isPresent()) {
-				logger.info("동일한 값이 이미 있습니");
-			}else {
-				UserEntity userEntity = UserEntity.builder().userPwd(encodePw).userId("testtest").build();
-				logger.info("userEntity 조회 logger : " + userEntity);
-				userRepository.save(userEntity);
-			}
+//			if(userRepository.findById("testtest").isPresent()) {
+//				logger.info("동일한 값이 이미 있습니");
+//			}else {
+//				UserEntity userEntity = UserEntity.builder().userPwd(encodePw).userId("testtest").build();
+//				logger.info("userEntity 조회 logger : " + userEntity);
+//				userRepository.save(userEntity);
+//			}
 		} catch (JsonProcessingException e) {
 			logger.error("showUser Error : >>>>>>> " + e);
 		}

@@ -75,7 +75,6 @@ public class LoginController {
 		
 		String id = (String) param.get("text_id");
 		String pwd = (String) param.get("text_nm");
-		logger.info("pwd >>>> " + pwd);
 		pwd = AES256Util.enCode(pwd);
 		return loginService.updateLogin(id, pwd, request);
 	}
