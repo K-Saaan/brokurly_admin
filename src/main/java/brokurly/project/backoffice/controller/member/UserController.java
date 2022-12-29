@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +11,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.h2.util.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.entity.user.UserEntity;
-import brokurly.project.backoffice.entity.user.UserRepository;
+import brokurly.project.backoffice.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RestController // ResponseBody 필요없음

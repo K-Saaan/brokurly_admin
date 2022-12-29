@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.entity.member;
+package brokurly.project.backoffice.repository.member;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

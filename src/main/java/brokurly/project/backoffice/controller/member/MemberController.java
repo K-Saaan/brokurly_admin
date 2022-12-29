@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
-import brokurly.project.backoffice.entity.member.MemberDtlRepository;
-import brokurly.project.backoffice.entity.member.MemberEntity;
-import brokurly.project.backoffice.entity.member.MemberRepository;
 import brokurly.project.backoffice.entity.product.ProductEntity;
-import brokurly.project.backoffice.entity.product.ProductRepository;
+import brokurly.project.backoffice.repository.member.MemberDtlRepository;
+import brokurly.project.backoffice.repository.member.MemberRepository;
+import brokurly.project.backoffice.repository.product.ProductRepository;
 import brokurly.project.backoffice.service.common.MemberService;
 import lombok.RequiredArgsConstructor;
 
