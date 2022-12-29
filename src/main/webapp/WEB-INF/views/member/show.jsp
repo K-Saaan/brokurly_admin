@@ -6,10 +6,11 @@
 </div>
 <div class="container" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
 	<div style="padding: 10px 15px; flex: 0 10%;">
-		<b>고객코드</b>
+		<b>날짜</b>
 	</div>
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
-		<input id="memberCode" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+<!-- 		<input id="datepicker" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"> -->
+		<input id="datepicker" type="text">
 	</div>
 	<div style="padding: 10px 15px; flex: 0 10%;">
 		<b>고객이름</b>

@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
     gridView.setDataSource(provider);
     subgridView.setDataSource(subprovider);
     
+    $("#datepicker").datepicker({
+    	dateFormat: "yy-mm-dd"
+    });
+    
     // 메인그리드 컬럼
 	provider.setFields([
 		{
