@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		};
 		ajax("/member/showMemberCnt", param, function(returnData){
 			countData = returnData.countData;
-			$("#cntMember").text(countData);
+			$("#cntMember").text(countData); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0){
 				var param = {
