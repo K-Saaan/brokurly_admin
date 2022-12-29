@@ -397,6 +397,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			var custCode = selectOneData.custcode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
+			
+//			var detailSite = {
+//					id: "memberDetailInfoModal",
+//					url: usingUrl + "/detail",
+//					width: 800,
+//					height: 600,
+//					level: 1
+//			}
+//			var detailParam = {
+//					CUSTCODE	:	custCode
+//			}
+//			loadModalObj(detailSite, detailParam);
 		}
 	}
 

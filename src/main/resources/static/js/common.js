@@ -50,3 +50,30 @@ function openPopup(url, name, width, height){
 	"menubar=no, resizable=no, left=" + px + ", top=" + py + ", position=fixed");
 	
 }
+
+function loadModalObj(modalData, data){
+	var tagId = "#" + modalData.id;
+	$("body").append("<div id='" + modalData.id + "Area' class='modalArea'></div>");
+	$("#" + modalData.id + "Area").data("layer", $("body").find(".modalArea").length);
+	$(tagId + "Area").load(modalData.url, {objectId:modalData.id}, function(){
+		$(tagId).css({
+			"width" : modalData.width,
+			"height" : modalData.height,
+			"min-width" : modalData.width,
+			"min-height" : modalData.height,
+			"left" : ($(window).width() - modalData.width) / 2,
+			"top" : ($(window).height() - modalData.height) / 2,
+			"display" : "block",
+			"position" : "absolute"
+		}).data("level", modalData.level).css("z-index", 200 * modalData.level);
+	})
+	
+	var modalDataTagId = "#" + modalData.id + "DataBox";
+	var innerHtml = "<div id='" + modalData.id + "DataBox'>";
+	$.each(data, function(key, value){
+		innerHtml += "<input type='hidden' name='" + key + "'value='" + value + "'/>";
+	})
+	innerHtml += "</div>";
+	
+	$("body").append(innerHtml);
+}
