@@ -11,9 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
     gridView.setDataSource(provider);
     subgridView.setDataSource(subprovider);
     
+    gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    // 데이트피커 날짜 형식 지정
     $("#datepicker").datepicker({
     	dateFormat: "yy-mm-dd"
     });
+    
+    var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
+    var urlHost = location.host; // localhost:8080
+    var contextPath = realPath.replace("http://", "").replace(location.host, ""); // member/show같이 컨트롤러 requestMapping URL
+    var hostIndex = location.href.indexOf(location.host) + location.host.length;
+    var conPath = location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1)); // member같이 컨트롤러 헤더 경로만 가져오기
+    var urlIndex = realPath.lastIndexOf("/");
+    var usingUrl = realPath.substr(0, urlIndex); // full URL에서 http://localhost:8080/member 까지만 자른 URL
     
     // 메인그리드 컬럼
 	provider.setFields([
@@ -358,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					var gridData = returnData.codeList;
 					provider.fillJsonData(gridData, { fillMode : "set"});
 					gridCellClicked();
+					gridDblCellClicked();
 				})
 			} else {
 				
@@ -377,6 +388,15 @@ document.addEventListener('DOMContentLoaded', function () {
 				var detailData = returnData.codeList;
 				subprovider.fillJsonData(detailData, { fillMode : "set"});
 			})
+		}
+	}
+	// 메인그리드 더블클릭했을때 모달 호출
+	function gridDblCellClicked(){
+		gridView.onCellDblClicked = function(grid, clickData){
+			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+			var custCode = selectOneData.custcode;
+			$("#clickData").val(custCode);
+			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}
 	}
 

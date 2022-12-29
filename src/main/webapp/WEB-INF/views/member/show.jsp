@@ -25,3 +25,6 @@
 고객 정보 조회 화면
 <div id="realgrid"></div>
 <div id="subgrid" style="height: 400px; margin-top: 30px;"></div>
+<form name="openForm">
+	<input type="hidden" id="clickData" value="" />
+</form>

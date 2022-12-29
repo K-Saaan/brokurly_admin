@@ -39,3 +39,14 @@ function goMainPage(uri) {
 	document.body.appendChild(form);
 	form.submit();
 }
+// 새 창으로 팝업 화면을 띄울때 사용하는 펑션
+function openPopup(url, name, width, height){
+	var sw = screen.availWidth; // 스크린 넓이
+	var sh = screen.availHeight; // 스크린 높이
+	var px = (sw - width) / 2; // x좌표
+	var py = (sh - height) / 2; // y좌표
+	// 화면 중앙에 모달 띄우게 설정
+	window.open(url, name, "width= " + width + ", height=" + height + ", toolbar=no, status=no," +
+	"menubar=no, resizable=no, left=" + px + ", top=" + py + ", position=fixed");
+	
+}

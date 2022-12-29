@@ -16,6 +16,10 @@
 	<definition name="login/loginPage" extends="empty">
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
 	</definition>
+<!-- 	상세정보 모달 화면으로 가기 위한 tilex 설정 -->
+	<definition name="*/detail" extends="empty">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/detail.jsp"/>
+	</definition>
 	<definition name="*" extends="layout-basic">
 		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"/>
 	</definition>

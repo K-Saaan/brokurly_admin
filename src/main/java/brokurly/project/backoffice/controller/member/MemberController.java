@@ -96,4 +96,9 @@ public class MemberController {
 	public String show() {
 		return "member/show";
 	}
+	// 멤버 상세정보 화면 모달 호출
+	@GetMapping("/detail")
+	public String showDetailInfo() {
+		return "member/detail";
+	}
 }
