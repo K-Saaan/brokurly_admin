@@ -72,7 +72,9 @@ public class UserController {
 			String pw = users.get(0).getUserPwd();
 			logger.info("UserPwd 조회 logger : " + pw);
 			String encodePw = AES256Util.enCode("brokurly12");
+			String test = AES256Util.enCode("test");
 			logger.info("encodePwd 조회 logger : " + encodePw);
+			logger.info("encodePwd 조회 logger : " + test);
 			users = userRepository.findByUserId("Test");
 			String user = users.get(0).getUserId();
 			logger.info("User 조회 logger : " + user);

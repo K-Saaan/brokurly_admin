@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import brokurly.project.backoffice.common.DateUtil;
 import brokurly.project.backoffice.entity.user.UserEntity;
-import brokurly.project.backoffice.entity.user.UserRepository;
+import brokurly.project.backoffice.repository.user.UserRepository;
 import brokurly.project.backoffice.service.common.LoginService;
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +42,7 @@ public class LoginServiceImpl implements LoginService{
 		}
 		
 		List<UserEntity> user = userRepository.findByUser(id, pwd);
+		
 		logger.info("user :: " + user);
 		if(user.size() != 0) {
 			logger.info("login success >>>>>>>");
@@ -66,8 +67,12 @@ public class LoginServiceImpl implements LoginService{
 			resultMap.put("RESULT", "GO_MAIN");
 			resultMap.put("URL", user.get(0).getMainUrl());
 			
-			// 로그인 시간 update
-			UserEntity userEntity = UserEntity.builder().userId(id).loginFailCnt(0).chgrDate(today).build();
+			// 로그인 시간 update / 로그인 실패 횟수 0으로 초기화
+			UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(user.get(0).getEndDate())
+														.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(0)
+														.acntLock(user.get(0).getAcntLock()).mainUrl(user.get(0).getMainUrl()).bfPwd(user.get(0).getBfPwd())
+														.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
+														.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
 			userRepository.save(userEntity);
 			
 		}else {
@@ -75,19 +80,34 @@ public class LoginServiceImpl implements LoginService{
 			List<UserEntity> idCheck = userRepository.findByUserId(id);
 			String today = DateUtil.getTodayYYYYMMDD();
 			if(idCheck != null) {
-				int failCnt = idCheck.get(0).getLoginFailCnt() + 1;
+				int failCnt = idCheck.get(0).getLoginFailCnt();
 				
-				resultMap.put("RESULT", "PWD_FAIL");
+				if(failCnt >= 5) {
+					resultMap.put("RESULT", "OVER_LOGIN_FAIL_CNT");
+					resultMap.put("URL", "");
+					UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(user.get(0).getEndDate())
+																.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(failCnt+1)
+																.acntLock("Y").mainUrl(user.get(0).getMainUrl()).bfPwd(user.get(0).getBfPwd())
+																.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
+																.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
+					userRepository.save(userEntity);
+				}else {
+					resultMap.put("RESULT", "PWD_FAIL");
+					resultMap.put("URL", "");
+					resultMap.put("FAILCNT", failCnt+1);
+					UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(idCheck.get(0).getEndDate())
+																.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(failCnt+1)
+																.acntLock(idCheck.get(0).getAcntLock()).mainUrl(user.get(0).getMainUrl()).bfPwd(idCheck.get(0).getBfPwd())
+																.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
+																.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
+					userRepository.save(userEntity);
+				}
+				
+			}else {
+				// 로그인 실패
+				resultMap.put("RESULT", "LOGIN_FAIL");
 				resultMap.put("URL", "");
-				resultMap.put("FAILCNT", failCnt);
-				
-				UserEntity userEntity = UserEntity.builder().userId(id).loginFailCnt(failCnt+1).chgrDate(today).build();
-				userRepository.save(userEntity);
 			}
-			
-			// 로그인 실패
-			resultMap.put("RESULT", "LOGIN_FAIL");
-			resultMap.put("URL", "");
 		}
 		
 		
