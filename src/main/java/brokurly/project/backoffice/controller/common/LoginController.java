@@ -18,6 +18,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,9 @@ import lombok.RequiredArgsConstructor;
 public class LoginController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Value("${key.aesKey}")
+	private String key;
 	
 	@Autowired
 	private LoginService loginService;
@@ -75,7 +79,7 @@ public class LoginController {
 		
 		String id = (String) param.get("text_id");
 		String pwd = (String) param.get("text_nm");
-		pwd = AES256Util.enCode(pwd);
+		pwd = AES256Util.enCode(pwd, key);
 		return loginService.updateLogin(id, pwd, request);
 	}
 }

@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
 public class AES256Util {
 	
 	public static byte[] ivBytes = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-//	@Value("${aesKey}")
-	private static String key = "abcdefghabcdefghabcdefghabcdefgh";
+	
 	
 	/* 암호화
 	 * @param str
@@ -38,10 +37,10 @@ public class AES256Util {
 	 * @throws IllegalBlockSizeException
 	 * @throws BadPaddingException
 	*/
-	public static String enCode(String str) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
+	public static String enCode(String str, String key) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
 	NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,	
 	IllegalBlockSizeException, BadPaddingException {
-		System.out.println("key : " + key);
+//		System.out.println("aesKey : " + aesKey);
 		String secretKey = key.substring(0, 32);
 		byte[] textBytes = str.getBytes("UTF-8");
 		AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);

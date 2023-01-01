@@ -13,6 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,9 @@ public class UserController {
 	
 	private final UserRepository userRepository;
 	
+	@Value("${key.aesKey}")
+	private String key;
+	
 	// 전체 User 조회
 	@ResponseBody
 	@GetMapping("/showUser")
@@ -47,8 +51,6 @@ public class UserController {
 			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
 			String pw = users.get(1).getUserPwd();
 			logger.info("UserPwd 조회 logger : " + pw);
-			String encodePw = AES256Util.enCode(pw);
-			logger.info("encodePwd 조회 logger : " + encodePw);
 		} catch (JsonProcessingException e) {
 			logger.error("showUser Error : >>>>>>> " + e);
 		}
@@ -67,8 +69,8 @@ public class UserController {
 			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
 			String pw = users.get(0).getUserPwd();
 			logger.info("UserPwd 조회 logger : " + pw);
-			String encodePw = AES256Util.enCode("brokurly12");
-			String test = AES256Util.enCode("test");
+			String encodePw = AES256Util.enCode("brokurly12", key);
+			String test = AES256Util.enCode("test", key);
 			logger.info("encodePwd 조회 logger : " + encodePw);
 			logger.info("encodePwd 조회 logger : " + test);
 			users = userRepository.findByUserId("Test");
