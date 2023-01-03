@@ -3,21 +3,20 @@ package brokurly.project.backoffice.service.common.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import brokurly.project.backoffice.common.DateUtil;
+import brokurly.project.backoffice.common.SessionUser;
 import brokurly.project.backoffice.entity.user.UserEntity;
 import brokurly.project.backoffice.repository.user.UserRepository;
 import brokurly.project.backoffice.service.common.LoginService;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class LoginServiceImpl implements LoginService{
@@ -28,6 +27,8 @@ public class LoginServiceImpl implements LoginService{
 	private UserRepository userRepository;
 	
 	private UserEntity userEntity;
+	
+	private SessionUser sessionUser;
 	
 	@Override
 	public Map<String, Object> updateLogin(String id, String pwd, HttpServletRequest request){
@@ -110,6 +111,9 @@ public class LoginServiceImpl implements LoginService{
 			}
 		}
 		
+		HttpSession session = request.getSession(true);
+		session.removeAttribute("userId");
+		session.setAttribute("userId", id);
 		
 		return resultMap;
 	}
