@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     subgridView.setDataSource(subprovider);
     
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     // 데이트피커 날짜 형식 지정
     $("#datepicker").datepicker({
     	dateFormat: "yy-mm-dd"
@@ -382,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
 			var custCode = selectOneData.custcode;
 			var param = {
-					CUSTCODE	:	custCode
+					MEMBER_CODE	:	custCode
 			}
 			ajax("/member/showMemberDtl", param, function(returnData){
 				var detailData = returnData.codeList;

@@ -29,6 +29,14 @@ public class MemberServiceImpl implements MemberService {
 		result.put("codeList", gridDataList);
 		return result;
 	}
+	// 멤버 코드로 멤버 조회
+	@Override
+	public Map<String, Object> findMemberByCode(String custcode){
+		List<MemberEntity> gridDataList = memberRepository.findByCustcode(custcode);
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
+	}
 	// 멤버 이름으로 멤버 조회
 	@Override
 	public Map<String, Object> findMemberByName(String custnm){
