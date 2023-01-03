@@ -26,7 +26,7 @@
 				<b>고객코드</b>
 			</div>
 			<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 80%;">
-				<input id="memberCodeDtl" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+				<input id="memberCodeDtl" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 			</div>
 		</div>
 		<div style="display: flex;">
@@ -34,15 +34,15 @@
 				<b>고객이름</b>
 			</div>
 			<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 80%;">
-				<input id="memberName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+				<input id="memberName" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 			</div>
 		</div>
 		<div style="display: flex;">
 			<div style="padding: 10px 15px; flex: 0 20%;">
-				<b>고객이름</b>
+				<b>고객번호</b>
 			</div>
 			<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 80%;">
-				<input id="memberName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+				<input id="memberPhone" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 			</div>
 		</div>
 	</div>

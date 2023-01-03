@@ -26,5 +26,5 @@
 <div id="realgrid"></div>
 <div id="subgrid" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">
-	<input type="hidden" id="clickData" value="" />
+	<input type="hidden" id="clickData" name="clickData" value="" />
 </form>
