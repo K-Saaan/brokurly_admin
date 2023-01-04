@@ -13,12 +13,12 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!-- datepicker 용도 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- datepicker 용도 -->
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/realgrid.2.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/realgrid-lic.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/realgrid.2.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/realgrid-lic.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/libs/jszip.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/common.js"></script>
 <style>
 	
 </style>
@@ -36,6 +36,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/practice.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/home.js"></script>
 </body>
 </html>

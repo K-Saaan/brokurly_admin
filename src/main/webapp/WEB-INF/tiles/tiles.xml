@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="layout-basic" template="/WEB-INF/views/common/layout-basic.jsp">
-		<put-attribute name="include" value="/WEB-INF/views/common/include.jsp" />
-		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
+	<definition name="layout-basic" template="/WEB-INF/views/frame/layout-basic.jsp">
+		<put-attribute name="include" value="/WEB-INF/views/frame/include.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/frame/header.jsp"/>
 		<put-attribute name="body" value=""/>
-		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
+		<put-attribute name="side" value="/WEB-INF/views/frame/side.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/frame/footer.jsp"/>
 	</definition>
-	<definition name="empty" template="/WEB-INF/views/common/empty.jsp">
-		<put-attribute name="include" value="/WEB-INF/views/common/include.jsp" />
+	<definition name="empty" template="/WEB-INF/views/frame/empty.jsp">
+		<put-attribute name="include" value="/WEB-INF/views/frame/include.jsp" />
 		<put-attribute name="body" value=""/>
 	</definition>
 
 	<definition name="login/loginPage" extends="empty">
-		<put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/common/login.jsp"/>
 	</definition>
 <!-- 	상세정보 모달 화면으로 가기 위한 tilex 설정 -->
 	<definition name="*/detail" extends="empty">

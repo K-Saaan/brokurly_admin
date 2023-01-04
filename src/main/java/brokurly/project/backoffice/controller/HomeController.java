@@ -12,6 +12,6 @@ public class HomeController {
 
 	@PostMapping("/home")
 	public String homePage() {
-		return "home";
+		return "common/home";
 	}
 }
