@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import brokurly.project.backoffice.common.DateUtil;
-import brokurly.project.backoffice.common.SessionUser;
 import brokurly.project.backoffice.entity.user.UserEntity;
 import brokurly.project.backoffice.repository.user.UserRepository;
 import brokurly.project.backoffice.service.common.LoginService;
@@ -27,8 +26,6 @@ public class LoginServiceImpl implements LoginService{
 	private UserRepository userRepository;
 	
 	private UserEntity userEntity;
-	
-	private SessionUser sessionUser;
 	
 	@Override
 	public Map<String, Object> updateLogin(String id, String pwd, HttpServletRequest request){
