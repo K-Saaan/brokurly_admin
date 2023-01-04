@@ -11,11 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 import brokurly.project.backoffice.entity.product.ProductEntity;
 import brokurly.project.backoffice.repository.member.MemberDtlRepository;
@@ -96,6 +99,13 @@ public class MemberController {
 		result.put("codeList", gridDataList);
 		return result;
 	}
+	
+//	// 멤버 이름으로 조회(카운트)
+//	@ResponseBody
+//	@PutMapping(value = "/updateMember/{id}", produces = "application/json;charset=utf-8")
+//	public int updateMember(@PathVariable("id") String custcode, @RequestBody MemberDto memberDto) throws Throwable {
+//		return memberService.update(custcode, memberDto);
+//	}
 	
 	// 전체 상품 조회
 	@ResponseBody

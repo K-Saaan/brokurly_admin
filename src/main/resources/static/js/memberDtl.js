@@ -24,4 +24,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		console.log(detailData[0])
 	})
 	
+	var updateParam = {
+		MEMBER_NAME	:	$("#memberName").val(),
+		MEMBER_EMAIL :	$("#memberEmail").val()
+	};
+	
+	// 수정 버튼 눌렀을 경우
+	$("#updateMember").click(function(){
+//		ajax2("/member/updateMember/" + clickData, updateParam, function(returnData){
+//			alert("update complete!");
+//		})
+	});
+	
 });

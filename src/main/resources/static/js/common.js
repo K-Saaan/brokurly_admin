@@ -25,6 +25,27 @@ function ajax(paramUrl, paramData, returnCallBack, uiType){
 	});
 }
 
+function ajax2(paramUrl, paramData, returnCallBack, uiType){
+	$.ajax({
+		url:	paramUrl,
+		method:	"PUT",
+		type:	"PUT",
+		data:	JSON.stringify(paramData),
+		dataType:	"json",
+		async:	true,
+		contentType:	"application/json;charset=utf-8",
+		cache:	false,
+		success:	function(returnData){
+			returnCallBack(returnData);
+		},
+		complete:	function(xhr, status){
+		},
+		error:	function(xhr, status, errorThrow){
+			alert(JSON.stringify(errorThrow));
+		}
+	});
+}
+
 
 /**
  * Post 방식으로 페이지를 이동한다. 
