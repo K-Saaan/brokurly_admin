@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.entity.member.MemberEntity;
 import brokurly.project.backoffice.repository.member.MemberRepository;
 import brokurly.project.backoffice.service.common.MemberService;
@@ -51,5 +54,16 @@ public class MemberServiceImpl implements MemberService {
 		int countData = memberRepository.countByCustnm(custnm);
 		return countData;
 	}
+	
+//	@Transactional
+//	public int update(String custcode, MemberDto memberdto) {
+//		List<MemberEntity> gridDataList = memberRepository.findByCustcode(custcode);
+//		if(gridDataList != null) {
+//			memberEntity.update(memberdto.getCustnm(), memberdto.getCustemail());
+//		} else {
+//			logger.info("오류 발생!");
+//		}
+//		return 1;
+//	}
 
 }

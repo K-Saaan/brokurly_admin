@@ -69,4 +69,9 @@ public class MemberEntity {
 		this.chgrid = chgrid;
 		this.chgrdate = chgrdate;
 	}
+	
+//	public void update(String custnm, String custemail) {
+//		this.custnm = custnm;
+//		this.custemail = custemail;
+//	}
 }

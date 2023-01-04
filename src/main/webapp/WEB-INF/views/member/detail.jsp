@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/memberDtl.js"></script>
+<div class="container">
+	<div style="float: right; margin-bottom: 15px;">
+		<button type="button" class="btn btn-primary" id="updateMember">수정</button>
+	</div>
+</div>
 <div class="container" style="margin-top: 20px;">
 	<div class="container" style="display: flex; flex-direction: column; border: 1px solid lightgrey;">
 		<div style="display: flex;">
