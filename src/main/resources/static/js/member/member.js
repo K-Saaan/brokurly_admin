@@ -19,10 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
     var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
-    var urlHost = location.host; // localhost:8080
-    var contextPath = realPath.replace("http://", "").replace(location.host, ""); // member/show같이 컨트롤러 requestMapping URL
-    var hostIndex = location.href.indexOf(location.host) + location.host.length;
-    var conPath = location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1)); // member같이 컨트롤러 헤더 경로만 가져오기
     var urlIndex = realPath.lastIndexOf("/");
     var usingUrl = realPath.substr(0, urlIndex); // full URL에서 http://localhost:8080/member 까지만 자른 URL
     
