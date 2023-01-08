@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.service.common.impl;
+package brokurly.project.backoffice.service.member.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.entity.member.MemberEntity;
 import brokurly.project.backoffice.repository.member.MemberRepository;
-import brokurly.project.backoffice.service.common.MemberService;
+import brokurly.project.backoffice.service.member.MemberService;
 
 @Service
 public class MemberServiceImpl implements MemberService {

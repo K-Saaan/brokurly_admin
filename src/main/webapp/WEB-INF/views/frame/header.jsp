@@ -14,7 +14,7 @@ style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav-menu">
                 <ul class="navbar-nav text-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">홈</a>
+                        <a class="nav-link active" aria-current="page" href="javascript:goMainPage('/home');">홈</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">태그</a>

@@ -11,20 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 import brokurly.project.backoffice.entity.product.ProductEntity;
 import brokurly.project.backoffice.repository.member.MemberDtlRepository;
 import brokurly.project.backoffice.repository.member.MemberRepository;
 import brokurly.project.backoffice.repository.product.ProductRepository;
-import brokurly.project.backoffice.service.common.MemberService;
+import brokurly.project.backoffice.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @Controller // ResponseBody 필요없음

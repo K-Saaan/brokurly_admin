@@ -14,6 +14,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.entity.user.UserEntity;
 import brokurly.project.backoffice.repository.user.UserRepository;
+import brokurly.project.backoffice.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController // ResponseBody 필요없음
@@ -37,6 +39,8 @@ public class UserController {
 	
 	private final UserRepository userRepository;
 	
+	private final UserService userService;
+	
 	@Value("${key.aesKey}")
 	private String key;
 	
@@ -46,12 +50,27 @@ public class UserController {
 	public List<UserEntity> findAllUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
 		List<UserEntity> users = new ArrayList<>();
 		try {
-		users = userRepository.findAll();
-		ObjectMapper mapper = new ObjectMapper();
-			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
-			String pw = users.get(1).getUserPwd();
-			logger.info("UserPwd 조회 logger : " + pw);
-		} catch (JsonProcessingException e) {
+			users = userRepository.findAll();
+			UserEntity user =  users.get(0);
+			Specification<UserEntity> spec = (root, query, criteriaBuilder) -> null;
+//			String userId = user.getUserId();
+			String userId = null;
+			String createDate = user.getCreateDate();
+//			String createDate = null;
+			int loginFailCnt = user.getLoginFailCnt();
+			
+			if(userId != null) {
+				spec = spec.and(userService.getUserId(userId));
+			}else if(createDate != null) {
+				spec = spec.and(userService.getCreateDate(createDate));
+			}else {
+				spec = spec.and(userService.getLoginFailCnt(loginFailCnt));
+			}
+			List<UserEntity> specUser = userRepository.findAll(spec);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			logger.info("spec : "+ mapper.writeValueAsString(specUser));
+		} catch (Exception e) {
 			logger.error("showUser Error : >>>>>>> " + e);
 		}
 		

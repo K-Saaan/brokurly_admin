@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.service.common;
+package brokurly.project.backoffice.service.member;
 
 import java.util.Map;
 
