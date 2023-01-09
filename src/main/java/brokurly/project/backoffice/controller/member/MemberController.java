@@ -36,12 +36,6 @@ public class MemberController {
 	private final MemberDtlRepository memberDtlRepository;
 	private final MemberService memberService;
 	
-	// 전체 멤버 조회
-	@ResponseBody
-	@PostMapping(value = "/showMember", produces = "application/json;charset=utf-8")
-	public Map<String, Object> findAllMember() throws Throwable {
-		return memberService.findAllMember();
-	}
 	// 멤버 코드로 조회
 	@ResponseBody
 	@PostMapping(value = "/showMemberByCode", produces = "application/json;charset=utf-8")
@@ -61,27 +55,19 @@ public class MemberController {
 	@PostMapping(value = "/showMemberByName", produces = "application/json;charset=utf-8")
 	public Map<String, Object> findMemberByName(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		String memberName = (String)param.get("MEMBER_NAME");
+		int countData = 0;
 		Map<String, Object> result = new HashMap();
 		// 고객이름 조회조건이 공란이면 전체 조회
 		if(memberName == "") {
-			result = memberService.findAllMember();
-		} else { // 고객이름 조회조건이 있으면 해당 데이터 조회
-			result = memberService.findMemberByName(memberName);
-		}
-		return result;
-	}
-	// 멤버 이름으로 조회(카운트)
-	@ResponseBody
-	@PostMapping(value = "/showMemberCnt", produces = "application/json;charset=utf-8")
-	public Map<String, Object> findAllMemberCnt(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-		String memberName = (String)param.get("MEMBER_NAME");
-		int countData;
-		Map<String, Object> result = new HashMap();
-		// 고객이름 조회조건이 공란이면 전체 카운트 조회
-		if(memberName == "") {
 			countData = Long.valueOf(memberRepository.count()).intValue();
-		} else { // 고객이름 조회조건이 있으면 해당 카운트 조회
+			if(countData > 0) {
+				result = memberService.findAllMember();
+			}
+		} else { // 고객이름 조회조건이 있으면 해당 데이터 조회
 			countData = memberService.countByCustnm(memberName);
+			if(countData > 0) {
+				result = memberService.findMemberByName(memberName);
+			}
 		}
 		result.put("countData", countData);
 		return result;
@@ -104,13 +90,6 @@ public class MemberController {
 //		return memberService.update(custcode, memberDto);
 //	}
 	
-	// 전체 상품 조회
-	@ResponseBody
-	@GetMapping("/showProduct")
-	public List<ProductEntity> findAllProduct(){
-		List products = productRepository.findAll();
-		return products;
-	}
 	@GetMapping("/show")
 	public String show() {
 		return "member/show";

@@ -353,22 +353,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		var param = {
 				MEMBER_NAME		:	$("#memberName").val()
 		};
-		ajax("/member/showMemberCnt", param, function(returnData){
+		ajax("/member/showMemberByName", param, function(returnData){
 			countData = returnData.countData;
+			gridData = returnData.codeList;
 			$("#cntMember").text(countData); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0){
-				var param = {
-						MEMBER_NAME		:	$("#memberName").val()
-				};
-				ajax("/member/showMemberByName", param, function(returnData){
-					var gridData = returnData.codeList;
-					provider.fillJsonData(gridData, { fillMode : "set"});
-					gridCellClicked();
-					gridDblCellClicked();
-				})
+				var gridData = returnData.codeList;
+				provider.fillJsonData(gridData, { fillMode : "set"});
+				gridCellClicked();
+				gridDblCellClicked();
 			} else {
-				
+				provider.clearRows(); // 조회 결과가 없을시 그리드 비우기
 			}
 		})
 	});
@@ -394,18 +390,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			var custCode = selectOneData.custcode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
-			
-//			var detailSite = {
-//					id: "memberDetailInfoModal",
-//					url: usingUrl + "/detail",
-//					width: 800,
-//					height: 600,
-//					level: 1
-//			}
-//			var detailParam = {
-//					CUSTCODE	:	custCode
-//			}
-//			loadModalObj(detailSite, detailParam);
 		}
 	}
 
