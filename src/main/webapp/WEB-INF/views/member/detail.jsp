@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/memberDtl.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/member/memberDtl.js"></script>
 <div class="container">
 	<div style="float: right; margin-bottom: 15px;">
 		<button type="button" class="btn btn-primary" id="updateMember">수정</button>
