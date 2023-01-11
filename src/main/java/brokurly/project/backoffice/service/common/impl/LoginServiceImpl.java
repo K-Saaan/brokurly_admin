@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import brokurly.project.backoffice.common.DateUtil;
+import brokurly.project.backoffice.entity.user.LoginHistEntity;
 import brokurly.project.backoffice.entity.user.UserEntity;
+import brokurly.project.backoffice.repository.user.LoginHistRepository;
 import brokurly.project.backoffice.repository.user.UserRepository;
 import brokurly.project.backoffice.service.common.LoginService;
 
@@ -25,7 +27,8 @@ public class LoginServiceImpl implements LoginService{
 	@Autowired
 	private UserRepository userRepository;
 	
-	private UserEntity userEntity;
+	@Autowired
+	private LoginHistRepository loginHsitRepository;
 	
 	@Override
 	public Map<String, Object> updateLogin(String id, String pwd, HttpServletRequest request){
@@ -73,6 +76,14 @@ public class LoginServiceImpl implements LoginService{
 														.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
 			userRepository.save(userEntity);
 			
+			String stringToday = DateUtil.getStringToday();
+			
+			// 로그인 이력 기록 
+			LoginHistEntity loginHistEntity = LoginHistEntity.builder().userId(id).loginDate(stringToday).regId(user.get(0).getRegId()).regDate(user.get(0)
+																	   .getRegDate()).chgrId(user.get(0).getChgrId()).chgrDate(today).build();
+			
+			loginHsitRepository.save(loginHistEntity);
+			
 		}else {
 			logger.info("login fail >>>>>>>");
 			List<UserEntity> idCheck = userRepository.findByUserId(id);
@@ -111,6 +122,8 @@ public class LoginServiceImpl implements LoginService{
 		HttpSession session = request.getSession(true);
 		session.removeAttribute("userId");
 		session.setAttribute("userId", id);
+		
+		
 		
 		return resultMap;
 	}

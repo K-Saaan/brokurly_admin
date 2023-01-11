@@ -27,6 +27,24 @@ public class DateUtil {
 	
 	
 	/**
+     * 1. MethodName: getStringToday
+     * 2. ClassName : DateUtil
+     * 3. Comment   : yyyyMMddHHmmss 형태의 날짜를 문자열로 변환.
+     *
+     * @return String 변환문자열
+     * @return
+     */
+	
+	public static String getStringToday() {
+		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyyMMddHHmmss", Locale.KOREA );
+		Date currentTime = new Date ( );
+		String dTime = formatter.format ( currentTime );
+		
+		return dTime;
+	}
+	
+	
+	/**
      * 1. MethodName: getToday
      * 2. ClassName : DateUtil
      * 3. Comment   : YYYYMMDD 형태의 날짜를 문자열로 변환.
