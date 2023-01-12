@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "CUST_CODE")
 	private String custcode;
 	@Column(name = "CUST_GRADE_CODE")
@@ -70,8 +69,8 @@ public class MemberEntity {
 		this.chgrdate = chgrdate;
 	}
 	
-//	public void update(String custnm, String custemail) {
-//		this.custnm = custnm;
-//		this.custemail = custemail;
-//	}
+	public void update(String custnm, String custemail) {
+		this.custnm = custnm;
+		this.custemail = custemail;
+	}
 }

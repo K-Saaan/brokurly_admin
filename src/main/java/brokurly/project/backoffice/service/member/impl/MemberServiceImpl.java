@@ -55,15 +55,11 @@ public class MemberServiceImpl implements MemberService {
 		return countData;
 	}
 	
-//	@Transactional
-//	public int update(String custcode, MemberDto memberdto) {
-//		List<MemberEntity> gridDataList = memberRepository.findByCustcode(custcode);
-//		if(gridDataList != null) {
-//			memberEntity.update(memberdto.getCustnm(), memberdto.getCustemail());
-//		} else {
-//			logger.info("오류 발생!");
-//		}
-//		return 1;
-//	}
+	@Transactional
+	public int update(String custcode, MemberDto memberdto) {
+		MemberEntity memberEntity = memberRepository.findById(custcode).orElseThrow(() -> new IllegalArgumentException("No data"));
+		memberEntity.update(memberdto.getCustnm(), memberdto.getCustemail());
+		return 1;
+	}
 
 }
