@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.entity.user;
+package brokurly.project.backoffice.entity.login;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,15 +22,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "user_info", catalog = "co")
-public class UserEntity {
+@Table(name = "mng_info", catalog = "co")
+public class MngEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String userId;
+	private String mngId;
 	
-	@Column(name = "USER_PWD")
-	private String userPwd;
+	@Column(name = "MNG_PWD")
+	private String mngPwd;
 	
 	@Column(name = "CREATE_DATE")
 	private String createDate;
@@ -64,5 +64,13 @@ public class UserEntity {
 	
 	@Column(name = "CHGR_DATE")
 	private String chgrDate;
+	
+	
+	public void LoginUpdate(int loginFailCnt, String acntLock,String chgrId,String chgrDate) {
+		this.loginFailCnt = loginFailCnt;
+		this.acntLock = acntLock;
+		this.chgrId = chgrId;
+		this.chgrDate = chgrDate;
+	}
 	
 }

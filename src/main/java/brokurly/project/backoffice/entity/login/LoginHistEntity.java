@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.entity.user;
+package brokurly.project.backoffice.entity.login;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,8 +25,8 @@ import lombok.ToString;
 @Table(name = "login_hist", catalog = "co")
 public class LoginHistEntity {
 	
-	@Column(name = "USER_ID")
-	private String userId;
+	@Column(name = "MNG_ID")
+	private String mngId;
 	
 	@Id
 	@Column(name = "LOGIN_DATE")

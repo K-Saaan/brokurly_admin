@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import brokurly.project.backoffice.common.DateUtil;
-import brokurly.project.backoffice.entity.user.LoginHistEntity;
-import brokurly.project.backoffice.entity.user.UserEntity;
-import brokurly.project.backoffice.repository.user.LoginHistRepository;
-import brokurly.project.backoffice.repository.user.UserRepository;
+import brokurly.project.backoffice.entity.login.LoginHistEntity;
+import brokurly.project.backoffice.entity.login.MngEntity;
+import brokurly.project.backoffice.repository.login.LoginHistRepository;
+import brokurly.project.backoffice.repository.login.MngRepository;
 import brokurly.project.backoffice.service.common.LoginService;
 
 @Service
@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService{
 	private  final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private UserRepository userRepository;
+	private MngRepository mngRepository;
 	
 	@Autowired
 	private LoginHistRepository loginHsitRepository;
@@ -42,20 +42,20 @@ public class LoginServiceImpl implements LoginService{
 			return resultMap;
 		}
 		
-		List<UserEntity> user = userRepository.findByUser(id, pwd);
+		MngEntity mng = mngRepository.findByMng(id, pwd);
 		
-		logger.info("user :: " + user);
-		if(user.size() != 0) {
+		logger.info("mng :: " + mng);
+		if(mng != null) {
 			logger.info("login success >>>>>>>");
 			
 			// 계정잠김 여부 확인
-			if(user.get(0).getAcntLock().equals("Y")) {
+			if(mng.getAcntLock().equals("Y")) {
 				resultMap.put("RESULT", "LOCK_ACCOUNT");
 				resultMap.put("URL", "");
 				return resultMap;
 			}
 			String today = DateUtil.getTodayYYYYMMDD();
-			String pwdExpDate = user.get(0).getPwdExpDate();
+			String pwdExpDate = mng.getPwdExpDate();
 			
 			// 만료일자 확인
 			if(!DateUtil.beforeDate(today, pwdExpDate)) {
@@ -66,50 +66,37 @@ public class LoginServiceImpl implements LoginService{
 			
 			// 메인으로 이동
 			resultMap.put("RESULT", "GO_MAIN");
-			resultMap.put("URL", user.get(0).getMainUrl());
+			resultMap.put("URL", mng.getMainUrl());
 			
 			// 로그인 시간 update / 로그인 실패 횟수 0으로 초기화
-			UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(user.get(0).getEndDate())
-														.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(0)
-														.acntLock(user.get(0).getAcntLock()).mainUrl(user.get(0).getMainUrl()).bfPwd(user.get(0).getBfPwd())
-														.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
-														.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
-			userRepository.save(userEntity);
+			mng.LoginUpdate(0, "N", id, today);
 			
 			String stringToday = DateUtil.getStringToday();
 			
 			// 로그인 이력 기록 
-			LoginHistEntity loginHistEntity = LoginHistEntity.builder().userId(id).loginDate(stringToday).regId(user.get(0).getRegId()).regDate(user.get(0)
-																	   .getRegDate()).chgrId(user.get(0).getChgrId()).chgrDate(today).build();
+			LoginHistEntity loginHistEntity = LoginHistEntity.builder().mngId(id).loginDate(stringToday).regId(mng.getRegId())
+																		.regDate(mng.getRegDate()).chgrId(mng.getChgrId()).chgrDate(today).build();
 			
 			loginHsitRepository.save(loginHistEntity);
 			
 		}else {
 			logger.info("login fail >>>>>>>");
-			List<UserEntity> idCheck = userRepository.findByUserId(id);
+			MngEntity idCheck = mngRepository.findByMngId(id);
 			String today = DateUtil.getTodayYYYYMMDD();
 			if(idCheck != null) {
-				int failCnt = idCheck.get(0).getLoginFailCnt();
+				int failCnt = idCheck.getLoginFailCnt();
 				
 				if(failCnt >= 5) {
 					resultMap.put("RESULT", "OVER_LOGIN_FAIL_CNT");
 					resultMap.put("URL", "");
-					UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(user.get(0).getEndDate())
-																.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(failCnt+1)
-																.acntLock("Y").mainUrl(user.get(0).getMainUrl()).bfPwd(user.get(0).getBfPwd())
-																.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
-																.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
-					userRepository.save(userEntity);
+					idCheck.LoginUpdate(failCnt+1, "Y", id, today);
+					
 				}else {
 					resultMap.put("RESULT", "PWD_FAIL");
 					resultMap.put("URL", "");
 					resultMap.put("FAILCNT", failCnt+1);
-					UserEntity userEntity = UserEntity.builder().userId(id).userPwd(pwd).createDate(user.get(0).getCreateDate()).endDate(idCheck.get(0).getEndDate())
-																.pwdExpDate(user.get(0).getPwdExpDate()).loginFailCnt(failCnt+1)
-																.acntLock(idCheck.get(0).getAcntLock()).mainUrl(user.get(0).getMainUrl()).bfPwd(idCheck.get(0).getBfPwd())
-																.regId(user.get(0).getRegId()).regDate(user.get(0).getRegDate())
-																.chgrId(user.get(0).getChgrId()).chgrDate(today).build();
-					userRepository.save(userEntity);
+					idCheck.LoginUpdate(failCnt+1, "Y", id, today);
+					
 				}
 				
 			}else {
@@ -120,8 +107,8 @@ public class LoginServiceImpl implements LoginService{
 		}
 		
 		HttpSession session = request.getSession(true);
-		session.removeAttribute("userId");
-		session.setAttribute("userId", id);
+		session.removeAttribute("mngId");
+		session.setAttribute("mngId", id);
 		
 		
 		

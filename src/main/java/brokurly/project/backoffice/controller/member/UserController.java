@@ -24,88 +24,88 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import brokurly.project.backoffice.common.AES256Util;
-import brokurly.project.backoffice.entity.user.UserEntity;
-import brokurly.project.backoffice.repository.user.UserRepository;
-import brokurly.project.backoffice.service.user.UserService;
+import brokurly.project.backoffice.entity.login.MngEntity;
+import brokurly.project.backoffice.repository.login.MngRepository;
+import brokurly.project.backoffice.service.login.MngService;
 import lombok.RequiredArgsConstructor;
 
 @RestController // ResponseBody 필요없음
 @RequiredArgsConstructor // final 객체를 Constructor Injection 해줌. Autowired 필요없음
-@RequestMapping("/user")
+@RequestMapping("/mng")
 public class UserController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	private final UserRepository userRepository;
+	private final MngRepository mngRepository;
 	
-	private final UserService userService;
+	private final MngService mngService;
 	
 	@Value("${key.aesKey}")
 	private String key;
 	
-	// 전체 User 조회
+	// 전체 Mng 조회
 	@ResponseBody
-	@GetMapping("/showUser")
-	public List<UserEntity> findAllUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
-		List<UserEntity> users = new ArrayList<>();
+	@GetMapping("/showMng")
+	public List<MngEntity> findAllMng() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
+		List<MngEntity> mngs = new ArrayList<>();
 		try {
-			users = userRepository.findAll();
-			UserEntity user =  users.get(0);
-			Specification<UserEntity> spec = (root, query, criteriaBuilder) -> null;
-//			String userId = user.getUserId();
-			String userId = null;
-			String createDate = user.getCreateDate();
+			mngs = mngRepository.findAll();
+			MngEntity mng =  mngs.get(0);
+			Specification<MngEntity> spec = (root, query, criteriaBuilder) -> null;
+//			String mngId = mng.getMngId();
+			String mngId = null;
+			String createDate = mng.getCreateDate();
 //			String createDate = null;
-			int loginFailCnt = user.getLoginFailCnt();
+			int loginFailCnt = mng.getLoginFailCnt();
 			
-			if(userId != null) {
-				spec = spec.and(userService.getUserId(userId));
+			if(mngId != null) {
+				spec = spec.and(mngService.getMngId(mngId));
 			}else if(createDate != null) {
-				spec = spec.and(userService.getCreateDate(createDate));
+				spec = spec.and(mngService.getCreateDate(createDate));
 			}else {
-				spec = spec.and(userService.getLoginFailCnt(loginFailCnt));
+				spec = spec.and(mngService.getLoginFailCnt(loginFailCnt));
 			}
-			List<UserEntity> specUser = userRepository.findAll(spec);
+			List<MngEntity> specMng = mngRepository.findAll(spec);
 			
 			ObjectMapper mapper = new ObjectMapper();
-			logger.info("spec : "+ mapper.writeValueAsString(specUser));
+			logger.info("spec : "+ mapper.writeValueAsString(specMng));
 		} catch (Exception e) {
-			logger.error("showUser Error : >>>>>>> " + e);
+			logger.error("showMng Error : >>>>>>> " + e);
 		}
 		
-		return users;
+		return mngs;
 	}
 	
-	// 전체 User 조회
+	// 전체 Mng 조회
 	@ResponseBody
-	@GetMapping("/insertUser")
-	public List<UserEntity> InsertUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
-		List<UserEntity> users = new ArrayList<>();
+	@GetMapping("/insertMng")
+	public List<MngEntity> InsertMng() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
+		List<MngEntity> mngs = new ArrayList<>();
 		try {
-			users = userRepository.findAll();
+			mngs = mngRepository.findAll();
 			ObjectMapper mapper = new ObjectMapper();
-			logger.info("User 전체 조회 logger : " + mapper.writeValueAsString(users));
-			String pw = users.get(0).getUserPwd();
-			logger.info("UserPwd 조회 logger : " + pw);
+			logger.info("Mng 전체 조회 logger : " + mapper.writeValueAsString(mngs));
+			String pw = mngs.get(0).getMngPwd();
+			logger.info("MngPwd 조회 logger : " + pw);
 			String encodePw = AES256Util.enCode("brokurly12", key);
 			String test = AES256Util.enCode("test", key);
 			logger.info("encodePwd 조회 logger : " + encodePw);
 			logger.info("encodePwd 조회 logger : " + test);
-			users = userRepository.findByUserId("Test");
-			String user = users.get(0).getUserId();
-			logger.info("User 조회 logger : " + user);
+//			mngs = mngRepository.findByMngId("Test");
+			String mng = mngs.get(0).getMngId();
+			logger.info("Mng 조회 logger : " + mng);
 			
-//			if(userRepository.findById("testtest").isPresent()) {
+//			if(mngRepository.findById("testtest").isPresent()) {
 //				logger.info("동일한 값이 이미 있습니");
 //			}else {
-//				UserEntity userEntity = UserEntity.builder().userPwd(encodePw).userId("testtest").build();
-//				logger.info("userEntity 조회 logger : " + userEntity);
-//				userRepository.save(userEntity);
+//				MngEntity mngEntity = MngEntity.builder().mngPwd(encodePw).mngId("testtest").build();
+//				logger.info("mngEntity 조회 logger : " + mngEntity);
+//				mngRepository.save(mngEntity);
 //			}
 		} catch (JsonProcessingException e) {
-			logger.error("showUser Error : >>>>>>> " + e);
+			logger.error("showMng Error : >>>>>>> " + e);
 		}
-		return users;
+		return mngs;
 	}
 }

@@ -78,7 +78,7 @@ public class LoginController {
 							 HttpServletResponse	response) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		
 		String id = (String) param.get("text_id");
-		String pwd = (String) param.get("text_nm");
+		String pwd = (String) param.get("text_pwd");
 		pwd = AES256Util.enCode(pwd, key);
 		return loginService.updateLogin(id, pwd, request);
 	}

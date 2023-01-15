@@ -35,7 +35,7 @@ function login(){
 		
 	var param = new Object();
 	param.text_id = $("#id").val();
-	param.text_nm = $("#pwd").val();
+	param.text_pwd = $("#pwd").val();
 	
 	ajax("/login/loginAction", param, function(returnData){
 			console.log(returnData);
