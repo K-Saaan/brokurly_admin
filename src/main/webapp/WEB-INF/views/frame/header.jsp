@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<% String user = (String) session.getAttribute("userId"); %>
+<% String mng = (String) session.getAttribute("mngId"); %>
 
 <nav class="navbar navbar-expand-md navbar-dark"
 style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 999;">
@@ -23,7 +23,7 @@ style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; 
                         <a class="nav-link" href="#">방명록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><%=user%></a>
+                        <a class="nav-link" href="#"><%=mng%></a>
                     </li>
                 </ul>
                 <form class="d-flex m-2">
