@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드를 그리기 위한 사전 설정
-    const container = document.getElementById('realgrid');
+    const container = document.getElementById('realgridProduct');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
     // 서브그리드를 그리기 위한 사전 설정
-    const subcontainer = document.getElementById('subgrid');
+    const subcontainer = document.getElementById('subgridProduct');
     const subprovider = new RealGrid.LocalDataProvider(false);
     const subgridView = new RealGrid.GridView(subcontainer);
     
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     // 데이트피커 날짜 형식 지정
-    $("#datepicker").datepicker({
+    $(".datepicker").datepicker({
     	dateFormat: "yy-mm-dd"
     });
     
@@ -25,47 +25,59 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 컬럼
 	provider.setFields([
 		{
-			fieldName: "chgrdate",
+			fieldName: "pdcode",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrid",
+			fieldName: "catecode",
 			dataType: "text",
 		},
 		{
-			fieldName: "custaddr",
+			fieldName: "pdnm",
 			dataType: "text",
 		},
 		{
-			fieldName: "custaddrdtl",
+			fieldName: "pdprice",
 			dataType: "text",
 		},
 		{
-			fieldName: "custbirth",
+			fieldName: "delitype",
 			dataType: "text",
 		},
 		{
-			fieldName: "custcode",
+			fieldName: "pdseller",
 			dataType: "text",
 		},
 		{
-			fieldName: "custemail",
+			fieldName: "packtype",
 			dataType: "text",
 		},
 		{
-			fieldName: "custgradecode",
+			fieldName: "salesunit",
 			dataType: "text",
 		},
 		{
-			fieldName: "custnm",
+			fieldName: "orgloc",
 			dataType: "text",
 		},
 		{
-			fieldName: "custtel",
+			fieldName: "pdweight",
 			dataType: "text",
 		},
 		{
-			fieldName: "deliloccode",
+			fieldName: "alerginfo",
+			dataType: "text",
+		},
+		{
+			fieldName: "expdateinfo",
+			dataType: "text",
+		},
+		{
+			fieldName: "pdextinfo",
+			dataType: "text",
+		},
+		{
+			fieldName: "regid",
 			dataType: "text",
 		},
 		{
@@ -73,109 +85,140 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "regid",
+			fieldName: "chgrid",
+			dataType: "text",
+		},
+		{
+			fieldName: "chgrdate",
 			dataType: "text",
 		},
 	]);
 	
 	gridView.setColumns([
 		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
+			name: "pdcode",
+			fieldName: "pdcode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "수정일시",
+				text: "상품코드",
 			},
 		},
 		{
-			name: "chgrid",
-			fieldName: "chgrid",
+			name: "catecode",
+			fieldName: "catecode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "수정자아이디",
+				text: "카테고리코드",
 			},
 		},
 		{
-			name: "custaddr",
-			fieldName: "custaddr",
+			name: "pdnm",
+			fieldName: "pdnm",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객주소",
+				text: "상품이름",
 			},
 		},
 		{
-			name: "custaddrdtl",
-			fieldName: "custaddrdtl",
+			name: "pdprice",
+			fieldName: "pdprice",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객상세주소",
+				text: "상품가격",
 			},
 		},
 		{
-			name: "custbirth",
-			fieldName: "custbirth",
+			name: "delitype",
+			fieldName: "delitype",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객생년월일",
+				text: "배송타입",
 			},
 		},
 		{
-			name: "custcode",
-			fieldName: "custcode",
+			name: "pdseller",
+			fieldName: "pdseller",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객코드",
+				text: "판매자",
 			},
 		},
 		{
-			name: "custemail",
-			fieldName: "custemail",
+			name: "packtype",
+			fieldName: "packtype",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객이메일",
+				text: "포장타입",
 			},
 		},
 		{
-			name: "custgradecode",
-			fieldName: "custgradecode",
+			name: "salesunit",
+			fieldName: "salesunit",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객등급코드",
+				text: "판매단위",
 			},
 		},
 		{
-			name: "custnm",
-			fieldName: "custnm",
+			name: "orgloc",
+			fieldName: "orgloc",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객이름",
+				text: "원산지",
 			},
 		},
 		{
-			name: "custtel",
-			fieldName: "custtel",
+			name: "pdweight",
+			fieldName: "pdweight",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객전화번호",
+				text: "상품중량",
 			},
 		},
 		{
-			name: "deliloccode",
-			fieldName: "deliloccode",
+			name: "alerginfo",
+			fieldName: "alerginfo",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객배송코드",
+				text: "알러지정보",
+			},
+		},
+		{
+			name: "expdateinfo",
+			fieldName: "expdateinfo",
+			type: "data",
+			width: "120",
+			header: {
+				text: "유통기한정보",
+			},
+		},
+		{
+			name: "pdextinfo",
+			fieldName: "pdextinfo",
+			type: "data",
+			width: "120",
+			header: {
+				text: "상품부가정보",
+			},
+		},
+		{
+			name: "regid",
+			fieldName: "regid",
+			type: "data",
+			width: "120",
+			header: {
+				text: "등록자",
 			},
 		},
 		{
@@ -188,148 +231,122 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regid",
-			fieldName: "regid",
+			name: "chgrid",
+			fieldName: "chgrid",
 			type: "data",
 			width: "120",
 			header: {
-				text: "등록자아이디",
+				text: "변경자",
+			},
+		},
+		{
+			name: "chgrdate",
+			fieldName: "chgrdate",
+			type: "data",
+			width: "120",
+			header: {
+				text: "변경일시",
 			},
 		},
 	]);
 	// 서브그리드 컬럼
 	subprovider.setFields([
 		{
-			fieldName: "custCode",
+			fieldName: "pdcode",
 			dataType: "text",
 		},
 		{
-			fieldName: "ageYn",
+			fieldName: "salecode",
 			dataType: "text",
 		},
 		{
-			fieldName: "agreEmail",
+			fieldName: "cpncode",
 			dataType: "text",
 		},
 		{
-			fieldName: "agrePrivacyEss",
+			fieldName: "discyn",
 			dataType: "text",
 		},
 		{
-			fieldName: "agrePrivacyOpt",
+			fieldName: "cpnyn",
 			dataType: "text",
 		},
 		{
-			fieldName: "agreSms",
+			fieldName: "regid",
 			dataType: "text",
 		},
 		{
-			fieldName: "agreTerms",
+			fieldName: "regdate",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrDate",
+			fieldName: "chgrid",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrId",
-			dataType: "text",
-		},
-		{
-			fieldName: "regDate",
-			dataType: "text",
-		},
-		{
-			fieldName: "regId",
+			fieldName: "chgrdate",
 			dataType: "text",
 		},
 		]);
 	
 	subgridView.setColumns([
 		{
-			name: "custCode",
-			fieldName: "custCode",
+			name: "pdcode",
+			fieldName: "pdcode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "고객코드",
+				text: "상품코드",
 			},
 		},
 		{
-			name: "ageYn",
-			fieldName: "ageYn",
+			name: "salecode",
+			fieldName: "salecode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "이용약관동의",
+				text: "판매코드",
 			},
 		},
 		{
-			name: "agreEmail",
-			fieldName: "agreEmail",
+			name: "cpncode",
+			fieldName: "cpncode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "광고성\n수신여부\n(이메일)",
+				text: "쿠폰코드",
 			},
 		},
 		{
-			name: "agreTerms",
-			fieldName: "agreTerms",
+			name: "discyn",
+			fieldName: "discyn",
 			type: "data",
 			width: "120",
 			header: {
-				text: "이용약관동의",
+				text: "할인적용여부",
 			},
 		},
 		{
-			name: "agreSms",
-			fieldName: "agreSms",
+			name: "cpnyn",
+			fieldName: "cpnyn",
 			type: "data",
 			width: "120",
 			header: {
-				text: "광고성\n수신여부\n(SMS)",
+				text: "쿠폰적용여부",
 			},
 		},
 		{
-			name: "agrePrivacyEss",
-			fieldName: "agrePrivacyEss",
+			name: "regid",
+			fieldName: "regid",
 			type: "data",
 			width: "120",
 			header: {
-				text: "개인정보\n수집이용동의\n(필수)",
+				text: "등록자",
 			},
 		},
 		{
-			name: "agrePrivacyOpt",
-			fieldName: "agrePrivacyOpt",
-			type: "data",
-			width: "120",
-			header: {
-				text: "개인정보\n수집이용동의\n(필수)",
-			},
-		},
-		{
-			name: "chgrDate",
-			fieldName: "chgrDate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "수정일시",
-			},
-		},
-		{
-			name: "chgrId",
-			fieldName: "chgrId",
-			type: "data",
-			width: "120",
-			header: {
-				text: "수정자아이디",
-			},
-		},
-		{
-			name: "regDate",
-			fieldName: "regDate",
+			name: "regdate",
+			fieldName: "regdate",
 			type: "data",
 			width: "120",
 			header: {
@@ -337,27 +354,36 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regId",
-			fieldName: "regId",
+			name: "chgrid",
+			fieldName: "chgrid",
 			type: "data",
 			width: "120",
 			header: {
-				text: "등록자아이디",
+				text: "수정자",
+			},
+		},
+		{
+			name: "chgrdate",
+			fieldName: "chgrdate",
+			type: "data",
+			width: "120",
+			header: {
+				text: "수정일시",
 			},
 		},
 		]);
 	
 	var countData = 0;
 	// 고객정보조회 조회버튼 클릭시
-	$("#memberSearch").click(function(){
+	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
 		var param = {
-				MEMBER_NAME		:	$("#memberName").val()
+				PRODUCT_NAME		:	$("#productName").val()
 		};
-		ajax("/member/showMemberByName", param, function(returnData){
+		ajax("/product/showProductByName", param, function(returnData){
 			countData = returnData.countData;
 			gridData = returnData.codeList;
-			$("#cntMember").text(countData); // 화면에 조회건수 출력
+			$("#cntProduct").text(countData); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0){
 				var gridData = returnData.codeList;
@@ -374,11 +400,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var custCode = selectOneData.custcode;
+			var pdcode = selectOneData.pdcode;
 			var param = {
-					MEMBER_CODE	:	custCode
+					PRODUCT_CODE	:	pdcode
 			}
-			ajax("/member/showMemberDtl", param, function(returnData){
+			ajax("/product/showProductDtl", param, function(returnData){
 				var detailData = returnData.codeList;
 				subprovider.fillJsonData(detailData, { fillMode : "set"});
 			})
@@ -388,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var custCode = selectOneData.custcode;
+			var pdCode = selectOneData.pdcode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}

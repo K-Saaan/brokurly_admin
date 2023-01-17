@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 public class ProductEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "PD_CODE")
 	private String pdcode;
 	@Column(name = "CATE_CODE")

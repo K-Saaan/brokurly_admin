@@ -1,11 +1,10 @@
 package brokurly.project.backoffice.repository.member;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 
-import java.util.List;
-
-public interface MemberDtlRepository extends JpaRepository<MemberDtlEntity, Long> {
+public interface MemberDtlRepository extends JpaRepository<MemberDtlEntity, String> {
 	List<MemberDtlEntity> findByCustCode(String custCode);
 }

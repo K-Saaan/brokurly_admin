@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class MemberDtlEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CUST_CODE")
 	private String custCode;
 	
 	@Column(name = "AGRE_TERMS")
