@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
     	});
 	
-	//로그인 버튼 이벤트
+	//로그인 버튼 이벤트 
     $('#loginBtn').on('click',function () {
 	    	login();
 		});
