@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.data.jpa.domain.Specification;
 
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 import brokurly.project.backoffice.entity.product.ProductDtlEntity;
+import brokurly.project.backoffice.entity.product.ProductEntity;
 import brokurly.project.backoffice.repository.product.ProductDtlRepository;
 import brokurly.project.backoffice.repository.product.ProductRepository;
 import brokurly.project.backoffice.service.product.ProductService;
@@ -58,6 +60,30 @@ public class ProductController {
 		}
 		result.put("countData", countData);
 		return result;
+	}
+	
+	// 상품 조회 specification 이용 다중 조회조건으로 검색
+	@ResponseBody
+	@PostMapping(value = "/showProduct", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String pdnm = (String)param.get("PRODUCT_NAME");
+		String packtype = (String)param.get("PACK_TYPE");
+		Specification<ProductEntity> spec = (root, query, criteriaBuilder) -> null;
+		Map<String, Object> result = new HashMap();
+		int countData = 0;
+		if(pdnm != "") {
+			spec = spec.and(productService.getByPdnm(pdnm));
+		}
+		if(packtype != "") {
+			spec = spec.and(productService.getByPacktype(packtype));
+		}
+		List<ProductEntity> specProduct = productRepository.findAll(spec);
+		logger.info("size");
+		logger.info(Integer.toBinaryString(specProduct.size()));
+		countData = specProduct.size();
+		result.put("codeList", specProduct);
+		result.put("countData", countData);
+ 		return result;
 	}
 	
 	// 특정 상품 세부정보 조회. ajax로 STRINGIFY.json 형태로 param 받을때는 @RequestBody 사용할것

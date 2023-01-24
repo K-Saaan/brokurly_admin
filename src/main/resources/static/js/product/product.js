@@ -375,17 +375,39 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	var countData = 0;
 	// 고객정보조회 조회버튼 클릭시
+//	$("#productSearch").click(function(){
+//		subprovider.clearRows(); // 서브 그리드 비우기
+//		var param = {
+//				PRODUCT_NAME		:	$("#productName").val()
+//		};
+//		ajax("/product/showProductByName", param, function(returnData){
+//			countData = returnData.countData;
+//			gridData = returnData.codeList;
+//			$("#cntProduct").text(countData); // 화면에 조회건수 출력
+//			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
+//			if(countData > 0){
+//				var gridData = returnData.codeList;
+//				provider.fillJsonData(gridData, { fillMode : "set"});
+//				gridCellClicked();
+//				gridDblCellClicked();
+//			} else {
+//				provider.clearRows(); // 조회 결과가 없을시 그리드 비우기
+//			}
+//		})
+//	});
+	// 고객정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
 		var param = {
-				PRODUCT_NAME		:	$("#productName").val()
+				PRODUCT_NAME		:	$("#productName").val(),
+				PACK_TYPE		:	$("#packType").val()
 		};
-		ajax("/product/showProductByName", param, function(returnData){
-			countData = returnData.countData;
+		ajax("/product/showProduct", param, function(returnData){
 			gridData = returnData.codeList;
+			countData = returnData.countData;
 			$("#cntProduct").text(countData); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
-			if(countData > 0){
+			if(countData > 0) {
 				var gridData = returnData.codeList;
 				provider.fillJsonData(gridData, { fillMode : "set"});
 				gridCellClicked();
