@@ -395,6 +395,17 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		})
 	});
+	// 엑셀 버튼 클릭시
+	$("#productExcel").click(function(){
+		if(countData > 0) {
+			gridView.exportGrid({
+			     type: 'excel',
+			     fileName: "상품 정보 조회.xlsx"
+			})
+		} else {
+			alert("조회된 데이터가 없습니다.");
+		}
+	});
 	
 	// 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
 	function gridCellClicked(){

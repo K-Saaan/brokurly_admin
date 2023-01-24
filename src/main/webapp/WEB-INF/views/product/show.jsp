@@ -18,7 +18,8 @@
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
 		<input id="productName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 	</div>
-	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row-reverse;">
+	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
+		<button type="button" style="margin-right: 10px;" class="btn btn-success" id="productExcel">엑셀</button>
 		<button type="button" class="btn btn-primary" id="productSearch">조회</button>
 	</div>
 </div>
