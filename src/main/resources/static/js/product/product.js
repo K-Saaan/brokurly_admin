@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 	$(".dropdown-item").click(function(){
-		$('#packType').text( $(this).text() ).val( $(this).text() );
+		$('#packType').text( $(this).attr('value') ).val( $(this).attr('value') );
 		if($('.dropdown-item').is(':visible')){
 			$('.dropdown-menu').hide();
 			$('.dropdown-item').hide();

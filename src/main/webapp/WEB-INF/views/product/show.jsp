@@ -21,9 +21,9 @@
 		    <span id="packType" class="visually-hidden"></span>
 		  </button>
 		  <ul class="dropdown-menu">
-		    <li class="dropdown-item">종이박스</li>
-		    <li class="dropdown-item">플라스틱박스</li>
-		    <li class="dropdown-item">종이봉투</li>
+		    <li class="dropdown-item" value="종이박스">종이박스</li>
+		    <li class="dropdown-item" value="플라스틱박스">플라스틱박스</li>
+		    <li class="dropdown-item" value="종이봉투">종이봉투</li>
 		  </ul>
 		</div>
 	</div>
