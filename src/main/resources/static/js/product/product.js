@@ -452,5 +452,25 @@ document.addEventListener('DOMContentLoaded', function () {
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}
 	}
+	
+	$(".dropdown-toggle").click(function(){
+		if($('.dropdown-menu').is(':visible')){
+			$('.dropdown-menu').hide();
+			$('.dropdown-item').hide();
+		} else {
+			$('.dropdown-menu').show();
+			$('.dropdown-item').show();
+		}
+	});
+	$(".dropdown-item").click(function(){
+		$('#packType').text( $(this).text() ).val( $(this).text() );
+		if($('.dropdown-item').is(':visible')){
+			$('.dropdown-menu').hide();
+			$('.dropdown-item').hide();
+		} else {
+			$('.dropdown-menu').show();
+			$('.dropdown-item').show();
+		}
+	});
 
 });
