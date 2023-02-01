@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="productSum" style="width: 600px;height:400px;"></div>
-<div id="productCnt" style="width: 600px;height:400px;"></div>
+<div id="productSum" style="width: 1200px;height:500px;"></div>
+<div id="productCnt" style="width: 1200px;height:500px;"></div>
+<div id="productSumOfCate" style="width: 1200px;height:500px;"></div>
 <script type="text/javascript">
 var list1 = [];
 var list2 = [];
 var list3 = [];
+var list4 = [];
+var list5 = [];
 var param = {};
 ajax("/showProductChart", param, function(returnData){
 	var gridData = returnData.codeList;
@@ -65,6 +68,42 @@ ajax("/showProductChart", param, function(returnData){
 		};
 		cntChart.setOption(optionCnt);
 	});
+});
+
+// 상품 카테고리별 상품가 총합
+ajax("/showSumOfProduct", param, function(returnData){
+	var gridDataSum = returnData.codeList;
+	gridDataSum.forEach(function(data) {
+		list4.push(data[0]); // 상품 카테고리
+		list5.push(data[1]); // 상품가격 sum
+		var sumChartOfCate = echarts.init(document.getElementById('productSumOfCate'));
+		var optionSum = {
+		  title: {
+		    text: '상품 카테고리별 상품가격 총합'
+		  },
+		  tooltip: {},
+		  legend: {
+		    data: ['상품가격합']
+		  },
+		  xAxis: {
+			type: 'category',
+		    data: list4
+		  },
+		  yAxis: {
+			  type: 'value'
+		  },
+		  series: [
+		    {
+		      name: '상품가격합',
+		      type: 'line',
+		      data: list5
+		    }
+		  ]
+		};
+		sumChartOfCate.setOption(optionSum);
+	});
+	console.log("test")
+	console.log(list4)
 });
 
 </script>

@@ -35,4 +35,14 @@ public class HomeController {
 		result.put("codeList", gridDataList);
 		return result;
 	}
+	
+	// 상품 카테고리별 상품가 총합
+	@ResponseBody
+	@PostMapping(value = "/showSumOfProduct", produces = "application/json;charset=utf-8")
+	public Map<String, Object> showSumOfProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		Map<String, Object> result = new HashMap();
+		List<Object[]> gridDataList = productRepository.showSumOfProduct();
+		result.put("codeList", gridDataList);
+		return result;
+	}
 }
