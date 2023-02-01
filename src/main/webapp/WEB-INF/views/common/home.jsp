@@ -102,8 +102,6 @@ ajax("/showSumOfProduct", param, function(returnData){
 		};
 		sumChartOfCate.setOption(optionSum);
 	});
-	console.log("test")
-	console.log(list4)
 });
 
 </script>
