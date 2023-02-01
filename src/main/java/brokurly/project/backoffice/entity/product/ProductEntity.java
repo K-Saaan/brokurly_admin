@@ -24,30 +24,36 @@ public class ProductEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PD_CODE")
 	private String pdcode;
-	@Column(name = "CATE_CODE")
-	private String catecode;
 	@Column(name = "PD_NM")
 	private String pdnm;
+	@Column(name = "PD_EXT")
+	private String pdext;
 	@Column(name = "PD_PRICE")
 	private String pdprice;
 	@Column(name = "DELI_TYPE")
 	private String delitype;
+	@Column(name = "DELI_EXT")
+	private String deliext;
 	@Column(name = "PD_SELLER")
 	private String pdseller;
-	@Column(name = "PACK_TYPE")
-	private String packtype;
+	@Column(name = "PAKG_TYPE")
+	private String pakgtype;
+	@Column(name = "PAKG_EXT")
+	private String pakgext;
 	@Column(name = "SALES_UNIT")
 	private String salesunit;
+	@Column(name = "PD_WEG")
+	private String pdweg;
+	@Column(name = "PD_SWEET")
+	private String pdsweet;
 	@Column(name = "ORG_LOC")
 	private String orgloc;
-	@Column(name = "PD_WEIGHT")
-	private String pdweight;
 	@Column(name = "ALERG_INFO")
 	private String alerginfo;
-	@Column(name = "EXP_DATE_INFO")
-	private String expdateinfo;
-	@Column(name = "PD_EXT_INFO")
-	private String pdextinfo;
+	@Column(name = "EXP_DATE")
+	private String expdate;
+	@Column(name = "EXT_INFO")
+	private String extinfo;
 	@Column(name = "REG_ID")
 	private String regid;
 	@Column(name = "REG_DATE")
@@ -59,22 +65,26 @@ public class ProductEntity {
 	
 	// new 예약어를 사용하는 생성자의 경우 파라미터 파악이 힘드므로 @Builder 사용
 	@Builder
-	public ProductEntity(String pdcode, String catecode, String pdnm, String pdprice, String delitype,
-			String pdseller, String packtype, String salesunit, String orgloc, String pdweight, String alerginfo,
-			String expdateinfo, String pdextinfo, String regid, Timestamp regdate, String chgrid, Timestamp chgrdate) {
+	public ProductEntity(String pdcode, String pdnm, String pdext, String pdprice, String delitype,
+			String deliext, String pdseller, String pakgtype, String pakgext, String salesunit,
+			String pdweg, String pdsweet, String orgloc, String alerginfo,
+			String expdate, String extinfo, String regid, Timestamp regdate, String chgrid, Timestamp chgrdate) {
 		this.pdcode = pdcode;
-		this.catecode = catecode;
 		this.pdnm = pdnm;
+		this.pdext = pdext;
 		this.pdprice = pdprice;
 		this.delitype = delitype;
+		this.deliext = deliext;
 		this.pdseller = pdseller;
-		this.packtype = packtype;
+		this.pakgtype = pakgtype;
+		this.pakgext = pakgext;
 		this.salesunit = salesunit;
+		this.pdweg = pdweg;
+		this.pdsweet = pdsweet;
 		this.orgloc = orgloc;
-		this.pdweight = pdweight;
 		this.alerginfo = alerginfo;
-		this.expdateinfo = expdateinfo;
-		this.pdextinfo = pdextinfo;
+		this.expdate = expdate;
+		this.extinfo = extinfo;
 		this.regid = regid;
 		this.regdate = regdate;
 		this.chgrid = chgrid;

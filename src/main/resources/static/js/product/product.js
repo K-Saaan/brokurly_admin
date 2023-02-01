@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "catecode",
+			fieldName: "pdnm",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdnm",
+			fieldName: "pdext",
 			dataType: "text",
 		},
 		{
@@ -45,11 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
+			fieldName: "deliext",
+			dataType: "text",
+		},
+		{
 			fieldName: "pdseller",
 			dataType: "text",
 		},
 		{
-			fieldName: "packtype",
+			fieldName: "pakgtype",
 			dataType: "text",
 		},
 		{
@@ -57,11 +61,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "orgloc",
+			fieldName: "pdweg",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdweight",
+			fieldName: "pdsweet",
+			dataType: "text",
+		},
+		{
+			fieldName: "orgloc",
 			dataType: "text",
 		},
 		{
@@ -69,11 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "expdateinfo",
+			fieldName: "expdate",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdextinfo",
+			fieldName: "extinfo",
 			dataType: "text",
 		},
 		{
@@ -105,21 +113,21 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "catecode",
-			fieldName: "catecode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "카테고리코드",
-			},
-		},
-		{
 			name: "pdnm",
 			fieldName: "pdnm",
 			type: "data",
 			width: "120",
 			header: {
 				text: "상품이름",
+			},
+		},
+		{
+			name: "pdext",
+			fieldName: "pdext",
+			type: "data",
+			width: "120",
+			header: {
+				text: "상품부가정보",
 			},
 		},
 		{
@@ -141,6 +149,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
+			name: "deliext",
+			fieldName: "deliext",
+			type: "data",
+			width: "120",
+			header: {
+				text: "배송부가정보",
+			},
+		},
+		{
 			name: "pdseller",
 			fieldName: "pdseller",
 			type: "data",
@@ -150,12 +167,21 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "packtype",
-			fieldName: "packtype",
+			name: "pakgtype",
+			fieldName: "pakgtype",
 			type: "data",
 			width: "120",
 			header: {
 				text: "포장타입",
+			},
+		},
+		{
+			name: "pakgext",
+			fieldName: "pakgext",
+			type: "data",
+			width: "120",
+			header: {
+				text: "포장부가정보",
 			},
 		},
 		{
@@ -168,21 +194,30 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
+			name: "pdweg",
+			fieldName: "pdweg",
+			type: "data",
+			width: "120",
+			header: {
+				text: "상품무게",
+			},
+		},
+		{
+			name: "pdsweet",
+			fieldName: "pdsweet",
+			type: "data",
+			width: "120",
+			header: {
+				text: "당도",
+			},
+		},
+		{
 			name: "orgloc",
 			fieldName: "orgloc",
 			type: "data",
 			width: "120",
 			header: {
 				text: "원산지",
-			},
-		},
-		{
-			name: "pdweight",
-			fieldName: "pdweight",
-			type: "data",
-			width: "120",
-			header: {
-				text: "상품중량",
 			},
 		},
 		{
@@ -195,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "expdateinfo",
-			fieldName: "expdateinfo",
+			name: "expdate",
+			fieldName: "expdate",
 			type: "data",
 			width: "120",
 			header: {
@@ -204,12 +239,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdextinfo",
-			fieldName: "pdextinfo",
+			name: "extinfo",
+			fieldName: "extinfo",
 			type: "data",
 			width: "120",
 			header: {
-				text: "상품부가정보",
+				text: "상품기타정보",
 			},
 		},
 		{
@@ -374,33 +409,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		]);
 	
 	var countData = 0;
-	// 고객정보조회 조회버튼 클릭시
-//	$("#productSearch").click(function(){
-//		subprovider.clearRows(); // 서브 그리드 비우기
-//		var param = {
-//				PRODUCT_NAME		:	$("#productName").val()
-//		};
-//		ajax("/product/showProductByName", param, function(returnData){
-//			countData = returnData.countData;
-//			gridData = returnData.codeList;
-//			$("#cntProduct").text(countData); // 화면에 조회건수 출력
-//			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
-//			if(countData > 0){
-//				var gridData = returnData.codeList;
-//				provider.fillJsonData(gridData, { fillMode : "set"});
-//				gridCellClicked();
-//				gridDblCellClicked();
-//			} else {
-//				provider.clearRows(); // 조회 결과가 없을시 그리드 비우기
-//			}
-//		})
-//	});
 	// 고객정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
 		var param = {
 				PRODUCT_NAME		:	$("#productName").val(),
-				PACK_TYPE		:	$("#packType").val()
+				PAKG_TYPE		:	$("#packType").val()
 		};
 		ajax("/product/showProduct", param, function(returnData){
 			gridData = returnData.codeList;

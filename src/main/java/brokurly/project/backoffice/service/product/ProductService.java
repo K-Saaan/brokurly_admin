@@ -11,5 +11,5 @@ public interface ProductService {
 	public Map<String, Object> findProductByName(String pdnm); // 고객이름 조회조건으로 조회
 	public int countByPdnm(String pdnm);
 	Specification<ProductEntity> getByPdnm(String pdnm); // 조회조건 상품이름
-	Specification<ProductEntity> getByPacktype(String packtype); // 조회조건 포장타입
+	Specification<ProductEntity> getByPakgtype(String pakgtype); // 조회조건 포장타입
 }
