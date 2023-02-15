@@ -408,22 +408,34 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		]);
 	
+	var totalCount = 0;
 	var countData = 0;
+	var pagingIndex = 0;
+	var pagingRows = 50;
 	// 고객정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
+		pagingIndex = 0;
+		pagingRows = 50;
 		var param = {
 				PRODUCT_NAME		:	$("#productName").val(),
-				PAKG_TYPE		:	$("#packType").val()
+				PAKG_TYPE		:	$("#packType").val(),
+				pagingIndex		:	pagingIndex,
+				pagingRows		:	pagingRows
 		};
 		ajax("/product/showProduct", param, function(returnData){
-			gridData = returnData.codeList;
-			countData = returnData.countData;
-			$("#cntProduct").text(countData); // 화면에 조회건수 출력
+			totalCount = returnData.codeList.totalElements;
+			countData = returnData.codeList.size;
+			$("#cntProduct").text(totalCount); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0) {
-				var gridData = returnData.codeList;
+				// 만약 이번 조회된 카운트값이 pagingRows 값과 같다면 다음 페이지가 있는것이므로 pagingIndex 증가
+				if(countData == pagingRows) {
+					pagingIndex++;
+				}
+				var gridData = returnData.codeList.content;
 				provider.fillJsonData(gridData, { fillMode : "set"});
+				gridPaging();
 				gridCellClicked();
 				gridDblCellClicked();
 			} else {
@@ -433,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	// 엑셀 버튼 클릭시
 	$("#productExcel").click(function(){
-		if(countData > 0) {
+		if(totalCount > 0) {
 			gridView.exportGrid({
 			     type: 'excel',
 			     fileName: "상품 정보 조회.xlsx"
@@ -464,6 +476,35 @@ document.addEventListener('DOMContentLoaded', function () {
 			var pdCode = selectOneData.pdcode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
+		}
+	}
+	
+	// 스크롤 가장 아래로 내렸을때 추가로 조회
+	function gridPaging(){
+		gridView.onScrollToBottom = function() {
+			// pagingIndex가 1이라면 카운트값이 pagingRows 보다 적은것이므로 return 처리
+			if(pagingIndex == 0) {
+				return;
+			}
+			var param = {
+					PRODUCT_NAME		:	$("#productName").val(),
+					PAKG_TYPE		:	$("#packType").val(),
+					pagingIndex		:	pagingIndex,
+					pagingRows		:	pagingRows
+			};
+			ajax("/product/showProduct", param, function(returnData){
+				totalCount = returnData.codeList.totalElements;
+				countData = returnData.codeList.size;
+				// 스크롤 시 추가 데이터가 있을때만 show
+				if(countData > 0) {
+					var gridData = returnData.codeList.content;
+					pagingIndex++;
+					provider.fillJsonData(gridData, { fillMode : "append", noStates: true});
+					gridView.refresh();
+				} else {
+					provider.clearRows(); // 조회 결과가 없을시 그리드 비우기
+				}
+			})
 		}
 	}
 	

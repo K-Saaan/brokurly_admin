@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
@@ -68,19 +71,19 @@ public class ProductController {
 	public Map<String, Object> findProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		String pdnm = (String)param.get("PRODUCT_NAME");
 		String pakgtype = (String)param.get("PAKG_TYPE");
+		int pagingIndex = (int) param.get("pagingIndex");
+		int pagingRows = (int) param.get("pagingRows");
 		Specification<ProductEntity> spec = (root, query, criteriaBuilder) -> null;
 		Map<String, Object> result = new HashMap();
-		int countData = 0;
 		if(pdnm != "") {
 			spec = spec.and(productService.getByPdnm(pdnm));
 		}
 		if(pakgtype != "") {
 			spec = spec.and(productService.getByPakgtype(pakgtype));
 		}
-		List<ProductEntity> specProduct = productRepository.findAll(spec);
-		countData = specProduct.size();
+		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+		Page<ProductEntity> specProduct = productRepository.findAll(spec, page);
 		result.put("codeList", specProduct);
-		result.put("countData", countData);
  		return result;
 	}
 	
