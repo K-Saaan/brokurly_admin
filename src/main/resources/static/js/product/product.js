@@ -412,6 +412,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	var countData = 0;
 	var pagingIndex = 0;
 	var pagingRows = 50;
+	
+	// 이름 입력하고 엔터키 눌렀을시 조회되게
+	$('#productName').keypress(function(event) {
+		if(event.keyCode == 13){
+			$("#productSearch").trigger("click");
+		}
+	});
+	
 	// 고객정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
