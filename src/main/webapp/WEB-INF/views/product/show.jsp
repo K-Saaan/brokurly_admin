@@ -20,12 +20,8 @@
 		  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
 		    <span id="packType" class="visually-hidden"></span>
 		  </button>
-		  <ul class="dropdown-menu">
+		  <ul class="dropdown-menu" id="dropdownProduct">
 		    <li class="dropdown-item" value="">선택하세요</li>
-		    <li class="dropdown-item" value="기타">기타</li>
-		    <li class="dropdown-item" value="상온">상온</li>
-		    <li class="dropdown-item" value="냉장">냉장</li>
-		    <li class="dropdown-item" value="냉동">냉동</li>
 		  </ul>
 		</div>
 	</div>

@@ -77,3 +77,14 @@ function loadModalObj(modalData, data){
 	
 	$("body").append(innerHtml);
 }
+
+// 드롭다운 공통 구성 함수
+function setSelbox(objectId, url, param) {
+	var tagId = "#" + objectId;
+	ajax(url, param, function(returnData){
+		var codeList = returnData.codeList;
+		for(var i = 0; i < codeList.length; i++) {
+			$(tagId).append("<li class = 'dropdown-item' value='" + codeList[i].code + "'>" + codeList[i].label + "</li>")
+		}
+	})
+}

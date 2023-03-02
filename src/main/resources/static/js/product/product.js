@@ -515,6 +515,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 	
+	// test
+	var dropdownParam = {
+			CATEGORY		:	"PACKTYPE"
+	};
+	// common에 있는 공통 펑션으로 드롭다운 구성
+	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
+	
 	$(".dropdown-toggle").click(function(){
 		if($('.dropdown-menu').is(':visible')){
 			$('.dropdown-menu').hide();
