@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.entity.login;
+package brokurly.project.backoffice.entity.mng;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "mng_info", catalog = "co")
+@Table(name = "mng_info", catalog = "cs")
 public class MngEntity {
 	
 	@Id

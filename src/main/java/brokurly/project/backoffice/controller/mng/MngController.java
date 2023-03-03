@@ -1,4 +1,4 @@
-package brokurly.project.backoffice.controller.member;
+package brokurly.project.backoffice.controller.mng;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -24,15 +24,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import brokurly.project.backoffice.common.AES256Util;
-import brokurly.project.backoffice.entity.login.MngEntity;
-import brokurly.project.backoffice.repository.login.MngRepository;
+import brokurly.project.backoffice.entity.mng.MngEntity;
+import brokurly.project.backoffice.repository.mng.MngRepository;
 import brokurly.project.backoffice.service.login.MngService;
 import lombok.RequiredArgsConstructor;
 
 @RestController // ResponseBody 필요없음
 @RequiredArgsConstructor // final 객체를 Constructor Injection 해줌. Autowired 필요없음
 @RequestMapping("/mng")
-public class UserController {
+public class MngController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	

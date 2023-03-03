@@ -1,7 +1,6 @@
 package brokurly.project.backoffice.service.common.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import brokurly.project.backoffice.common.DateUtil;
 import brokurly.project.backoffice.entity.login.LoginHistEntity;
-import brokurly.project.backoffice.entity.login.MngEntity;
+import brokurly.project.backoffice.entity.mng.MngEntity;
 import brokurly.project.backoffice.repository.login.LoginHistRepository;
-import brokurly.project.backoffice.repository.login.MngRepository;
+import brokurly.project.backoffice.repository.mng.MngRepository;
 import brokurly.project.backoffice.service.common.LoginService;
 
 @Service

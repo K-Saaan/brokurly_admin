@@ -3,7 +3,7 @@ package brokurly.project.backoffice.service.login.impl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import brokurly.project.backoffice.entity.login.MngEntity;
+import brokurly.project.backoffice.entity.mng.MngEntity;
 import brokurly.project.backoffice.service.login.MngService;
 
 @Service

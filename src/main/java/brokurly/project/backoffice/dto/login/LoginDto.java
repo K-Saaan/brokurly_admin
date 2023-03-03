@@ -1,6 +1,6 @@
 package brokurly.project.backoffice.dto.login;
 
-import brokurly.project.backoffice.entity.login.MngEntity;
+import brokurly.project.backoffice.entity.mng.MngEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
