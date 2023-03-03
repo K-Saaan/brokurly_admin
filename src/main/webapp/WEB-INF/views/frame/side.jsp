@@ -9,7 +9,7 @@
 	      <li><a href="${pageContext.request.contextPath}/member/show" class="menu1_down" style="display: none; padding-left: 20px;">고객정보조회</a></li>
       <li><a href="#" class="menu2">상품</a></li>
 	      <li><a href="${pageContext.request.contextPath}/product/show" class="menu2_down" style="display: none; padding-left: 20px;">상품정보조회</a></li>
-	      <li><a href="#" class="menu2_down" style="display: none; padding-left: 20px;">후기조회</a></li>
+	      <li><a href="${pageContext.request.contextPath}/product/review" class="menu2_down" style="display: none; padding-left: 20px;">후기조회</a></li>
 	      <li><a href="#" class="menu2_down" style="display: none; padding-left: 20px;">문의조회</a></li>
 	      <li><a href="#" class="menu2_down" style="display: none; padding-left: 20px;">쿠폰조회</a></li>
 	      <li><a href="#" class="menu2_down" style="display: none; padding-left: 20px;">할인조회</a></li>

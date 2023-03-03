@@ -78,6 +78,8 @@ function loadModalObj(modalData, data){
 	$("body").append(innerHtml);
 }
 
+
+
 // 드롭다운 공통 구성 함수
 function setSelbox(objectId, url, param) {
 	var tagId = "#" + objectId;
@@ -88,3 +90,4 @@ function setSelbox(objectId, url, param) {
 		}
 	})
 }
+

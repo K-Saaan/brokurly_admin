@@ -37,9 +37,15 @@ public class ProductController {
 	private final ProductService productService;
 	private final ProductDtlRepository productDtlRepository;
 	
+	// 상품 조회 화면
 	@GetMapping("/show")
 	public String show() {
 		return "product/show";
+	}
+	// 후기 조회 화면
+	@GetMapping("/review")
+	public String showReview() {
+		return "product/review";
 	}
 	
 	// 상품 이름으로 조회

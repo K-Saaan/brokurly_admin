@@ -1,18 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드를 그리기 위한 사전 설정
-    const container = document.getElementById('realgridProduct');
+    const container = document.getElementById('realgridReview');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
-    // 서브그리드를 그리기 위한 사전 설정
-    const subcontainer = document.getElementById('subgridProduct');
-    const subprovider = new RealGrid.LocalDataProvider(false);
-    const subgridView = new RealGrid.GridView(subcontainer);
     
     gridView.setDataSource(provider);
-    subgridView.setDataSource(subprovider);
     
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
-    subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     // 데이트피커 날짜 형식 지정
     $(".datepicker").datepicker({
     	dateFormat: "yy-mm-dd"
@@ -25,87 +19,103 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 컬럼
 	provider.setFields([
 		{
-			fieldName: "pdcode",
+			fieldName: "reviewSeqNo",
+			dataType: "int",
+		},
+		{
+			fieldName: "userId",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdnm",
+			fieldName: "custCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdext",
+			fieldName: "custNm",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdprice",
+			fieldName: "pdCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "delitype",
+			fieldName: "pdNm",
 			dataType: "text",
 		},
 		{
-			fieldName: "deliext",
+			fieldName: "reviewDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdseller",
+			fieldName: "reviewTxt",
 			dataType: "text",
 		},
 		{
-			fieldName: "pakgtype",
+			fieldName: "reviewLike",
+			dataType: "int",
+		},
+		{
+			fieldName: "regId",
 			dataType: "text",
 		},
 		{
-			fieldName: "salesunit",
+			fieldName: "regDate",
+			dataType: "date",
+		},
+		{
+			fieldName: "chgrId",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdweg",
-			dataType: "text",
+			fieldName: "chgrDate",
+			dataType: "date",
 		},
 		{
-			fieldName: "pdsweet",
-			dataType: "text",
-		},
-		{
-			fieldName: "orgloc",
-			dataType: "text",
-		},
-		{
-			fieldName: "alerginfo",
-			dataType: "text",
-		},
-		{
-			fieldName: "expdate",
-			dataType: "text",
-		},
-		{
-			fieldName: "extinfo",
-			dataType: "text",
-		},
-		{
-			fieldName: "regid",
-			dataType: "text",
-		},
-		{
-			fieldName: "regdate",
-			dataType: "text",
-		},
-		{
-			fieldName: "chgrid",
-			dataType: "text",
-		},
-		{
-			fieldName: "chgrdate",
+			fieldName: "pdName",
 			dataType: "text",
 		},
 	]);
 	
 	gridView.setColumns([
 		{
-			name: "pdcode",
-			fieldName: "pdcode",
+			name: "reviewSeqNo",
+			fieldName: "reviewSeqNo",
+			type: "data",
+			width: "120",
+			header: {
+				text: "후기시퀀스번호",
+			},
+		},
+		{
+			name: "userId",
+			fieldName: "userId",
+			type: "data",
+			width: "120",
+			header: {
+				text: "유저아이디",
+			},
+		},
+		{
+			name: "custCode",
+			fieldName: "custCode",
+			type: "data",
+			width: "120",
+			header: {
+				text: "고객코드",
+			},
+		},
+		{
+			name: "custNm",
+			fieldName: "custNm",
+			type: "data",
+			width: "120",
+			header: {
+				text: "고객이름",
+			},
+		},
+		{
+			name: "pdCode",
+			fieldName: "pdCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -113,8 +123,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdnm",
-			fieldName: "pdnm",
+			name: "pdNm",
+			fieldName: "pdNm",
 			type: "data",
 			width: "120",
 			header: {
@@ -122,291 +132,78 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdext",
-			fieldName: "pdext",
+			name: "reviewDate",
+			fieldName: "reviewDate",
 			type: "data",
 			width: "120",
 			header: {
-				text: "상품부가정보",
+				text: "후기날짜",
 			},
 		},
 		{
-			name: "pdprice",
-			fieldName: "pdprice",
+			name: "reviewTxt",
+			fieldName: "reviewTxt",
 			type: "data",
 			width: "120",
 			header: {
-				text: "상품가격",
+				text: "후기내용",
 			},
 		},
 		{
-			name: "delitype",
-			fieldName: "delitype",
+			name: "reviewLike",
+			fieldName: "reviewLike",
 			type: "data",
 			width: "120",
 			header: {
-				text: "배송타입",
+				text: "좋아요수",
 			},
 		},
 		{
-			name: "deliext",
-			fieldName: "deliext",
+			name: "regId",
+			fieldName: "regId",
 			type: "data",
 			width: "120",
 			header: {
-				text: "배송부가정보",
+				text: "등록자아이디",
 			},
 		},
 		{
-			name: "pdseller",
-			fieldName: "pdseller",
+			name: "regDate",
+			fieldName: "regDate",
 			type: "data",
 			width: "120",
 			header: {
-				text: "판매자",
+				text: "등록날짜",
 			},
 		},
 		{
-			name: "pakgtype",
-			fieldName: "pakgtype",
+			name: "chgrId",
+			fieldName: "chgrId",
 			type: "data",
 			width: "120",
 			header: {
-				text: "포장타입",
+				text: "수정자아이디",
 			},
 		},
 		{
-			name: "pakgext",
-			fieldName: "pakgext",
+			name: "chgrDate",
+			fieldName: "chgrDate",
 			type: "data",
 			width: "120",
 			header: {
-				text: "포장부가정보",
+				text: "수정날짜",
 			},
 		},
 		{
-			name: "salesunit",
-			fieldName: "salesunit",
+			name: "pdName",
+			fieldName: "pdName",
 			type: "data",
 			width: "120",
 			header: {
-				text: "판매단위",
-			},
-		},
-		{
-			name: "pdweg",
-			fieldName: "pdweg",
-			type: "data",
-			width: "120",
-			header: {
-				text: "상품무게",
-			},
-		},
-		{
-			name: "pdsweet",
-			fieldName: "pdsweet",
-			type: "data",
-			width: "120",
-			header: {
-				text: "당도",
-			},
-		},
-		{
-			name: "orgloc",
-			fieldName: "orgloc",
-			type: "data",
-			width: "120",
-			header: {
-				text: "원산지",
-			},
-		},
-		{
-			name: "alerginfo",
-			fieldName: "alerginfo",
-			type: "data",
-			width: "120",
-			header: {
-				text: "알러지정보",
-			},
-		},
-		{
-			name: "expdate",
-			fieldName: "expdate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "유통기한정보",
-			},
-		},
-		{
-			name: "extinfo",
-			fieldName: "extinfo",
-			type: "data",
-			width: "120",
-			header: {
-				text: "상품기타정보",
-			},
-		},
-		{
-			name: "regid",
-			fieldName: "regid",
-			type: "data",
-			width: "120",
-			header: {
-				text: "등록자",
-			},
-		},
-		{
-			name: "regdate",
-			fieldName: "regdate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "등록일시",
-			},
-		},
-		{
-			name: "chgrid",
-			fieldName: "chgrid",
-			type: "data",
-			width: "120",
-			header: {
-				text: "변경자",
-			},
-		},
-		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "변경일시",
+				text: "상품이름2",
 			},
 		},
 	]);
-	// 서브그리드 컬럼
-	subprovider.setFields([
-		{
-			fieldName: "pdcode",
-			dataType: "text",
-		},
-		{
-			fieldName: "salecode",
-			dataType: "text",
-		},
-		{
-			fieldName: "cpncode",
-			dataType: "text",
-		},
-		{
-			fieldName: "discyn",
-			dataType: "text",
-		},
-		{
-			fieldName: "cpnyn",
-			dataType: "text",
-		},
-		{
-			fieldName: "regid",
-			dataType: "text",
-		},
-		{
-			fieldName: "regdate",
-			dataType: "text",
-		},
-		{
-			fieldName: "chgrid",
-			dataType: "text",
-		},
-		{
-			fieldName: "chgrdate",
-			dataType: "text",
-		},
-		]);
-	
-	subgridView.setColumns([
-		{
-			name: "pdcode",
-			fieldName: "pdcode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "상품코드",
-			},
-		},
-		{
-			name: "salecode",
-			fieldName: "salecode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "판매코드",
-			},
-		},
-		{
-			name: "cpncode",
-			fieldName: "cpncode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "쿠폰코드",
-			},
-		},
-		{
-			name: "discyn",
-			fieldName: "discyn",
-			type: "data",
-			width: "120",
-			header: {
-				text: "할인적용여부",
-			},
-		},
-		{
-			name: "cpnyn",
-			fieldName: "cpnyn",
-			type: "data",
-			width: "120",
-			header: {
-				text: "쿠폰적용여부",
-			},
-		},
-		{
-			name: "regid",
-			fieldName: "regid",
-			type: "data",
-			width: "120",
-			header: {
-				text: "등록자",
-			},
-		},
-		{
-			name: "regdate",
-			fieldName: "regdate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "등록일시",
-			},
-		},
-		{
-			name: "chgrid",
-			fieldName: "chgrid",
-			type: "data",
-			width: "120",
-			header: {
-				text: "수정자",
-			},
-		},
-		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
-			type: "data",
-			width: "120",
-			header: {
-				text: "수정일시",
-			},
-		},
-		]);
 	
 	var totalCount = 0;
 	var countData = 0;
@@ -414,15 +211,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	var pagingRows = 50;
 	
 	// 이름 입력하고 엔터키 눌렀을시 조회되게
-	$('#productName').keypress(function(event) {
+	$('#reviewName').keypress(function(event) {
 		if(event.keyCode == 13){
-			$("#productSearch").trigger("click");
+			$("#reviewSearch").trigger("click");
 		}
 	});
 	
-	// 고객정보조회 조회버튼 클릭시 // 테스트
-	$("#productSearch").click(function(){
-		subprovider.clearRows(); // 서브 그리드 비우기
+	// 후기조회 조회버튼 클릭시 // 테스트
+	$("#reviewSearch").click(function(){
+		provider.clearRows(); // 서브 그리드 비우기
 		pagingIndex = 0;
 		pagingRows = 50;
 		var param = {
@@ -515,6 +312,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 	
+	// test
+	var dropdownParam = {
+			CATEGORY		:	"PACKTYPE"
+	};
+	// common에 있는 공통 펑션으로 드롭다운 구성
+	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
+	
 	$(".dropdown-toggle").click(function(){
 		if($('.dropdown-menu').is(':visible')){
 			$('.dropdown-menu').hide();
@@ -524,8 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('.dropdown-item').show();
 		}
 	});
-	
-	$("#dropdownProduct").on('click', ".dropdown-item", function(){
+	$(".dropdown-item").click(function(){
 		$('#packType').text( $(this).attr('value') ).val( $(this).attr('value') );
 		if($('.dropdown-item').is(':visible')){
 			$('.dropdown-menu').hide();
@@ -534,12 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('.dropdown-menu').show();
 			$('.dropdown-item').show();
 		}
-	})
-	
-	var dropdownParam = {
-			CATEGORY		:	"PACKTYPE"
-	};
-	// common에 있는 공통 펑션으로 드롭다운 구성
-	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
+	});
 
 });
