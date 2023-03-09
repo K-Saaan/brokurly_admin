@@ -223,15 +223,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		pagingIndex = 0;
 		pagingRows = 50;
 		var param = {
-				PRODUCT_NAME		:	$("#productName").val(),
-				PAKG_TYPE		:	$("#packType").val(),
+				PD_NM		:	$("#reviewPdName").val(),
+				CUST_NM		:	$("#reviewCustName").val(),
 				pagingIndex		:	pagingIndex,
 				pagingRows		:	pagingRows
 		};
-		ajax("/product/showProduct", param, function(returnData){
+		ajax("/product/showReview", param, function(returnData){
 			totalCount = returnData.codeList.totalElements;
 			countData = returnData.codeList.size;
-			$("#cntProduct").text(totalCount); // 화면에 조회건수 출력
+			$("#cntPdReview").text(totalCount); // 화면에 조회건수 출력
 			// 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
 			if(countData > 0) {
 				// 만약 이번 조회된 카운트값이 pagingRows 값과 같다면 다음 페이지가 있는것이므로 pagingIndex 증가
@@ -249,11 +249,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	});
 	// 엑셀 버튼 클릭시
-	$("#productExcel").click(function(){
+	$("#reviewExcel").click(function(){
 		if(totalCount > 0) {
 			gridView.exportGrid({
 			     type: 'excel',
-			     fileName: "상품 정보 조회.xlsx"
+			     fileName: "후기 정보 조회.xlsx"
 			})
 		} else {
 			alert("조회된 데이터가 없습니다.");
@@ -262,24 +262,24 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
-			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var pdcode = selectOneData.pdcode;
-			var param = {
-					PRODUCT_CODE	:	pdcode
-			}
-			ajax("/product/showProductDtl", param, function(returnData){
-				var detailData = returnData.codeList;
-				subprovider.fillJsonData(detailData, { fillMode : "set"});
-			})
+//			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+//			var pdcode = selectOneData.pdcode;
+//			var param = {
+//					PRODUCT_CODE	:	pdcode
+//			}
+//			ajax("/product/showProductDtl", param, function(returnData){
+//				var detailData = returnData.codeList;
+//				subprovider.fillJsonData(detailData, { fillMode : "set"});
+//			})
 		}
 	}
 	// 메인그리드 더블클릭했을때 모달 호출
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
-			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var pdCode = selectOneData.pdcode;
-			$("#clickData").val(custCode);
-			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
+//			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+//			var pdCode = selectOneData.pdcode;
+//			$("#clickData").val(custCode);
+//			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}
 	}
 	
@@ -291,12 +291,12 @@ document.addEventListener('DOMContentLoaded', function () {
 				return;
 			}
 			var param = {
-					PRODUCT_NAME		:	$("#productName").val(),
-					PAKG_TYPE		:	$("#packType").val(),
+					PD_NM		:	$("#reviewPdName").val(),
+					CUST_NM		:	$("#reviewCustName").val(),
 					pagingIndex		:	pagingIndex,
 					pagingRows		:	pagingRows
 			};
-			ajax("/product/showProduct", param, function(returnData){
+			ajax("/product/showReview", param, function(returnData){
 				totalCount = returnData.codeList.totalElements;
 				countData = returnData.codeList.size;
 				// 스크롤 시 추가 데이터가 있을때만 show
@@ -312,12 +312,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 	
-	// test
-	var dropdownParam = {
-			CATEGORY		:	"PACKTYPE"
-	};
+//	var dropdownParam = {
+//			CATEGORY		:	"PACKTYPE"
+//	};
 	// common에 있는 공통 펑션으로 드롭다운 구성
-	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
+//	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
 	
 	$(".dropdown-toggle").click(function(){
 		if($('.dropdown-menu').is(':visible')){

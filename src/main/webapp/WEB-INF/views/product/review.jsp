@@ -10,21 +10,13 @@
 		<b>상품이름</b>
 	</div>
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
-		<input id="reviewName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+		<input id="reviewPdName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 	</div>
 	<div style="padding: 10px 15px; flex: 0 10%;">
-		<b>포장타입</b>
+		<b>고객이름</b>
 	</div>
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
-<!-- 		<input id="packType" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"> -->
-		<div class="btn-group">
-		  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
-		    <span id="reviewpackType" class="visually-hidden"></span>
-		  </button>
-		  <ul class="dropdown-menu" id="dropdownReview">
-		    <li class="dropdown-item" value="">선택하세요</li>
-		  </ul>
-		</div>
+		<input id="reviewCustName" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
 	</div>
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
 		<button type="button" style="margin-right: 10px;" class="btn btn-success" id="reviewExcel">엑셀</button>

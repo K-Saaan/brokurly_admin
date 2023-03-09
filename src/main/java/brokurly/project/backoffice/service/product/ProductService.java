@@ -5,11 +5,13 @@ import java.util.Map;
 import org.springframework.data.jpa.domain.Specification;
 
 import brokurly.project.backoffice.entity.product.ProductEntity;
+import brokurly.project.backoffice.entity.product.ReviewEntity;
 
 public interface ProductService {
-	public Map<String, Object> findAllProduct(); // 조회조건없이 모든 고객 조회
-	public Map<String, Object> findProductByName(String pdnm); // 고객이름 조회조건으로 조회
-	public int countByPdnm(String pdnm);
+	// 상품 조회 화면
 	Specification<ProductEntity> getByPdnm(String pdnm); // 조회조건 상품이름
 	Specification<ProductEntity> getByPakgtype(String pakgtype); // 조회조건 포장타입
+	// 후기 조회 화면
+	Specification<ReviewEntity> getByPdNm(String pdNm); // 조회조건 상품이름
+	Specification<ReviewEntity> getByCustNm(String custNm); // 조회조건 고객이름
 }

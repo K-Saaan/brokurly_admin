@@ -22,8 +22,10 @@ import org.springframework.data.jpa.domain.Specification;
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 import brokurly.project.backoffice.entity.product.ProductDtlEntity;
 import brokurly.project.backoffice.entity.product.ProductEntity;
+import brokurly.project.backoffice.entity.product.ReviewEntity;
 import brokurly.project.backoffice.repository.product.ProductDtlRepository;
 import brokurly.project.backoffice.repository.product.ProductRepository;
+import brokurly.project.backoffice.repository.product.ReviewRepository;
 import brokurly.project.backoffice.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +38,7 @@ public class ProductController {
 	private final ProductRepository productRepository;
 	private final ProductService productService;
 	private final ProductDtlRepository productDtlRepository;
+	private final ReviewRepository reviewRepository;
 	
 	// 상품 조회 화면
 	@GetMapping("/show")
@@ -46,29 +49,6 @@ public class ProductController {
 	@GetMapping("/review")
 	public String showReview() {
 		return "product/review";
-	}
-	
-	// 상품 이름으로 조회
-	@ResponseBody
-	@PostMapping(value = "/showProductByName", produces = "application/json;charset=utf-8")
-	public Map<String, Object> findProductByName(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-		String productName = (String)param.get("PRODUCT_NAME");
-		int countData = 0;
-		Map<String, Object> result = new HashMap();
-		// 고객이름 조회조건이 공란이면 전체 조회
-		if(productName == "") {
-			countData = Long.valueOf(productRepository.count()).intValue();
-			if(countData > 0) {
-				result = productService.findAllProduct();
-			}
-		} else { // 고객이름 조회조건이 있으면 해당 데이터 조회
-			countData = productService.countByPdnm(productName);
-			if(countData > 0) {
-				result = productService.findProductByName(productName);
-			}
-		}
-		result.put("countData", countData);
-		return result;
 	}
 	
 	// 상품 조회 specification 이용 다중 조회조건으로 검색
@@ -102,5 +82,27 @@ public class ProductController {
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;
+	}
+	
+	// 후기 조회 specification 이용 다중 조회조건으로 검색
+	@ResponseBody
+	@PostMapping(value = "/showReview", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findReview(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String pdNm = (String)param.get("PD_NM");
+		String custNm = (String)param.get("CUST_NM");
+		int pagingIndex = (int) param.get("pagingIndex");
+		int pagingRows = (int) param.get("pagingRows");
+		Specification<ReviewEntity> spec = (root, query, criteriaBuilder) -> null;
+		Map<String, Object> result = new HashMap();
+		if(pdNm != "") {
+			spec = spec.and(productService.getByPdNm(pdNm));
+		}
+		if(custNm != "") {
+			spec = spec.and(productService.getByCustNm(custNm));
+		}
+		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+		Page<ReviewEntity> specProduct = reviewRepository.findAll(spec, page);
+		result.put("codeList", specProduct);
+ 		return result;
 	}
 }
