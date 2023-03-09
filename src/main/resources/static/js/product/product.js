@@ -25,87 +25,87 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 컬럼
 	provider.setFields([
 		{
-			fieldName: "pdcode",
+			fieldName: "pdCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdnm",
+			fieldName: "pdNm",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdext",
+			fieldName: "pdExt",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdprice",
+			fieldName: "pdPrice",
 			dataType: "text",
 		},
 		{
-			fieldName: "delitype",
+			fieldName: "deliType",
 			dataType: "text",
 		},
 		{
-			fieldName: "deliext",
+			fieldName: "deliExt",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdseller",
+			fieldName: "pdSeller",
 			dataType: "text",
 		},
 		{
-			fieldName: "pakgtype",
+			fieldName: "pakgType",
 			dataType: "text",
 		},
 		{
-			fieldName: "salesunit",
+			fieldName: "salesUnit",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdweg",
+			fieldName: "pdWeg",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdsweet",
+			fieldName: "pdSweet",
 			dataType: "text",
 		},
 		{
-			fieldName: "orgloc",
+			fieldName: "orgLoc",
 			dataType: "text",
 		},
 		{
-			fieldName: "alerginfo",
+			fieldName: "alergInfo",
 			dataType: "text",
 		},
 		{
-			fieldName: "expdate",
+			fieldName: "expDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "extinfo",
+			fieldName: "extInfo",
 			dataType: "text",
 		},
 		{
-			fieldName: "regid",
+			fieldName: "regId",
 			dataType: "text",
 		},
 		{
-			fieldName: "regdate",
+			fieldName: "regDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrid",
+			fieldName: "chgrId",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrdate",
+			fieldName: "chgrDate",
 			dataType: "text",
 		},
 	]);
 	
 	gridView.setColumns([
 		{
-			name: "pdcode",
-			fieldName: "pdcode",
+			name: "pdCode",
+			fieldName: "pdCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdnm",
-			fieldName: "pdnm",
+			name: "pdNm",
+			fieldName: "pdNm",
 			type: "data",
 			width: "120",
 			header: {
@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdext",
-			fieldName: "pdext",
+			name: "pdExt",
+			fieldName: "pdExt",
 			type: "data",
 			width: "120",
 			header: {
@@ -131,8 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdprice",
-			fieldName: "pdprice",
+			name: "pdPrice",
+			fieldName: "pdPrice",
 			type: "data",
 			width: "120",
 			header: {
@@ -140,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "delitype",
-			fieldName: "delitype",
+			name: "deliType",
+			fieldName: "deliType",
 			type: "data",
 			width: "120",
 			header: {
@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "deliext",
-			fieldName: "deliext",
+			name: "deliExt",
+			fieldName: "deliExt",
 			type: "data",
 			width: "120",
 			header: {
@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdseller",
-			fieldName: "pdseller",
+			name: "pdSeller",
+			fieldName: "pdSeller",
 			type: "data",
 			width: "120",
 			header: {
@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pakgtype",
-			fieldName: "pakgtype",
+			name: "pakgType",
+			fieldName: "pakgType",
 			type: "data",
 			width: "120",
 			header: {
@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pakgext",
-			fieldName: "pakgext",
+			name: "pakgExt",
+			fieldName: "pakgExt",
 			type: "data",
 			width: "120",
 			header: {
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "salesunit",
-			fieldName: "salesunit",
+			name: "salesUnit",
+			fieldName: "salesUnit",
 			type: "data",
 			width: "120",
 			header: {
@@ -194,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdweg",
-			fieldName: "pdweg",
+			name: "pdWeg",
+			fieldName: "pdWeg",
 			type: "data",
 			width: "120",
 			header: {
@@ -203,8 +203,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdsweet",
-			fieldName: "pdsweet",
+			name: "pdSweet",
+			fieldName: "pdSweet",
 			type: "data",
 			width: "120",
 			header: {
@@ -212,8 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "orgloc",
-			fieldName: "orgloc",
+			name: "orgLoc",
+			fieldName: "orgLoc",
 			type: "data",
 			width: "120",
 			header: {
@@ -221,8 +221,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "alerginfo",
-			fieldName: "alerginfo",
+			name: "alergInfo",
+			fieldName: "alergInfo",
 			type: "data",
 			width: "120",
 			header: {
@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "expdate",
-			fieldName: "expdate",
+			name: "expDate",
+			fieldName: "expDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -239,8 +239,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "extinfo",
-			fieldName: "extinfo",
+			name: "extInfo",
+			fieldName: "extInfo",
 			type: "data",
 			width: "120",
 			header: {
@@ -248,8 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regid",
-			fieldName: "regid",
+			name: "regId",
+			fieldName: "regId",
 			type: "data",
 			width: "120",
 			header: {
@@ -257,8 +257,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regdate",
-			fieldName: "regdate",
+			name: "regDate",
+			fieldName: "regDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -266,8 +266,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "chgrid",
-			fieldName: "chgrid",
+			name: "chgrId",
+			fieldName: "chgrId",
 			type: "data",
 			width: "120",
 			header: {
@@ -275,8 +275,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
+			name: "chgrDate",
+			fieldName: "chgrDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -287,47 +287,47 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 서브그리드 컬럼
 	subprovider.setFields([
 		{
-			fieldName: "pdcode",
+			fieldName: "pdCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "salecode",
+			fieldName: "saleCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "cpncode",
+			fieldName: "cpnCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "discyn",
+			fieldName: "discYn",
 			dataType: "text",
 		},
 		{
-			fieldName: "cpnyn",
+			fieldName: "cpnYn",
 			dataType: "text",
 		},
 		{
-			fieldName: "regid",
+			fieldName: "regId",
 			dataType: "text",
 		},
 		{
-			fieldName: "regdate",
+			fieldName: "regDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrid",
+			fieldName: "chgrId",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrdate",
+			fieldName: "chgrDate",
 			dataType: "text",
 		},
 		]);
 	
 	subgridView.setColumns([
 		{
-			name: "pdcode",
-			fieldName: "pdcode",
+			name: "pdCode",
+			fieldName: "pdCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -335,8 +335,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "salecode",
-			fieldName: "salecode",
+			name: "saleCode",
+			fieldName: "saleCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -344,8 +344,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "cpncode",
-			fieldName: "cpncode",
+			name: "cpnCode",
+			fieldName: "cpnCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -353,8 +353,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "discyn",
-			fieldName: "discyn",
+			name: "discYn",
+			fieldName: "discYn",
 			type: "data",
 			width: "120",
 			header: {
@@ -362,8 +362,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "cpnyn",
-			fieldName: "cpnyn",
+			name: "cpnYn",
+			fieldName: "cpnYn",
 			type: "data",
 			width: "120",
 			header: {
@@ -371,8 +371,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regid",
-			fieldName: "regid",
+			name: "regId",
+			fieldName: "regId",
 			type: "data",
 			width: "120",
 			header: {
@@ -380,8 +380,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regdate",
-			fieldName: "regdate",
+			name: "regDate",
+			fieldName: "regDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -389,8 +389,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "chgrid",
-			fieldName: "chgrid",
+			name: "chgrId",
+			fieldName: "chgrId",
 			type: "data",
 			width: "120",
 			header: {
@@ -398,8 +398,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
+			name: "chgrDate",
+			fieldName: "chgrDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		pagingIndex = 0;
 		pagingRows = 50;
 		var param = {
-				PRODUCT_NAME		:	$("#productName").val(),
+				PRODUCT_NAME			:	$("#productName").val(),
 				PAKG_TYPE		:	$("#packType").val(),
 				pagingIndex		:	pagingIndex,
 				pagingRows		:	pagingRows
@@ -466,9 +466,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var pdcode = selectOneData.pdcode;
+			var pdCode = selectOneData.pdCode;
 			var param = {
-					PRODUCT_CODE	:	pdcode
+					PRODUCT_CODE	:	pdCode
 			}
 			ajax("/product/showProductDtl", param, function(returnData){
 				var detailData = returnData.codeList;
@@ -480,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var pdCode = selectOneData.pdcode;
+			var pdCode = selectOneData.pdCode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}

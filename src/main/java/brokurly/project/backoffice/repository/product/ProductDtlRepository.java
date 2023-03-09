@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import brokurly.project.backoffice.entity.product.ProductDtlEntity;
 
 public interface ProductDtlRepository extends JpaRepository<ProductDtlEntity, String> {
-	List<ProductDtlEntity> findByPdcode(String pdcode);
+	List<ProductDtlEntity> findByPdCode(String pdCode);
 }

@@ -10,7 +10,7 @@ import brokurly.project.backoffice.entity.product.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, String>, JpaSpecificationExecutor<ProductEntity> {
 	@Query(value = "SELECT SALES_UNIT, COUNT(SALES_UNIT) as CNT, SUM(PD_PRICE) as SUM from pd.pd_info group by SALES_UNIT", nativeQuery=true)
-	List<Object[]> showBySalesunit();
+	List<Object[]> showBySalesUnit();
 	
 	// 상품 카테고리별 상품가 총합
 	@Query(value = "SELECT c.CATE_NM, sum(p.PD_PRICE) as sum FROM pd.pd_info p, pd.pd_cate c where p.PD_CODE = c.PD_CODE group by c.CATE_NM", nativeQuery=true)

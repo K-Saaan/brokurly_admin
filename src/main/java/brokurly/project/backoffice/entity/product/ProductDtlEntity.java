@@ -21,22 +21,22 @@ public class ProductDtlEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PD_CODE")
-	private String pdcode;
+	private String pdCode;
 	
 	@Column(name = "SALE_CODE")
-	private String salecode;
+	private String saleCode;
 	@Column(name = "CPN_CODE")
-	private String cpncode;
+	private String cpnCode;
 	@Column(name = "DISC_YN")
-	private String discyn;
+	private String discYn;
 	@Column(name = "CPN_YN")
-	private String cpnyn;
+	private String cpnYn;
 	@Column(name = "REG_ID")
-	private String regid;
+	private String regId;
 	@Column(name = "REG_DATE")
-	private String regdate;
+	private String regDate;
 	@Column(name = "CHGR_ID")
-	private String chgrid;
+	private String chgrId;
 	@Column(name = "CHGR_DATE")
-	private String chgrdate;
+	private String chgrDate;
 }

@@ -26,24 +26,14 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 조회 화면 조회조건
 	// 상품 이름 조회조건
 	@Override
-	public Specification<ProductEntity> getByPdnm(String pdnm) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("pdnm"), "%" + pdnm + "%");
-	}
-	// 포장타입 조회조건
-	@Override
-	public Specification<ProductEntity> getByPakgtype(String pakgtype) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("pakgtype"), "%" + pakgtype + "%");
-	}
-	
-	// 후기 조회 화면 조회조건
-	// 상품 이름 조회조건
-	@Override
-	public Specification<ReviewEntity> getByPdNm(String pdNm) {
+	public Specification<ProductEntity> getByPdNm(String pdNm) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("pdNm"), "%" + pdNm + "%");
 	}
 	// 포장타입 조회조건
 	@Override
-	public Specification<ReviewEntity> getByCustNm(String custNm) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("custNm"), "%" + custNm + "%");
+	public Specification<ProductEntity> getByPakgType(String pakgType) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("pakgType"), "%" + pakgType + "%");
 	}
+	
+	
 }

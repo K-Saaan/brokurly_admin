@@ -27,6 +27,7 @@ import brokurly.project.backoffice.repository.product.ProductDtlRepository;
 import brokurly.project.backoffice.repository.product.ProductRepository;
 import brokurly.project.backoffice.repository.product.ReviewRepository;
 import brokurly.project.backoffice.service.product.ProductService;
+import brokurly.project.backoffice.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
 
 @Controller // ResponseBody 필요없음
@@ -39,6 +40,7 @@ public class ProductController {
 	private final ProductService productService;
 	private final ProductDtlRepository productDtlRepository;
 	private final ReviewRepository reviewRepository;
+	private final ReviewService reviewService;
 	
 	// 상품 조회 화면
 	@GetMapping("/show")
@@ -55,17 +57,17 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping(value = "/showProduct", produces = "application/json;charset=utf-8")
 	public Map<String, Object> findProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-		String pdnm = (String)param.get("PRODUCT_NAME");
-		String pakgtype = (String)param.get("PAKG_TYPE");
+		String pdNm = (String)param.get("PRODUCT_NAME");
+		String pakgType = (String)param.get("PAKG_TYPE");
 		int pagingIndex = (int) param.get("pagingIndex");
 		int pagingRows = (int) param.get("pagingRows");
 		Specification<ProductEntity> spec = (root, query, criteriaBuilder) -> null;
 		Map<String, Object> result = new HashMap();
-		if(pdnm != "") {
-			spec = spec.and(productService.getByPdnm(pdnm));
+		if(pdNm != "") {
+			spec = spec.and(productService.getByPdNm(pdNm));
 		}
-		if(pakgtype != "") {
-			spec = spec.and(productService.getByPakgtype(pakgtype));
+		if(pakgType != "") {
+			spec = spec.and(productService.getByPakgType(pakgType));
 		}
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<ProductEntity> specProduct = productRepository.findAll(spec, page);
@@ -77,8 +79,8 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value = "/showProductDtl")
 	public Map<String, Object> findProductDetailInfo(@RequestBody Map<String, Object> param, HttpServletRequest request){
-		String pdcode = (String)param.get("PRODUCT_CODE");
-		List<ProductDtlEntity> gridDataList = productDtlRepository.findByPdcode(pdcode);
+		String pdCode = (String)param.get("PRODUCT_CODE");
+		List<ProductDtlEntity> gridDataList = productDtlRepository.findByPdCode(pdCode);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;
@@ -95,10 +97,10 @@ public class ProductController {
 		Specification<ReviewEntity> spec = (root, query, criteriaBuilder) -> null;
 		Map<String, Object> result = new HashMap();
 		if(pdNm != "") {
-			spec = spec.and(productService.getByPdNm(pdNm));
+			spec = spec.and(reviewService.getByPdNm(pdNm));
 		}
 		if(custNm != "") {
-			spec = spec.and(productService.getByCustNm(custNm));
+			spec = spec.and(reviewService.getByCustNm(custNm));
 		}
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<ReviewEntity> specProduct = reviewRepository.findAll(spec, page);

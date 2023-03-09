@@ -211,7 +211,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	var pagingRows = 50;
 	
 	// 이름 입력하고 엔터키 눌렀을시 조회되게
-	$('#reviewName').keypress(function(event) {
+	$('#reviewPdName').keypress(function(event) {
+		if(event.keyCode == 13){
+			$("#reviewSearch").trigger("click");
+		}
+	});
+	$('#reviewCustName').keypress(function(event) {
 		if(event.keyCode == 13){
 			$("#reviewSearch").trigger("click");
 		}

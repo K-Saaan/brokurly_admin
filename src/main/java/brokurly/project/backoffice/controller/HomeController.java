@@ -31,7 +31,7 @@ public class HomeController {
 	@PostMapping(value = "/showProductChart", produces = "application/json;charset=utf-8")
 	public Map<String, Object> showProductChart(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		Map<String, Object> result = new HashMap();
-		List<Object[]> gridDataList = productRepository.showBySalesunit();
+		List<Object[]> gridDataList = productRepository.showBySalesUnit();
 		result.put("codeList", gridDataList);
 		return result;
 	}
