@@ -1,6 +1,7 @@
 package brokurly.project.backoffice.service.common.impl;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class LoginServiceImpl implements LoginService{
 				return resultMap;
 			}
 			String today = DateUtil.getTodayYYYYMMDD();
-			String timestamp = DateUtil.getTimestampToString();
+			String dateTime = LocalDateTime.now().toString();
 			String pwdExpDate = mng.getPwdExpDate();
 			
 			// 만료일자 확인
@@ -77,27 +78,27 @@ public class LoginServiceImpl implements LoginService{
 
 			// 로그인 이력 기록 
 			LoginHistEntity loginHistEntity = LoginHistEntity.builder().mngId(id).loginDate(stringToday).regId(mng.getRegId())
-																		.regDate(mng.getRegDate()).chgrId(mng.getChgrId()).chgrDate(timestamp).build();
+																		.regDate(mng.getRegDate()).chgrId(mng.getChgrId()).chgrDate(dateTime).build();
 			
 			loginHsitRepository.save(loginHistEntity);
 			
 		}else {
 			logger.info("login fail >>>>>>>");
 			MngEntity idCheck = mngRepository.findByMngId(id);
-			String timestamp = DateUtil.getTimestampToString();
+			String dateTime = LocalDateTime.now().toString();
 			if(idCheck != null) {
 				int failCnt = idCheck.getLoginFailCnt();
 
 				if(failCnt >= 5) {
 					resultMap.put("RESULT", "OVER_LOGIN_FAIL_CNT");
 					resultMap.put("URL", "");
-					idCheck.LoginUpdate(failCnt+1, "Y", id, timestamp);
+					idCheck.LoginUpdate(failCnt+1, "Y", id, dateTime);
 					mngRepository.save(idCheck);
 				}else {
 					resultMap.put("RESULT", "PWD_FAIL");
 					resultMap.put("URL", "");
 					resultMap.put("FAILCNT", failCnt+1);
-					idCheck.LoginUpdate(failCnt+1, "Y", id, timestamp);
+					idCheck.LoginUpdate(failCnt+1, "N", id, dateTime);
 					mngRepository.save(idCheck);
 				}
 			}else {
