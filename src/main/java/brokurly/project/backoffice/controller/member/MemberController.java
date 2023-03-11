@@ -90,7 +90,7 @@ public class MemberController {
 	public int updateMember(@PathVariable("id") String custcode, @RequestBody MemberDto memberDto) throws Throwable {
 		return memberService.update(custcode, memberDto);
 	}
-	
+	// 3.11 commit test
 	@GetMapping("/show")
 	public String show() {
 		return "member/show";
