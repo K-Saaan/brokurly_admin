@@ -42,10 +42,8 @@ public class LoginController {
 	
 	@Value("${key.aesKey}")
 	private String key;
-	
-	@Autowired
-	private LoginService loginService;
-	
+
+	private final LoginService loginService;
 	
 	@GetMapping("/loginPage")
 	public String loginPage() {

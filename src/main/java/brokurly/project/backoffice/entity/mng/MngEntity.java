@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "mng_info", catalog = "cs")
@@ -64,9 +67,9 @@ public class MngEntity {
 	
 	@Column(name = "CHGR_DATE")
 	private String chgrDate;
-	
-	
-	public void LoginUpdate(int loginFailCnt, String acntLock,String chgrId,String chgrDate) {
+
+	@Transactional
+	public void LoginUpdate(int loginFailCnt, String acntLock, String chgrId, String chgrDate) {
 		this.loginFailCnt = loginFailCnt;
 		this.acntLock = acntLock;
 		this.chgrId = chgrId;

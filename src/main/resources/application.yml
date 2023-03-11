@@ -24,7 +24,7 @@ spring:
     database: 
       mysql
     generate-ddl: 
-      true
+      false
     hibernate:
       ddl-auto: 
         none

@@ -1,5 +1,6 @@
 package brokurly.project.backoffice.common;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +41,32 @@ public class DateUtil {
 		Date currentTime = new Date ( );
 		String dTime = formatter.format ( currentTime );
 		
+		return dTime;
+	}
+
+	/**
+	 * 1. MethodName: getStringToday
+	 * 2. ClassName : DateUtil
+	 * 3. Comment   : yyyy-mm-dd hh:mm:ss 형태의 날짜를 문자열로 변환.
+	 *
+	 * @return String 변환문자열
+	 * @return
+	 */
+
+	public static Timestamp getStringTimestamp() {
+		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy-mm-dd hh:mm:ss", Locale.KOREA );
+		Date currentTime = new Date ( );
+		String dTime = formatter.format (currentTime);
+
+		return Timestamp.valueOf(dTime);
+	}
+
+
+	public static String getTimestampToString() {
+		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy-mm-dd hh:mm:ss", Locale.KOREA );
+		Date currentTime = new Date ( );
+		String dTime = formatter.format (currentTime);
+
 		return dTime;
 	}
 	

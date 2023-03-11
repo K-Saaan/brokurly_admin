@@ -34,31 +34,31 @@ public class MemberServiceImpl implements MemberService {
 	}
 	// 멤버 코드로 멤버 조회
 	@Override
-	public Map<String, Object> findMemberByCode(String custcode){
-		List<MemberEntity> gridDataList = memberRepository.findByCustcode(custcode);
+	public Map<String, Object> findMemberByCode(String custCode){
+		List<MemberEntity> gridDataList = memberRepository.findByCustCode(custCode);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;
 	}
 	// 멤버 이름으로 멤버 조회
 	@Override
-	public Map<String, Object> findMemberByName(String custnm){
-		List<MemberEntity> gridDataList = memberRepository.findByCustnm(custnm);
+	public Map<String, Object> findMemberByName(String custNm){
+		List<MemberEntity> gridDataList = memberRepository.findByCustNm(custNm);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;
 	}
 	// 카운트 조회
 	@Override
-	public int countByCustnm(String custnm){
-		int countData = memberRepository.countByCustnm(custnm);
+	public int countByCustnm(String custNm){
+		int countData = memberRepository.countByCustNm(custNm);
 		return countData;
 	}
 	
 	@Transactional
-	public int update(String custcode, MemberDto memberdto) {
-		MemberEntity memberEntity = memberRepository.findById(custcode).orElseThrow(() -> new IllegalArgumentException("No data"));
-		memberEntity.update(memberdto.getCustnm(), memberdto.getCustemail());
+	public int update(String custCode, MemberDto memberdto) {
+		MemberEntity memberEntity = memberRepository.findById(custCode).orElseThrow(() -> new IllegalArgumentException("No data"));
+		memberEntity.update(memberdto.getCustNm(), memberdto.getCustEmail());
 		return 1;
 	}
 

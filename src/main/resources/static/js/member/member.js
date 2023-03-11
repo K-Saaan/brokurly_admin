@@ -1,87 +1,75 @@
 document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드를 그리기 위한 사전 설정
-    const container = document.getElementById('realgrid');
-    const provider = new RealGrid.LocalDataProvider(false);
-    const gridView = new RealGrid.GridView(container);
-    // 서브그리드를 그리기 위한 사전 설정
-    const subcontainer = document.getElementById('subgrid');
-    const subprovider = new RealGrid.LocalDataProvider(false);
-    const subgridView = new RealGrid.GridView(subcontainer);
-    
-    gridView.setDataSource(provider);
-    subgridView.setDataSource(subprovider);
-    
-    gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
-    subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
-    // 데이트피커 날짜 형식 지정
-    $("#datepicker").datepicker({
-    	dateFormat: "yy-mm-dd"
-    });
-    
-    var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
-    var urlIndex = realPath.lastIndexOf("/");
-    var usingUrl = realPath.substr(0, urlIndex); // full URL에서 http://localhost:8080/member 까지만 자른 URL
-    
-    // 메인그리드 컬럼
+	const container = document.getElementById('realgrid');
+	const provider = new RealGrid.LocalDataProvider(false);
+	const gridView = new RealGrid.GridView(container);
+	// 서브그리드를 그리기 위한 사전 설정
+	const subcontainer = document.getElementById('subgrid');
+	const subprovider = new RealGrid.LocalDataProvider(false);
+	const subgridView = new RealGrid.GridView(subcontainer);
+
+	gridView.setDataSource(provider);
+	subgridView.setDataSource(subprovider);
+
+	gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+	subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+	// 데이트피커 날짜 형식 지정
+	$("#datepicker").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
+
+	var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
+	var urlIndex = realPath.lastIndexOf("/");
+	var usingUrl = realPath.substr(0, urlIndex); // full URL에서 http://localhost:8080/member 까지만 자른 URL
+
+	// 메인그리드 컬럼
 	provider.setFields([
 		{
-			fieldName: "chgrdate",
+			fieldName: "chgrDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "chgrid",
+			fieldName: "chgrId",
 			dataType: "text",
 		},
 		{
-			fieldName: "custaddr",
+			fieldName: "custAddrDtl",
 			dataType: "text",
 		},
 		{
-			fieldName: "custaddrdtl",
+			fieldName: "custBirth",
 			dataType: "text",
 		},
 		{
-			fieldName: "custbirth",
+			fieldName: "custCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "custcode",
+			fieldName: "custEmail",
 			dataType: "text",
 		},
 		{
-			fieldName: "custemail",
+			fieldName: "custNm",
 			dataType: "text",
 		},
 		{
-			fieldName: "custgradecode",
+			fieldName: "custTel",
 			dataType: "text",
 		},
 		{
-			fieldName: "custnm",
+			fieldName: "regDate",
 			dataType: "text",
 		},
 		{
-			fieldName: "custtel",
-			dataType: "text",
-		},
-		{
-			fieldName: "deliloccode",
-			dataType: "text",
-		},
-		{
-			fieldName: "regdate",
-			dataType: "text",
-		},
-		{
-			fieldName: "regid",
+			fieldName: "regId",
 			dataType: "text",
 		},
 	]);
-	
+
 	gridView.setColumns([
 		{
-			name: "chgrdate",
-			fieldName: "chgrdate",
+			name: "chgrDate",
+			fieldName: "chgrDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -89,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "chgrid",
-			fieldName: "chgrid",
+			name: "chgrId",
+			fieldName: "chgrId",
 			type: "data",
 			width: "120",
 			header: {
@@ -98,17 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custaddr",
-			fieldName: "custaddr",
-			type: "data",
-			width: "120",
-			header: {
-				text: "고객주소",
-			},
-		},
-		{
-			name: "custaddrdtl",
-			fieldName: "custaddrdtl",
+			name: "custAddrDtl",
+			fieldName: "custAddrDtl",
 			type: "data",
 			width: "120",
 			header: {
@@ -116,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custbirth",
-			fieldName: "custbirth",
+			name: "custBirth",
+			fieldName: "custBirth",
 			type: "data",
 			width: "120",
 			header: {
@@ -125,8 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custcode",
-			fieldName: "custcode",
+			name: "custCode",
+			fieldName: "custCode",
 			type: "data",
 			width: "120",
 			header: {
@@ -134,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custemail",
-			fieldName: "custemail",
+			name: "custEmail",
+			fieldName: "custEmail",
 			type: "data",
 			width: "120",
 			header: {
@@ -143,17 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custgradecode",
-			fieldName: "custgradecode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "고객등급코드",
-			},
-		},
-		{
-			name: "custnm",
-			fieldName: "custnm",
+			name: "custNm",
+			fieldName: "custNm",
 			type: "data",
 			width: "120",
 			header: {
@@ -161,8 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custtel",
-			fieldName: "custtel",
+			name: "custTel",
+			fieldName: "custTel",
 			type: "data",
 			width: "120",
 			header: {
@@ -170,17 +140,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "deliloccode",
-			fieldName: "deliloccode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "고객배송코드",
-			},
-		},
-		{
-			name: "regdate",
-			fieldName: "regdate",
+			name: "regDate",
+			fieldName: "regDate",
 			type: "data",
 			width: "120",
 			header: {
@@ -188,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "regid",
-			fieldName: "regid",
+			name: "regId",
+			fieldName: "regId",
 			type: "data",
 			width: "120",
 			header: {
@@ -243,8 +204,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			fieldName: "regId",
 			dataType: "text",
 		},
-		]);
-	
+	]);
+
 	subgridView.setColumns([
 		{
 			name: "custCode",
@@ -345,14 +306,14 @@ document.addEventListener('DOMContentLoaded', function () {
 				text: "등록자아이디",
 			},
 		},
-		]);
-	
+	]);
+
 	var countData = 0;
 	// 고객정보조회 조회버튼 클릭시
 	$("#memberSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
 		var param = {
-				MEMBER_NAME		:	$("#memberName").val()
+			MEMBER_NAME		:	$("#memberName").val()
 		};
 		ajax("/member/showMemberByName", param, function(returnData){
 			countData = returnData.countData;
@@ -369,14 +330,14 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		})
 	});
-	
+
 	// 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
 	function gridCellClicked(){
 		gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var custCode = selectOneData.custcode;
+			var custCode = selectOneData.custCode;
 			var param = {
-					MEMBER_CODE	:	custCode
+				MEMBER_CODE	:	custCode
 			}
 			ajax("/member/showMemberDtl", param, function(returnData){
 				var detailData = returnData.codeList;
@@ -388,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var custCode = selectOneData.custcode;
+			var custCode = selectOneData.custCode;
 			$("#clickData").val(custCode);
 			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}

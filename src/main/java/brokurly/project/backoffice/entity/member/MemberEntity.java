@@ -1,6 +1,5 @@
 package brokurly.project.backoffice.entity.member;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -9,68 +8,48 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @Entity
+@AllArgsConstructor
+@Builder
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 아무런 값도 갖지 않는 의미 없는 객체의 생성을 막아줌
 @Table(name = "cust_info", catalog = "cs")
 public class MemberEntity {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CUST_CODE")
-	private String custcode;
-	@Column(name = "CUST_GRADE_CODE")
-	private String custgradecode;
-	@Column(name = "DELI_LOC_CODE")
-	private String deliloccode;
+	private String custCode;
+
 	@Column(name = "CUST_NM")
-	private String custnm;
+	private String custNm;
 	@Column(name = "CUST_TEL")
-	private String custtel;
+	private String custTel;
 	@Column(name = "CUST_EMAIL")
-	private String custemail;
+	private String custEmail;
 	@Column(name = "CUST_BIRTH")
-	private String custbirth;
-	@Column(name = "CUST_ADDR")
-	private String custaddr;
+	private String custBirth;
+	@Column(name = "SITE_CODE")
+	private String siteCode;
 	@Column(name = "CUST_ADDR_DTL")
-	private String custaddrdtl;
+	private String custAddrDtl;
 	@Column(name = "REG_ID")
-	private String regid;
+	private String regId;
 	@Column(name = "REG_DATE")
-	private Timestamp regdate;
+	private String regDate;
 	@Column(name = "CHGR_ID")
-	private String chgrid;
+	private String chgrId;
 	@Column(name = "CHGR_DATE")
-	private Timestamp chgrdate;
-	
-	// new 예약어를 사용하는 생성자의 경우 파라미터 파악이 힘드므로 @Builder 사용
-	@Builder // 컨트롤러에서 값 실어줄때 builder를 이용하여 쉽게 작업
-	public MemberEntity(String custcode, String custgrad, String delilocc, String custnm,
-			String custtel, String custemail, String custbirth, String custaddr, String custaddrdtl, String regid,
-			Timestamp regdate, String chgrid, Timestamp chgrdate) {
-		this.custcode = custcode;
-		this.custgradecode = custgrad;
-		this.deliloccode = delilocc;
-		this.custnm = custnm;
-		this.custtel = custtel;
-		this.custemail = custemail;
-		this.custbirth = custbirth;
-		this.custaddr = custaddr;
-		this.custaddrdtl = custaddrdtl;
-		this.regid = regid;
-		this.regdate = regdate;
-		this.chgrid = chgrid;
-		this.chgrdate = chgrdate;
-	}
-	
-	public void update(String custnm, String custemail) {
-		this.custnm = custnm;
-		this.custemail = custemail;
+	private String chgrDate;
+
+	@Transactional
+	public void update(String custNm, String custEmail) {
+		this.custNm = custNm;
+		this.custEmail = custEmail;
 	}
 }
