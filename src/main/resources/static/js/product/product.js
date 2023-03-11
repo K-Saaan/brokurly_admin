@@ -524,6 +524,17 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('.dropdown-item').show();
 		}
 	});
+	// 드롭다운 리스트 밖으로 마우스 옮겼을때 드롭다운 해제되도록 설정
+	$(".dropdown-toggle").mouseleave(function(){
+		$(".dropdown-menu").mouseover(function(){
+			$('.dropdown-menu').show();
+			$('.dropdown-item').show();
+		});
+		$(".dropdown-menu").mouseleave(function(){
+			$('.dropdown-menu').hide();
+			$('.dropdown-item').hide();
+		})
+	});
 	
 	$("#dropdownProduct").on('click', ".dropdown-item", function(){
 		$('#packType').text( $(this).attr('value') ).val( $(this).attr('value') );

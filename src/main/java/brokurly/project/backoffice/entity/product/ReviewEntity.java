@@ -46,6 +46,4 @@ public class ReviewEntity {
 	private String chgrId;
 	@Column(name = "CHGR_DATE")
 	private Timestamp chgrDate;
-	@Column(name = "PD_NAME")
-	private String pdName;
 }
