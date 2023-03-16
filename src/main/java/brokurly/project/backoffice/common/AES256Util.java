@@ -66,7 +66,6 @@ public class AES256Util {
 	public static String deCode(String str, String key) throws UnsupportedEncodingException, NoSuchAlgorithmException, 
 	NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,	
 	IllegalBlockSizeException, BadPaddingException {
-		
 		String secretKey = key.substring(0, 32);
 		byte[] textBytes = Base64.decodeBase64(str);
 		AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
@@ -74,6 +73,7 @@ public class AES256Util {
 		Cipher cipher = null;
 		cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		cipher.init(Cipher.DECRYPT_MODE, newKey, ivSpec);
+
 		return new String(cipher.doFinal(textBytes), "UTF-8");
 	}
 }
