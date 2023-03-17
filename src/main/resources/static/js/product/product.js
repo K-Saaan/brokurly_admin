@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     gridView.setDataSource(provider);
     subgridView.setDataSource(subprovider);
+	// commit test
     
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
