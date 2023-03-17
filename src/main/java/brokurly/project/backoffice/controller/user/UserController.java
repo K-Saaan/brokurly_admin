@@ -123,7 +123,7 @@ public class UserController {
 //      logger.info("bf nm >>>>>>>>>>>>. " + userList.get(0).getUserNm());
 //        String nm = AES256Util.deCode(userList.getUserNm(), key);
 //        logger.info("nm >>>>>>>>>>>>. " + nm);
-//        CipherUtil.changeDecodeObject(userList, UserEntity.class, key);
+        CipherUtil.changeDecodeObject(userList, UserEntity.class, key);
 
         return userList;
     }
