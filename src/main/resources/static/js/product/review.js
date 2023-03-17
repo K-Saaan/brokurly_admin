@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		{
 			fieldName: "regDate",
-			dataType: "date",
+			dataType: "text",
 		},
 		{
 			fieldName: "chgrId",
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		{
 			fieldName: "chgrDate",
-			dataType: "date",
+			dataType: "text",
 		},
 		{
 			fieldName: "pdName",
