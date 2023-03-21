@@ -480,10 +480,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드 더블클릭했을때 모달 호출
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
-			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-			var pdCode = selectOneData.pdCode;
-			$("#clickData").val(custCode);
-			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
+			// var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+			// var pdCode = selectOneData.pdCode;
+			// $("#clickData").val(custCode);
+			// openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
 		}
 	}
 	

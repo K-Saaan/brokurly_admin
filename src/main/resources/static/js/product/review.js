@@ -70,10 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			fieldName: "chgrDate",
 			dataType: "text",
 		},
-		{
-			fieldName: "pdName",
-			dataType: "text",
-		},
 	]);
 	
 	gridView.setColumns([
@@ -194,15 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				text: "수정날짜",
 			},
 		},
-		{
-			name: "pdName",
-			fieldName: "pdName",
-			type: "data",
-			width: "120",
-			header: {
-				text: "상품이름2",
-			},
-		},
 	]);
 	
 	var totalCount = 0;
@@ -281,10 +268,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 메인그리드 더블클릭했을때 모달 호출
 	function gridDblCellClicked(){
 		gridView.onCellDblClicked = function(grid, clickData){
-//			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-//			var pdCode = selectOneData.pdcode;
-//			$("#clickData").val(custCode);
-//			openPopup(usingUrl + "/detail", "고객 상세정보 조회", 800, 600);
+			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+			var custNm = selectOneData.custNm;
+			var pdNm = selectOneData.pdNm;
+			var reviewDate = selectOneData.reviewDate;
+			var reviewTxt = selectOneData.reviewTxt;
+			var reviewLike = selectOneData.reviewLike;
+			$("#clickCustNm").val(custNm);
+			$("#clickPdNm").val(pdNm);
+			$("#clickReviewDate").val(reviewDate);
+			$("#clickReviewTxt").val(reviewTxt);
+			$("#clickReviewLike").val(reviewLike);
+			openPopup(usingUrl + "/review/detail", "리뷰 상세정보 조회", 800, 600);
 		}
 	}
 	

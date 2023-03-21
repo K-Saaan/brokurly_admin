@@ -52,6 +52,11 @@ public class ProductController {
 	public String showReview() {
 		return "product/review";
 	}
+	// 후기 상세화면 모달
+	@GetMapping("/review/detail")
+	public String showReviewDetail() {
+		return "product/review/detail";
+	}
 	
 	// 상품 조회 specification 이용 다중 조회조건으로 검색
 	@ResponseBody
@@ -107,4 +112,14 @@ public class ProductController {
 		result.put("codeList", specProduct);
  		return result;
 	}
+	// 후기 상세화면
+//	@ResponseBody
+//	@PostMapping(value = "/showReviewDetail", produces = "application/json;charset=utf-8")
+//	public Map<String, Object> findReviewDetail(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+//		int reviewSeqNo = Integer.parseInt(String.valueOf(param.get("REVIEW_SEQ_NO")));
+//		ReviewEntity review = reviewRepository.findByReviewSeqNo(reviewSeqNo);
+//		Map<String, Object> result = new HashMap();
+//		result.put("codeList", gridDataList);
+// 		return result;
+//	}
 }

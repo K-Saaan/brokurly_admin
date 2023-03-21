@@ -20,6 +20,9 @@
 	<definition name="*/detail" extends="empty">
 		<put-attribute name="body" value="/WEB-INF/views/{1}/detail.jsp"/>
 	</definition>
+	<definition name="*/*/detail" extends="empty">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/detail.jsp"/>
+	</definition>
 	<definition name="*" extends="layout-basic">
 		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"/>
 	</definition>

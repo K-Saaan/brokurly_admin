@@ -26,5 +26,9 @@
 
 <div id="realgridReview" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">
-	<input type="hidden" id="clickDataReview" name="clickData" value="" />
+	<input type="hidden" id="clickCustNm" name="clickData" value="" />
+	<input type="hidden" id="clickPdNm" name="clickData" value="" />
+	<input type="hidden" id="clickReviewDate" name="clickData" value="" />
+	<input type="hidden" id="clickReviewTxt" name="clickData" value="" />
+	<input type="hidden" id="clickReviewLike" name="clickData" value="" />
 </form>
