@@ -39,7 +39,22 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	private final MemberDtlRepository memberDtlRepository;
 	private final MemberService memberService;
-	
+
+	// 멤버 코드로 조회
+	@ResponseBody
+	@PostMapping(value = "/showMemberByCode", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findMemberByCode(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String memberCode = (String)param.get("MEMBER_CODE");
+		Map<String, Object> result = new HashMap();
+		// 고객코드 조회조건이 공란이면 전체 조회
+		if(memberCode == "") {
+			result = memberService.findAllMember();
+		} else { // 고객코드 조회조건이 있으면 해당 데이터 조회
+			result = memberService.findMemberByCode(memberCode);
+		}
+		return result;
+	}
+
 	// 멤버 조회 specification 이용. 다중 조회 조건.
 	@ResponseBody
 	@PostMapping(value="/showMember", produces = "application/json;charset=utf-8")

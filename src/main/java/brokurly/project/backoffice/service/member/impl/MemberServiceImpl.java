@@ -26,6 +26,23 @@ public class MemberServiceImpl implements MemberService {
 	private MemberRepository memberRepository;
 	private MemberEntity memberEntity;
 
+	// 전체 멤버 조회
+	@Override
+	public Map<String, Object> findAllMember(){
+		List<MemberEntity> gridDataList = memberRepository.findAll();
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
+	}
+	// 멤버 코드로 멤버 조회
+	@Override
+	public Map<String, Object> findMemberByCode(String custCode){
+		List<MemberEntity> gridDataList = memberRepository.findByCustCode(custCode);
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
+	}
+
 	@Transactional
 	public int update(String custCode, MemberDto memberdto) {
 		MemberEntity memberEntity = memberRepository.findById(custCode).orElseThrow(() -> new IllegalArgumentException("No data"));
