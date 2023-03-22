@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 	
-	// 고객정보조회 조회버튼 클릭시 // 테스트
+	// 상품정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
 		subprovider.clearRows(); // 서브 그리드 비우기
 		pagingIndex = 0;
