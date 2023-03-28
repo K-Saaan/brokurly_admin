@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var clickReviewTxt = opener.document.openForm.clickReviewTxt.value;
     var clickReviewLike = opener.document.openForm.clickReviewLike.value;
 
-    $("#custNm").attr('value', clickCustNm);
-    $("#pdNm").attr('value', clickPdNm);
-    $("#reviewDate").attr('value', clickReviewDate);
-    $("#reviewTxt").html(clickReviewTxt);
-    $("#reviewLike").attr('value', clickReviewLike);
+    $("#rvDtCustNm").attr('value', clickCustNm);
+    $("#rvDtPdNm").attr('value', clickPdNm);
+    $("#rvDtReviewDate").attr('value', clickReviewDate);
+    $("#rvDtReviewTxt").html(clickReviewTxt);
+    $("#rvDtReviewLike").attr('value', clickReviewLike);
 
 });

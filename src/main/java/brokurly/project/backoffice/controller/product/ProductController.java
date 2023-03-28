@@ -6,14 +6,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import brokurly.project.backoffice.dto.member.MemberDto;
+import brokurly.project.backoffice.dto.product.QnaDto;
+import brokurly.project.backoffice.entity.product.QnaEntity;
+import brokurly.project.backoffice.repository.product.QnaRepository;
+import brokurly.project.backoffice.service.product.QnaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +41,10 @@ public class ProductController {
 	private final ProductService productService;
 	private final ProductDtlRepository productDtlRepository;
 	private final ReviewRepository reviewRepository;
+	private final QnaRepository qnaRepository;
 	private final ReviewService reviewService;
-	
+	private final QnaService qnaService;
+
 	// 상품 조회 화면
 	@GetMapping("/show")
 	public String show() {
@@ -56,6 +59,16 @@ public class ProductController {
 	@GetMapping("/review/detail")
 	public String showReviewDetail() {
 		return "product/review/detail";
+	}
+	// 문의 조회 화면
+	@GetMapping("/qna")
+	public String showQna() {
+		return "product/qna";
+	}
+	// 문의 상세화면 모달
+	@GetMapping("/qna/detail")
+	public String showQnaDetail() {
+		return "product/qna/detail";
 	}
 	
 	// 상품 조회 specification 이용 다중 조회조건으로 검색
@@ -112,14 +125,42 @@ public class ProductController {
 		result.put("codeList", specProduct);
  		return result;
 	}
-	// 후기 상세화면
-//	@ResponseBody
-//	@PostMapping(value = "/showReviewDetail", produces = "application/json;charset=utf-8")
-//	public Map<String, Object> findReviewDetail(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-//		int reviewSeqNo = Integer.parseInt(String.valueOf(param.get("REVIEW_SEQ_NO")));
-//		ReviewEntity review = reviewRepository.findByReviewSeqNo(reviewSeqNo);
-//		Map<String, Object> result = new HashMap();
-//		result.put("codeList", gridDataList);
-// 		return result;
-//	}
+	// 문의 조회 specification 이용 다중 조회조건으로 검색
+	@ResponseBody
+	@PostMapping(value = "/showQna", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findQna(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String pdCode = (String)param.get("PD_CODE");
+		String custCode = (String)param.get("CUST_CODE");
+		int pagingIndex = (int) param.get("pagingIndex");
+		int pagingRows = (int) param.get("pagingRows");
+		Specification<QnaEntity> spec = (root, query, criteriaBuilder) -> null;
+		Map<String, Object> result = new HashMap();
+		if(pdCode != "") {
+			spec = spec.and(qnaService.getByPdCode(pdCode));
+		}
+		if(custCode != "") {
+			spec = spec.and(qnaService.getByCustCode(custCode));
+		}
+		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+		Page<QnaEntity> specProduct = qnaRepository.findAll(spec, page);
+		result.put("codeList", specProduct);
+ 		return result;
+	}
+	// 후기 상세화면 데이터 바인딩
+	@ResponseBody
+	@RequestMapping(value = "/showQnaDtl")
+	public Map<String, Object> findProductQnaInfo(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		String qnaCode = (String)param.get("QNA_CODE");
+		List<QnaEntity> gridDataList = qnaRepository.findByQnaCode(qnaCode);
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
+	}
+
+	// 문의 답변 등록
+	@ResponseBody
+	@PostMapping(value = "/replyQna/{id}", produces = "application/json;charset=utf-8")
+	public int replyQna(@PathVariable("id") String qnaCode, @RequestBody QnaDto qnaDto) throws Throwable {
+		return qnaService.replyQna(qnaCode, qnaDto);
+	}
 }

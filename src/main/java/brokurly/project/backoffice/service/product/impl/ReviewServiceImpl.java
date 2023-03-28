@@ -23,7 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public Specification<ReviewEntity> getByPdNm(String pdNm) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("pdNm"), "%" + pdNm + "%");
 	}
-	// 포장타입 조회조건
+	// 고객이름 조회조건
 	@Override
 	public Specification<ReviewEntity> getByCustNm(String custNm) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("custNm"), "%" + custNm + "%");

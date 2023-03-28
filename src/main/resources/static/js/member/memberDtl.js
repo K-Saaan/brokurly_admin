@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 수정 버튼 눌렀을 경우
 	$("#updateMember").click(function(){
 		var updateParam = {
-				custnm	:	$("#memberName").val(),
-				custemail :	$("#memberEmail").val()
+				custNm	:	$("#memberName").val(),
+				custEmail :	$("#memberEmail").val()
 			};
 		ajax("/member/updateMember/" + clickData, updateParam, function(returnData){
 			if(returnData == 1) {
