@@ -29,8 +29,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	@ResponseBody
 	@RequestMapping(value = "/showCode")
 	public Map<String, Object> findCode(@RequestBody Map<String, Object> param, HttpServletRequest request){
-		String category = (String)param.get("CATEGORY");
-		List<ComCodeEntity> gridDataList = comCodeRepository.findAllByCategoryOrderByIndexAsc(category);
+		String comCd = (String)param.get("COM_CD");
+		List<ComCodeEntity> gridDataList = comCodeRepository.findAllByComCdOrderByIndexAsc(comCd);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;

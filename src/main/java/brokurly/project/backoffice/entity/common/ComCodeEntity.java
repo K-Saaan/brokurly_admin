@@ -22,12 +22,12 @@ public class ComCodeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CODE_SEQ")
 	private int codeSeq;
-	@Column(name = "CODE")
-	private String code;
+	@Column(name = "COM_CD")
+	private String comCd;
+	@Column(name = "COM_NM")
+	private String comNm;
 	@Column(name = "LABEL")
 	private String label;
-	@Column(name = "CATEGORY")
-	private String category;
 	@Column(name = "INDEX")
 	private int index;
 	@Column(name = "REG_ID")
