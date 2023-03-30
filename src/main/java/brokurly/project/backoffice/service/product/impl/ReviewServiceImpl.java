@@ -10,6 +10,9 @@ import brokurly.project.backoffice.entity.product.ReviewEntity;
 import brokurly.project.backoffice.repository.product.ReviewRepository;
 import brokurly.project.backoffice.service.product.ReviewService;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
 	private  final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -27,5 +30,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public Specification<ReviewEntity> getByCustNm(String custNm) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("custNm"), "%" + custNm + "%");
+	}
+	// 리뷰 멀티 삭제
+	@Transactional
+	public int deleteReview(List<Integer> reviewSeqId) {
+		reviewRepository.deleteAllByIds(reviewSeqId);
+		return 1;
 	}
 }

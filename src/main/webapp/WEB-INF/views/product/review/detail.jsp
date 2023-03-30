@@ -13,7 +13,7 @@
                 <b>고객이름</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="rvDtCustNm" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+                <input id="rvDtCustNm" readonly value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
             </div>
         </div>
         <div style="display: flex;">
@@ -21,7 +21,7 @@
                 <b>상품이름</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="rvDtPdNm" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+                <input id="rvDtPdNm" readonly value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
             </div>
         </div>
         <div style="display: flex;">
@@ -29,7 +29,7 @@
                 <b>후기날짜</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="rvDtReviewDate" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+                <input id="rvDtReviewDate" readonly value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
             </div>
         </div>
         <div style="display: flex;">
@@ -37,7 +37,7 @@
                 <b>후기내용</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <textarea id="rvDtReviewTxt" value="" style="height: 200px;" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"></textarea>
+                <textarea id="rvDtReviewTxt" readonly value="" style="height: 200px;" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"></textarea>
             </div>
         </div>
         <div style="display: flex;">
@@ -45,7 +45,7 @@
                 <b>좋아요</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="rvDtReviewLike" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+                <input id="rvDtReviewLike" readonly value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
             </div>
         </div>
     </div>

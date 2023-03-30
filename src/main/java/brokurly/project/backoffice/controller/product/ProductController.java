@@ -163,4 +163,10 @@ public class ProductController {
 	public int replyQna(@PathVariable("id") String qnaCode, @RequestBody QnaDto qnaDto) throws Throwable {
 		return qnaService.replyQna(qnaCode, qnaDto);
 	}
+
+	@ResponseBody
+	@PostMapping(value = "/deleteReview")
+	public int deleteReview(@RequestBody List<Integer> reviewSeqId, HttpServletRequest request) {
+		return reviewService.deleteReview(reviewSeqId);
+	}
 }

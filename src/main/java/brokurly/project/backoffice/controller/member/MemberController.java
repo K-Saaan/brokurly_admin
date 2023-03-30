@@ -86,8 +86,8 @@ public class MemberController {
 	// 멤버 이름으로 조회(카운트)
 	@ResponseBody
 	@PostMapping(value = "/updateMember/{id}", produces = "application/json;charset=utf-8")
-	public int updateMember(@PathVariable("id") String custcode, @RequestBody MemberDto memberDto) throws Throwable {
-		return memberService.update(custcode, memberDto);
+	public int updateMember(@PathVariable("id") String custCode, @RequestBody MemberDto memberDto) throws Throwable {
+		return memberService.update(custCode, memberDto);
 	}
 	// 고객 정보 조회 화면 호출
 	@GetMapping("/show")

@@ -337,5 +337,27 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('.dropdown-item').show();
 		}
 	});
+	// 삭제 버튼 클릭사
+	$("#reviewDelete").click(function(){
+		var checkedRows = gridView.getCheckedRows();
+		var rowDatas = [];
+		for (var i in checkedRows) {
+			var chkdata = provider.getJsonRow(checkedRows[i]);
+			rowDatas.push(chkdata);
+		}
+		console.log(rowDatas)
+		var delData = [];
+		for(var i in rowDatas) {
+			delData.push(rowDatas[i].reviewSeqNo);
+		}
+		ajax("/product/deleteReview", delData, function(returnData){
+			if(returnData == 1) {
+				alert("삭제가 완료됐습니다.");
+				window.close();
+			} else {
+				alert("delete fail!");
+			}
+		})
+	});
 
 });
