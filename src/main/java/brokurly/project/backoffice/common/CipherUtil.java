@@ -3,6 +3,7 @@ package brokurly.project.backoffice.common;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,13 +20,13 @@ public class CipherUtil {
        @param : List, Class(Entity), key
      */
     @SuppressWarnings("unchecked")
-    public static void changeDecodeObjectList(List objList, Class clz, String key){
+    public static void changeDecodeObjectList(Page objList, Class clz, String key){
         if(objList!=null){
-            for(int i=0; i<objList.size(); i++){
-                Object obj = (Object)objList.get(i);
+            for(int i=0; i<objList.getTotalElements(); i++){
+                Object obj = (Object)objList.getContent().get(i);
                 changeDecodeObject(obj,clz, key);
-                objList.remove(i);
-                objList.add(i, obj);
+                objList.getContent().remove(i);
+                objList.getContent().add(i, obj);
             }
         }
     }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.QnaEntity;
@@ -13,6 +14,7 @@ import brokurly.project.backoffice.repository.product.QnaRepository;
 import brokurly.project.backoffice.service.product.QnaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/product")
 public class ProductController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Value("${key.aesKey}")
+	private String key;
 	
 	private final ProductRepository productRepository;
 	private final ProductService productService;
@@ -122,6 +127,9 @@ public class ProductController {
 		}
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<ReviewEntity> specProduct = reviewRepository.findAll(spec, page);
+
+//		CipherUtil.changeDecodeObjectList(specProduct, ReviewEntity.class, key);
+
 		result.put("codeList", specProduct);
  		return result;
 	}
