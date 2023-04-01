@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
@@ -115,6 +116,7 @@ public class ProductController {
 	public Map<String, Object> findReview(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		String pdNm = (String)param.get("PD_NM");
 		String custNm = (String)param.get("CUST_NM");
+		String custNmChanged = AES256Util.enCode(custNm, key);
 		int pagingIndex = (int) param.get("pagingIndex");
 		int pagingRows = (int) param.get("pagingRows");
 		Specification<ReviewEntity> spec = (root, query, criteriaBuilder) -> null;
@@ -123,14 +125,12 @@ public class ProductController {
 			spec = spec.and(reviewService.getByPdNm(pdNm));
 		}
 		if(custNm != "") {
-			spec = spec.and(reviewService.getByCustNm(custNm));
+			spec = spec.and(reviewService.getByCustNm(custNmChanged));
 		}
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<ReviewEntity> specProduct = reviewRepository.findAll(spec, page);
 
-//		CipherUtil.changeDecodeObjectList(specProduct, ReviewEntity.class, key);
-
-		result.put("codeList", specProduct);
+		result.put("codeList", CipherUtil.changeDecodeObjectList(specProduct, ReviewEntity.class, key));
  		return result;
 	}
 	// 문의 조회 specification 이용 다중 조회조건으로 검색

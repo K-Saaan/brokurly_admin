@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Getter
+@Setter
 @Entity
 @Builder
 @AllArgsConstructor
