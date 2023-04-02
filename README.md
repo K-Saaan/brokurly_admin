@@ -26,4 +26,8 @@
 ##### 협업툴
 <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 
+
+##### 프로젝트 아키텍쳐
+<img src="https://user-images.githubusercontent.com/111870436/229355057-6491fde4-53d3-42cb-a9ee-0453be58577c.png"/></a>
+
 </div>
