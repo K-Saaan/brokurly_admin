@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ajax("/product/replyQna/" + qnaClickQnaCode, updateParam, function(returnData){
             if(returnData == 1) {
                 alert("수정이 완료됐습니다.");
+                $("#qnaSearch", opener.document).trigger("click");
                 window.close();
             } else {
                 alert("update fail!");
