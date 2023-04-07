@@ -73,7 +73,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setCustNm", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskName(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }
@@ -87,7 +87,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setUserNm", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskName(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }
@@ -129,7 +129,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setPymAcntNm", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskName(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }
@@ -143,7 +143,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setPymAcntTel", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskTelNo(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }
@@ -157,7 +157,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setAcntHolder", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskName(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }
@@ -185,7 +185,7 @@ public class CipherUtil {
                         orgValue = String.valueOf(method.invoke(obj));
                         method = clz.getMethod("setVirtualAcntNo", new Class[]{String.class});
                         try {
-                            chgValue = AES256Util.deCode(orgValue, key);
+                            chgValue = CommonUtil.maskAccountNo(AES256Util.deCode(orgValue, key));
                         } catch (Exception e) {
                             chgValue = "";
                         }

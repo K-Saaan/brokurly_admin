@@ -10,12 +10,8 @@ public class DateUtil {
 
 	
 	/**
-     * 1. MethodName: getToday
-     * 2. ClassName : DateUtil
-     * 3. Comment   : yyyy-MM-dd HH:mm:ss 형태의 날짜를 문자열로 변환.
-     *
+     * yyyy-MM-dd HH:mm:ss 형태의 날짜를 문자열로 변환.
      * @return String 변환문자열
-     * @return
      */
 	
 	public static String getToday() {
@@ -28,12 +24,8 @@ public class DateUtil {
 	
 	
 	/**
-     * 1. MethodName: getStringToday
-     * 2. ClassName : DateUtil
-     * 3. Comment   : yyyyMMddHHmmss 형태의 날짜를 문자열로 변환.
-     *
+     * yyyyMMddHHmmss 형태의 날짜를 문자열로 변환.
      * @return String 변환문자열
-     * @return
      */
 	
 	public static String getStringToday() {
@@ -45,12 +37,8 @@ public class DateUtil {
 	}
 
 	/**
-	 * 1. MethodName: getStringToday
-	 * 2. ClassName : DateUtil
-	 * 3. Comment   : yyyy-mm-dd hh:mm:ss 형태의 날짜를 문자열로 변환.
-	 *
-	 * @return String 변환문자열
-	 * @return
+	 * yyyy-mm-dd hh:mm:ss 형태의 날짜를 Timestamp로 변환.
+	 * @return Timestamp 변환문자열
 	 */
 
 	public static Timestamp getStringTimestamp() {
@@ -61,8 +49,11 @@ public class DateUtil {
 		return Timestamp.valueOf(dTime);
 	}
 
-
-	public static String getTimestampToString() {
+	/**
+	 * yyyy-mm-dd hh:mm:ss 형태의 날짜를 문자열로 변환.
+	 * @return String 변환문자열
+	 */
+	public static String getStringDate() {
 		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy-mm-dd hh:mm:ss", Locale.KOREA );
 		Date currentTime = new Date ( );
 		String dTime = formatter.format (currentTime);
@@ -72,12 +63,8 @@ public class DateUtil {
 	
 	
 	/**
-     * 1. MethodName: getToday
-     * 2. ClassName : DateUtil
-     * 3. Comment   : YYYYMMDD 형태의 날짜를 문자열로 변환.
-     *
+     * YYYYMMDD 형태의 날짜를 문자열로 변환.
      * @return String 변환문자열
-     * @return
      */
 	public static String getTodayYYYYMMDD() {
 		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyyMMdd", Locale.KOREA );
@@ -89,11 +76,7 @@ public class DateUtil {
 	
 	
 	/**
-    *
-    * 1. MethodName: beforeDate
-    * 2. ClassName : DateUtil
-    * 3. Comment   : begin이 end 보다 이전인 경우 true반환
-    *
+    * begin이 end 보다 이전인 경우 true반환
     * @return boolean
     * @param begin
     * @param end
