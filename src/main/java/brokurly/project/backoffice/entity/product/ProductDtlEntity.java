@@ -23,14 +23,16 @@ public class ProductDtlEntity {
 	@Column(name = "PD_CODE")
 	private String pdCode;
 	
-	@Column(name = "SALE_CODE")
-	private String saleCode;
+	@Column(name = "DISC_CODE")
+	private String discCode;
 	@Column(name = "CPN_CODE")
 	private String cpnCode;
 	@Column(name = "DISC_YN")
 	private String discYn;
 	@Column(name = "CPN_YN")
 	private String cpnYn;
+	@Column(name = "RESERVE_YN")
+	private String reserveYn;
 	@Column(name = "REG_ID")
 	private String regId;
 	@Column(name = "REG_DATE")
