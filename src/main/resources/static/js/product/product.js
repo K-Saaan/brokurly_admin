@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "saleCode",
+			fieldName: "discCode",
 			dataType: "text",
 		},
 		{
@@ -305,6 +305,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		{
 			fieldName: "cpnYn",
+			dataType: "text",
+		},
+		{
+			fieldName: "reserveYn",
 			dataType: "text",
 		},
 		{
@@ -336,12 +340,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "saleCode",
-			fieldName: "saleCode",
+			name: "discCode",
+			fieldName: "discCode",
 			type: "data",
 			width: "120",
 			header: {
-				text: "판매코드",
+				text: "할인코드",
 			},
 		},
 		{
@@ -369,6 +373,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			width: "120",
 			header: {
 				text: "쿠폰적용여부",
+			},
+		},
+		{
+			name: "reserveYn",
+			fieldName: "reserveYn",
+			type: "data",
+			width: "120",
+			header: {
+				text: "적립금여부",
 			},
 		},
 		{
@@ -553,5 +566,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	};
 	// common에 있는 공통 펑션으로 드롭다운 구성
 	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
+
+	$("#productSearchTest").click(function(){
+		ajax("/product/showProductAndReview", {}, function(returnData){
+			var gridData = returnData.codeList;
+			console.log("check")
+			console.log(gridData)
+		})
+	});
 
 });

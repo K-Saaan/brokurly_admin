@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.dto.member.MemberDto;
+import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.QnaEntity;
 import brokurly.project.backoffice.repository.product.QnaRepository;
@@ -176,5 +177,15 @@ public class ProductController {
 	@PostMapping(value = "/deleteReview")
 	public int deleteReview(@RequestBody List<Integer> reviewSeqId, HttpServletRequest request) {
 		return reviewService.deleteReview(reviewSeqId);
+	}
+
+	// 상품, 리뷰 테이블 조인 조회
+	@ResponseBody
+	@PostMapping(value = "/showProductAndReview", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findProductAndReview(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		Map<String, Object> result = new HashMap();
+		List<ProductReviewDto> gridDataList = productRepository.showProductAndReview();
+		result.put("codeList", gridDataList);
+		return result;
 	}
 }

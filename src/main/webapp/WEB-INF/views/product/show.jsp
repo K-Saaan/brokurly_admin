@@ -31,6 +31,7 @@
 		<button type="button" class="btn btn-primary" id="productSearch">조회</button>
 	</div>
 </div>
+<button type="button" class="btn btn-primary" id="productSearchTest">조회test</button>
 <div id="realgridProduct" style="height: 400px; margin-top: 30px;"></div>
 <div id="subgridProduct" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">

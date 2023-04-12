@@ -1,6 +1,5 @@
 package brokurly.project.backoffice.dto.product;
 
-import brokurly.project.backoffice.entity.member.MemberEntity;
 import brokurly.project.backoffice.entity.product.QnaEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
