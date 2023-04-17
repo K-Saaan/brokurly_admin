@@ -4,10 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="../static/css/styles.css">
-<link type="text/css" href="../static/css/realgrid-style.css" rel="stylesheet" />
-<link type="text/css" href="../static/css/bootstrap.css" rel="stylesheet" />
-<link type="text/css" href="../static/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/styles.css">
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/realgrid-style.css" rel="stylesheet" />
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap.css" rel="stylesheet" />
+<link type="text/css" href="${pageContext.request.contextPath}./static/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!-- datepicker 용도 -->
