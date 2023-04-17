@@ -184,7 +184,11 @@ public class ProductController {
 	@PostMapping(value = "/showProductAndReview", produces = "application/json;charset=utf-8")
 	public Map<String, Object> findProductAndReview(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		Map<String, Object> result = new HashMap();
-		List<ProductReviewDto> gridDataList = productRepository.showProductAndReview();
+//		List<ProductReviewDto> gridDataList = productRepository.showProductAndReview();
+		int pagingIndex = (int) param.get("pagingIndex");
+		int pagingRows = (int) param.get("pagingRows");
+		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+		Page<ProductReviewDto> gridDataList = productRepository.showProductAndReview(page);
 		result.put("codeList", gridDataList);
 		return result;
 	}

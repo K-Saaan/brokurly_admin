@@ -3,6 +3,8 @@ package brokurly.project.backoffice.repository.product;
 import java.util.List;
 
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,6 +22,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String>,
 
 	// 상품, 리뷰 테이블 조인 조회. 상품코드, 상품이름, 리뷰내용만 조회.
 	@Query("select new brokurly.project.backoffice.dto.product.ProductReviewDto(p.pdCode, p.pdNm, r.reviewTxt) from ProductEntity p join ReviewEntity r on p.pdCode = r.pdCode")
-	List<ProductReviewDto> showProductAndReview();
+//	List<ProductReviewDto> showProductAndReview();
+	Page<ProductReviewDto> showProductAndReview(Pageable pageable);
 
 }

@@ -567,11 +567,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	// common에 있는 공통 펑션으로 드롭다운 구성
 	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);
 
+	var testPagingIndex = 0;
+	var testPagingRows = 50;
+	var testParam = {
+		pagingIndex		:	testPagingIndex,
+		pagingRows		:	testPagingRows
+	}
 	$("#productSearchTest").click(function(){
-		ajax("/product/showProductAndReview", {}, function(returnData){
+		ajax("/product/showProductAndReview", testParam, function(returnData){
 			var gridData = returnData.codeList;
-			console.log("check")
-			console.log(gridData)
 		})
 	});
 
