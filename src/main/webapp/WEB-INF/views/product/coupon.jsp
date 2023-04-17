@@ -20,6 +20,7 @@
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
         <button type="button" style="margin-right: 10px;" class="btn btn-success" id="couponExcel">엑셀</button>
+        <button type="button" style="margin-right: 10px;" class="btn btn-primary" id="couponReg">등록</button>
         <button type="button" class="btn btn-primary" id="couponSearch">조회</button>
     </div>
 </div>

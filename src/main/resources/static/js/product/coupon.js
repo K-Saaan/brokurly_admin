@@ -346,4 +346,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // 등록 버튼 클릭시
+    $("#couponReg").click(function(){
+        openPopup(usingUrl + "/coupon/register", "쿠폰 정보 등록", 800, 700);
+    });
+
 });

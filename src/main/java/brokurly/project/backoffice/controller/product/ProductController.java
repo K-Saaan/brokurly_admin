@@ -1,14 +1,15 @@
 package brokurly.project.backoffice.controller.product;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
-import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.*;
@@ -22,10 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import brokurly.project.backoffice.entity.member.MemberDtlEntity;
 import brokurly.project.backoffice.service.product.ProductService;
 import brokurly.project.backoffice.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -78,6 +77,11 @@ public class ProductController {
 	@GetMapping("/coupon")
 	public String showCoupon() {
 		return "product/coupon";
+	}
+	// 쿠폰 등록 모달
+	@GetMapping("/coupon/register")
+	public String registerCpnInfo() {
+		return "product/coupon/register";
 	}
 	
 	// 상품 조회 specification 이용 다중 조회조건으로 검색
@@ -215,5 +219,38 @@ public class ProductController {
 		Page<CouponEntity> specProduct = couponRepository.findAll(spec, page);
 		result.put("codeList", specProduct);
 		return result;
+	}
+
+	// 쿠폰 등록
+	@ResponseBody
+	@PostMapping(value = "/regCoupon", produces = "application/json;charset=utf-8")
+	public int regCoupon(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String cpnCode = (String)param.get("cpnCode");
+		String cpnGubun = (String)param.get("cpnGubun");
+		String cpnNm = (String)param.get("cpnNm");
+		String cpnStat = (String)param.get("cpnStat");
+		String createDate = (String)param.get("createDate");
+		String endDate = (String)param.get("endDate");
+		String cpnPrice = (String)param.get("cpnPrice");
+		String cpnRatio = (String)param.get("cpnRatio");
+		String maxAmt = (String)param.get("maxAmt");
+		String dtlDesc = (String)param.get("dtlDesc");
+		String useReq = (String)param.get("useReq");
+//		String regId = (String)param.get("regId");
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		try{
+			HttpSession session = request.getSession();
+			String regId = (String)session.getAttribute("mngId");
+
+			CouponEntity coupon = CouponEntity.builder().cpnCode(cpnCode).cpnGubun(cpnGubun).cpnNm(cpnNm)
+					.cpnStat(cpnStat).createDate(createDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
+					.maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
+			couponRepository.save(coupon);
+			return 1;
+		} catch (Exception e) {
+			logger.info("error");
+			return 0;
+		}
 	}
 }

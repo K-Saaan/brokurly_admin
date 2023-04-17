@@ -14,7 +14,6 @@ import java.text.DecimalFormat;
 @Table(name = "cpn_info", catalog="pd")
 public class CouponEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CPN_CODE")
     private String cpnCode;
     @Column(name = "CPN_GUBUN")
@@ -25,6 +24,8 @@ public class CouponEntity {
     private String cpnStat;
     @Column(name = "CREATE_DATE")
     private String createDate;
+    @Column(name = "END_DATE")
+    private String endDate;
     @Column(name = "CPN_PRICE")
     private String cpnPrice;
     @Column(name = "CPN_RATIO")

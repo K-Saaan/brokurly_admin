@@ -23,7 +23,7 @@ style="background-color: purple; position: fixed; top: 0; left: 0; width: 100%; 
                         <a class="nav-link" href="#">방명록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><%=mng%></a>
+                        <a class="nav-link" id="myId" href="#"><%=mng%></a>
                     </li>
                 </ul>
                 <form class="d-flex m-2">
