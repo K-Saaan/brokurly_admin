@@ -11,8 +11,9 @@ import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.dto.member.MemberDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
-import brokurly.project.backoffice.entity.product.QnaEntity;
-import brokurly.project.backoffice.repository.product.QnaRepository;
+import brokurly.project.backoffice.entity.product.*;
+import brokurly.project.backoffice.repository.product.*;
+import brokurly.project.backoffice.service.product.CouponService;
 import brokurly.project.backoffice.service.product.QnaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import brokurly.project.backoffice.entity.member.MemberDtlEntity;
-import brokurly.project.backoffice.entity.product.ProductDtlEntity;
-import brokurly.project.backoffice.entity.product.ProductEntity;
-import brokurly.project.backoffice.entity.product.ReviewEntity;
-import brokurly.project.backoffice.repository.product.ProductDtlRepository;
-import brokurly.project.backoffice.repository.product.ProductRepository;
-import brokurly.project.backoffice.repository.product.ReviewRepository;
 import brokurly.project.backoffice.service.product.ProductService;
 import brokurly.project.backoffice.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +43,11 @@ public class ProductController {
 	private final ProductService productService;
 	private final ProductDtlRepository productDtlRepository;
 	private final ReviewRepository reviewRepository;
+	private final CouponRepository couponRepository;
 	private final QnaRepository qnaRepository;
 	private final ReviewService reviewService;
 	private final QnaService qnaService;
+	private final CouponService couponService;
 
 	// 상품 조회 화면
 	@GetMapping("/show")
@@ -76,6 +73,11 @@ public class ProductController {
 	@GetMapping("/qna/detail")
 	public String showQnaDetail() {
 		return "product/qna/detail";
+	}
+	// 쿠폰 조회 화면
+	@GetMapping("/coupon")
+	public String showCoupon() {
+		return "product/coupon";
 	}
 	
 	// 상품 조회 specification 이용 다중 조회조건으로 검색
@@ -190,6 +192,28 @@ public class ProductController {
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<ProductReviewDto> gridDataList = productRepository.showProductAndReview(page);
 		result.put("codeList", gridDataList);
+		return result;
+	}
+
+	// 쿠폰 조회 specification 이용 다중 조회조건으로 검색
+	@ResponseBody
+	@PostMapping(value = "/showCoupon", produces = "application/json;charset=utf-8")
+	public Map<String, Object> findCoupon(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String cpnCode = (String)param.get("CPN_CODE");
+		String cpnNm = (String)param.get("CPN_NM");
+		int pagingIndex = (int) param.get("pagingIndex");
+		int pagingRows = (int) param.get("pagingRows");
+		Specification<CouponEntity> spec = (root, query, criteriaBuilder) -> null;
+		Map<String, Object> result = new HashMap();
+		if(cpnCode != "") {
+			spec = spec.and(couponService.getByCpnCode(cpnCode));
+		}
+		if(cpnNm != "") {
+			spec = spec.and(couponService.getByCpnNm(cpnNm));
+		}
+		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+		Page<CouponEntity> specProduct = couponRepository.findAll(spec, page);
+		result.put("codeList", specProduct);
 		return result;
 	}
 }
