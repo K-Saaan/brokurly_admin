@@ -1,5 +1,6 @@
 package brokurly.project.backoffice.service.product.impl;
 
+import brokurly.project.backoffice.dto.product.CouponDto;
 import brokurly.project.backoffice.entity.product.CouponEntity;
 import brokurly.project.backoffice.entity.product.QnaEntity;
 import brokurly.project.backoffice.repository.product.CouponRepository;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -27,5 +30,15 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public Specification<CouponEntity> getByCpnNm(String cpnNm) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("cpnNm"), "%" + cpnNm + "%");
+    }
+    // 쿠폰 수정 처리
+    @Transactional
+    public int modCpn(String cpnCode, CouponDto couponDto) {
+        CouponEntity couponEntity = couponRepository.findById(cpnCode).orElseThrow(() -> new IllegalArgumentException("No data"));
+        couponEntity.modCpn(couponDto.getCpnCode(), couponDto.getCpnGubun(), couponDto.getCpnNm(), couponDto.getCpnStat(), couponDto.getCreateDate(),
+                couponDto.getEndDate(), couponDto.getCpnPrice(), couponDto.getCpnRatio(), couponDto.getMinOdAmt(),
+                couponDto.getMaxAmt(), couponDto.getDtlDesc(), couponDto.getUseReq(),
+                couponDto.getChgrId(), couponDto.getChgrDate());
+        return 1;
     }
 }

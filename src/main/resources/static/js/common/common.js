@@ -91,3 +91,11 @@ function setSelbox(objectId, url, param) {
 	})
 }
 
+function nullChk(object){
+	if(object == "") {
+		return null;
+	} else {
+		return object;
+	}
+}
+

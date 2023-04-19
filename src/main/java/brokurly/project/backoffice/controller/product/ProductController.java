@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
+import brokurly.project.backoffice.dto.product.CouponDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.*;
@@ -236,7 +237,6 @@ public class ProductController {
 		String maxAmt = (String)param.get("maxAmt");
 		String dtlDesc = (String)param.get("dtlDesc");
 		String useReq = (String)param.get("useReq");
-//		String regId = (String)param.get("regId");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
 		try{
@@ -252,5 +252,23 @@ public class ProductController {
 			logger.info("error");
 			return 0;
 		}
+	}
+
+	// 쿠폰 수정화면 데이터 바인딩
+	@ResponseBody
+	@RequestMapping(value = "/modCpnInfo")
+	public Map<String, Object> modCouponInfo(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		String cpnCode = (String)param.get("CPN_CODE");
+		List<CouponEntity> gridDataList = couponRepository.findByCpnCode(cpnCode);
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
+	}
+
+	// 쿠폰 수정 처리
+	@ResponseBody
+	@PostMapping(value = "/modCpn/{id}", produces = "application/json;charset=utf-8")
+	public int modCpn(@PathVariable("id") String cpnCode, @RequestBody CouponDto couponDto) throws Throwable {
+		return couponService.modCpn(cpnCode, couponDto);
 	}
 }

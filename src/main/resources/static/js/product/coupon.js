@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "text",
         },
         {
+            fieldName: "minOdAmt",
+            dataType: "int",
+        },
+        {
             fieldName: "maxAmt",
             dataType: "int",
         },
@@ -147,6 +151,15 @@ document.addEventListener('DOMContentLoaded', function () {
             width: "120",
             header: {
                 text: "할인률",
+            },
+        },
+        {
+            name: "minOdAmt",
+            fieldName: "minOdAmt",
+            type: "data",
+            width: "120",
+            header: {
+                text: "최소주문금액",
             },
         },
         {
@@ -290,10 +303,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 더블클릭했을때 모달 호출
     function gridDblCellClicked(){
         gridView.onCellDblClicked = function(grid, clickData){
-            // var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-            // var qnaCode = selectOneData.qnaCode;
-            // $("#qnaClickQnaCode").val(qnaCode);
-            // openPopup(usingUrl + "/qna/detail", "문의 상세정보 조회", 800, 700);
+            var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+            var cpnCode = selectOneData.cpnCode;
+            $("#clickCouponCode").val(cpnCode);
+            $("#clickStateCpn").val("MOD"); // 모달을 열때 수정임을 마킹
+            openPopup(usingUrl + "/coupon/register", "쿠폰 정보 수정", 800, 700);
         }
     }
 
@@ -349,6 +363,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 등록 버튼 클릭시
     $("#couponReg").click(function(){
         openPopup(usingUrl + "/coupon/register", "쿠폰 정보 등록", 800, 700);
+        $("#clickStateCpn").val("REG"); // 모달을 열때 등록임을 마킹
     });
 
 });
