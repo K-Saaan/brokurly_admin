@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "text",
         },
         {
-            fieldName: "createDate",
+            fieldName: "startDate",
             dataType: "text",
         },
         {
@@ -117,12 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
         {
-            name: "createDate",
-            fieldName: "createDate",
+            name: "startDate",
+            fieldName: "startDate",
             type: "data",
             width: "120",
             header: {
-                text: "생성일시",
+                text: "시작일시",
             },
         },
         {

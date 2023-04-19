@@ -35,7 +35,7 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     public int modCpn(String cpnCode, CouponDto couponDto) {
         CouponEntity couponEntity = couponRepository.findById(cpnCode).orElseThrow(() -> new IllegalArgumentException("No data"));
-        couponEntity.modCpn(couponDto.getCpnCode(), couponDto.getCpnGubun(), couponDto.getCpnNm(), couponDto.getCpnStat(), couponDto.getCreateDate(),
+        couponEntity.modCpn(couponDto.getCpnCode(), couponDto.getCpnGubun(), couponDto.getCpnNm(), couponDto.getCpnStat(), couponDto.getStartDate(),
                 couponDto.getEndDate(), couponDto.getCpnPrice(), couponDto.getCpnRatio(), couponDto.getMinOdAmt(),
                 couponDto.getMaxAmt(), couponDto.getDtlDesc(), couponDto.getUseReq(),
                 couponDto.getChgrId(), couponDto.getChgrDate());

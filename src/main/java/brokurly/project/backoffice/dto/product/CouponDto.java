@@ -14,7 +14,7 @@ public class CouponDto {
     private String cpnGubun;
     private String cpnNm;
     private String cpnStat;
-    private String createDate;
+    private String startDate;
     private String endDate;
     private String cpnPrice;
     private String cpnRatio;
@@ -26,14 +26,14 @@ public class CouponDto {
     private Timestamp chgrDate;
 
     @Builder
-    public CouponDto(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String createDate, String endDate,
+    public CouponDto(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String startDate, String endDate,
                      String cpnPrice, String cpnRatio, String minOdAmt, String maxAmt, String dtlDesc,
                      String useReq, String chgrId, Timestamp chgrDate) {
         this.cpnCode = cpnCode;
         this.cpnGubun = cpnGubun;
         this.cpnNm = cpnNm;
         this.cpnStat = cpnStat;
-        this.createDate = createDate;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.cpnPrice = cpnPrice;
         this.cpnRatio = cpnRatio;

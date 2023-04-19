@@ -23,8 +23,8 @@ public class CouponEntity {
     private String cpnNm;
     @Column(name = "CPN_STAT")
     private String cpnStat;
-    @Column(name = "CREATE_DATE")
-    private String createDate;
+    @Column(name = "START_DATE")
+    private String startDate;
     @Column(name = "END_DATE")
     private String endDate;
     @Column(name = "CPN_PRICE")
@@ -49,14 +49,14 @@ public class CouponEntity {
     private Timestamp chgrDate;
 
     @Transactional
-    public void modCpn(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String createDate,
+    public void modCpn(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String startDate,
                        String endDate, String cpnPrice, String cpnRatio, String minOdAmt, String maxAmt,
                        String dtlDesc, String useReq, String chgrId, Timestamp chgrDate) {
         this.cpnCode = cpnCode;
         this.cpnGubun = cpnGubun;
         this.cpnNm = cpnNm;
         this.cpnStat = cpnStat;
-        this.createDate = createDate;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.cpnPrice = cpnPrice;
         this.cpnRatio = cpnRatio;

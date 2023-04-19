@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 cpnGubun: $("#cpnDtlCpnGubun").val(),
                 cpnNm: $("#cpnDtlCpnNm").val(),
                 cpnStat: "10",
-                createDate: $("#cpnDtlCreateDate").val(),
+                startDate: $("#cpnDtlStartDate").val(),
                 endDate: $("#cpnDtlEndDate").val(),
                 cpnPrice: $("#cpnDtlCpnPrice").val(),
                 cpnRatio: $("#cpnDtlCpnRatio").val(),
                 minOdAmt: $("#cpnDtlMinOdAmt").val(),
                 maxAmt: $("#cpnDtlMaxAmt").val(),
                 dtlDesc: $("#cpnDtlDtlDesc").val(),
-                useReq: $("#cpnDtlUseReq").val(),
+                useReq: $("#cpnDtlUseReq").html(),
                 regId: $("#myId").html()
             };
             ajax("/product/regCoupon", regParam, function (returnData) {
@@ -54,14 +54,14 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#cpnDtlCpnGubun").attr('value', gridData[0].cpnGubun);
             $("#cpnDtlCpnNm").attr('value', gridData[0].cpnNm);
             $("#cpnDtlCpnStat").attr('value', gridData[0].cpnStat);
-            $("#cpnDtlCreateDate").attr('value', gridData[0].createDate);
+            $("#cpnDtlStartDate").attr('value', gridData[0].startDate);
             $("#cpnDtlEndDate").attr('value', gridData[0].endDate);
             $("#cpnDtlCpnPrice").attr('value', gridData[0].cpnPrice);
             $("#cpnDtlCpnRatio").attr('value', gridData[0].cpnRatio);
             $("#cpnDtlMinOdAmt").attr('value', gridData[0].minOdAmt);
             $("#cpnDtlMaxAmt").attr('value', gridData[0].maxAmt);
             $("#cpnDtlDtlDesc").attr('value', gridData[0].dtlDesc);
-            $("#cpnDtlUseReq").attr('value', gridData[0].useReq);
+            $("#cpnDtlUseReq").val(gridData[0].useReq);
         })
 
         // 수정 버튼 눌렀을 경우
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 cpnGubun: $("#cpnDtlCpnGubun").val(),
                 cpnNm: $("#cpnDtlCpnNm").val(),
                 cpnStat: $("#cpnDtlCpnStat").val(),
-                createDate: $("#cpnDtlCreateDate").val(),
+                startDate: $("#cpnDtlStartDate").val(),
                 endDate: $("#cpnDtlEndDate").val(),
                 cpnPrice: nullChk($("#cpnDtlCpnPrice").val()),
                 cpnRatio: nullChk($("#cpnDtlCpnRatio").val()),

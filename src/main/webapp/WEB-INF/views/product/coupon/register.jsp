@@ -43,10 +43,10 @@
         </div>
         <div style="display: flex;">
             <div style="padding: 10px 15px; flex: 0 20%;">
-                <b>생성일시</b>
+                <b>시작일시</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="cpnDtlCreateDate" value="" class="form-control me-2" type="text" placeholder="ex) 20230427000000" aria-label="Search">
+                <input id="cpnDtlStartDate" value="" class="form-control me-2" type="text" placeholder="ex) 20230427000000" aria-label="Search">
             </div>
         </div>
         <div style="display: flex;">
@@ -102,7 +102,8 @@
                 <b>사용조건</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="cpnDtlUseReq" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+<%--                <input id="cpnDtlUseReq" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">--%>
+                <textarea id="cpnDtlUseReq"value="" style="height: 200px;" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"></textarea>
             </div>
         </div>
     </div>

@@ -230,7 +230,7 @@ public class ProductController {
 		String cpnGubun = (String)param.get("cpnGubun");
 		String cpnNm = (String)param.get("cpnNm");
 		String cpnStat = (String)param.get("cpnStat");
-		String createDate = (String)param.get("createDate");
+		String startDate = (String)param.get("startDate");
 		String endDate = (String)param.get("endDate");
 		String cpnPrice = (String)param.get("cpnPrice");
 		String cpnRatio = (String)param.get("cpnRatio");
@@ -245,7 +245,7 @@ public class ProductController {
 			String regId = (String)session.getAttribute("mngId");
 
 			CouponEntity coupon = CouponEntity.builder().cpnCode(cpnCode).cpnGubun(cpnGubun).cpnNm(cpnNm)
-					.cpnStat(cpnStat).createDate(createDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
+					.cpnStat(cpnStat).startDate(startDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
 					.minOdAmt(minOdAmt).maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
 			couponRepository.save(coupon);
 			return 1;
