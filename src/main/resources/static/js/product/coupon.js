@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const gridView = new RealGrid.GridView(container);
 
     gridView.setDataSource(provider);
-
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
 
     var realPath = location.href; // http://localhost:8080/member/show 같은 full URL

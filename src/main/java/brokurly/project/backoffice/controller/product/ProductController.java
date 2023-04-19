@@ -234,6 +234,7 @@ public class ProductController {
 		String endDate = (String)param.get("endDate");
 		String cpnPrice = (String)param.get("cpnPrice");
 		String cpnRatio = (String)param.get("cpnRatio");
+		String minOdAmt = (String)param.get("minOdAmt");
 		String maxAmt = (String)param.get("maxAmt");
 		String dtlDesc = (String)param.get("dtlDesc");
 		String useReq = (String)param.get("useReq");
@@ -245,7 +246,7 @@ public class ProductController {
 
 			CouponEntity coupon = CouponEntity.builder().cpnCode(cpnCode).cpnGubun(cpnGubun).cpnNm(cpnNm)
 					.cpnStat(cpnStat).createDate(createDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
-					.maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
+					.minOdAmt(minOdAmt).maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
 			couponRepository.save(coupon);
 			return 1;
 		} catch (Exception e) {
