@@ -204,6 +204,8 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping(value = "/showCoupon", produces = "application/json;charset=utf-8")
 	public Map<String, Object> findCoupon(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+		String mgrId = (String) request.getSession().getAttribute("mngId");
+
 		String cpnCode = (String)param.get("CPN_CODE");
 		String cpnNm = (String)param.get("CPN_NM");
 		int pagingIndex = (int) param.get("pagingIndex");
