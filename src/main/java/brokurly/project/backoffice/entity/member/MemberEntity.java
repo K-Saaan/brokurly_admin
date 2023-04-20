@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import lombok.*;
 
 @Getter
-@Setter
 @Entity
 @AllArgsConstructor
 @Builder
@@ -50,5 +49,21 @@ public class MemberEntity {
 	public void update(String custNm, String custEmail) {
 		this.custNm = custNm;
 		this.custEmail = custEmail;
+	}
+
+	public void setCustNm(String custNm) {
+		this.custNm = custNm;
+	}
+
+	public void setCustTel(String custTel) {
+		this.custTel = custTel;
+	}
+
+	public void setCustEmail(String custEmail) {
+		this.custEmail = custEmail;
+	}
+
+	public void setCustAddrDtl(String custAddrDtl) {
+		this.custAddrDtl = custAddrDtl;
 	}
 }

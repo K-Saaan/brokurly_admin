@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -59,6 +58,10 @@ public class UserEntity {
 
 
     public void UpdateUserPwd(String userNm){
+        this.userNm = userNm;
+    }
+
+    public void setUserNm(String userNm) {
         this.userNm = userNm;
     }
 }

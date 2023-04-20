@@ -52,6 +52,7 @@ public class MemberController {
 		} else { // 고객코드 조회조건이 있으면 해당 데이터 조회
 			result = memberService.findMemberByCode(memberCode);
 		}
+
 		return result;
 	}
 

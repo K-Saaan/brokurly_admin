@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Getter
-@Setter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -23,6 +22,7 @@ public class ReviewEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "REVIEW_SEQ_NO")
 	private int reviewSeqNo;
+
 	@Column(name = "USER_ID")
 	private String userId;
 	@Column(name = "CUST_CODE")
@@ -47,4 +47,8 @@ public class ReviewEntity {
 	private String chgrId;
 	@Column(name = "CHGR_DATE")
 	private Timestamp chgrDate;
+
+	public void setCustNm(String custNm) {
+		this.custNm = custNm;
+	}
 }
