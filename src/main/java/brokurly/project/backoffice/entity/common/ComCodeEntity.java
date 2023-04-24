@@ -20,16 +20,16 @@ import lombok.NoArgsConstructor;
 public class ComCodeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CODE_SEQ")
+	@Column(name = "COM_CD_GRP_ID")
 	private int codeSeq;
 	@Column(name = "COM_CD")
 	private String comCd;
-	@Column(name = "COM_NM")
+	@Column(name = "COM_CD_NM")
 	private String comNm;
-	@Column(name = "LABEL")
-	private String label;
 	@Column(name = "INDEX")
 	private int index;
+	@Column(name = "USE_YN")
+	private String useYn;
 	@Column(name = "REG_ID")
 	private String regId;
 	@Column(name = "REG_DATE")
