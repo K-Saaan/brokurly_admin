@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter
@@ -16,10 +17,10 @@ public class CouponDto {
     private String cpnStat;
     private String startDate;
     private String endDate;
-    private String cpnPrice;
-    private String cpnRatio;
-    private String minOdAmt;
-    private String maxAmt;
+    private BigDecimal cpnPrice;
+    private BigDecimal cpnRatio;
+    private BigDecimal minOdAmt;
+    private BigDecimal maxAmt;
     private String dtlDesc;
     private String useReq;
     private String chgrId;
@@ -27,7 +28,7 @@ public class CouponDto {
 
     @Builder
     public CouponDto(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String startDate, String endDate,
-                     String cpnPrice, String cpnRatio, String minOdAmt, String maxAmt, String dtlDesc,
+                     BigDecimal cpnPrice, BigDecimal cpnRatio, BigDecimal minOdAmt, BigDecimal maxAmt, String dtlDesc,
                      String useReq, String chgrId, Timestamp chgrDate) {
         this.cpnCode = cpnCode;
         this.cpnGubun = cpnGubun;

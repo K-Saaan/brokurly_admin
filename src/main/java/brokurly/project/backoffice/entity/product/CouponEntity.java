@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 
@@ -27,14 +28,14 @@ public class CouponEntity {
     private String startDate;
     @Column(name = "END_DATE")
     private String endDate;
-    @Column(name = "CPN_PRICE")
-    private String cpnPrice;
-    @Column(name = "CPN_RATIO")
-    private String cpnRatio;
-    @Column(name = "MIN_OD_AMT")
-    private String minOdAmt;
-    @Column(name = "MAX_AMT")
-    private String maxAmt;
+    @Column(name = "CPN_PRICE", precision = 10, scale = 0)
+    private BigDecimal cpnPrice;
+    @Column(name = "CPN_RATIO", precision = 10, scale = 0)
+    private BigDecimal cpnRatio;
+    @Column(name = "MIN_OD_AMT", precision = 10, scale = 0)
+    private BigDecimal minOdAmt;
+    @Column(name = "MAX_AMT", precision = 10, scale = 0)
+    private BigDecimal maxAmt;
     @Column(name = "DTL_DESC")
     private String dtlDesc;
     @Column(name = "USE_REQ")
@@ -50,7 +51,7 @@ public class CouponEntity {
 
     @Transactional
     public void modCpn(String cpnCode, String cpnGubun, String cpnNm, String cpnStat, String startDate,
-                       String endDate, String cpnPrice, String cpnRatio, String minOdAmt, String maxAmt,
+                       String endDate, BigDecimal cpnPrice, BigDecimal cpnRatio, BigDecimal minOdAmt, BigDecimal maxAmt,
                        String dtlDesc, String useReq, String chgrId, Timestamp chgrDate) {
         this.cpnCode = cpnCode;
         this.cpnGubun = cpnGubun;

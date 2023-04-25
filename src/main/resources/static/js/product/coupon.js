@@ -39,19 +39,19 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "cpnPrice",
-            dataType: "text",
+            dataType: "number",
         },
         {
             fieldName: "cpnRatio",
-            dataType: "text",
+            dataType: "number",
         },
         {
             fieldName: "minOdAmt",
-            dataType: "int",
+            dataType: "number",
         },
         {
             fieldName: "maxAmt",
-            dataType: "int",
+            dataType: "number",
         },
         {
             fieldName: "dtlDesc",
@@ -67,7 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "regDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
         {
             fieldName: "chgrId",
@@ -75,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "chgrDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
     ]);
 
@@ -137,8 +139,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "cpnPrice",
             fieldName: "cpnPrice",
-            type: "data",
+            type: "number",
             width: "120",
+            numberFormat: "#,##0",
             header: {
                 text: "쿠폰금액",
             },
@@ -146,8 +149,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "cpnRatio",
             fieldName: "cpnRatio",
-            type: "data",
+            type: "number",
             width: "120",
+            numberFormat: "#,##0.0##",
             header: {
                 text: "할인률",
             },
@@ -155,8 +159,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "minOdAmt",
             fieldName: "minOdAmt",
-            type: "data",
+            type: "number",
             width: "120",
+            numberFormat: "#,##0",
             header: {
                 text: "최소주문금액",
             },
@@ -164,8 +169,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "maxAmt",
             fieldName: "maxAmt",
-            type: "data",
+            type: "number",
             width: "120",
+            numberFormat: "#,##0",
             header: {
                 text: "최대할인금액",
             },
@@ -200,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "regDate",
             fieldName: "regDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "등록일시",
@@ -218,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "chgrDate",
             fieldName: "chgrDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "수정일시",

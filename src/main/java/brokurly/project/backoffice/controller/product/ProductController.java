@@ -1,5 +1,6 @@
 package brokurly.project.backoffice.controller.product;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -234,10 +235,10 @@ public class ProductController {
 		String cpnStat = (String)param.get("cpnStat");
 		String startDate = (String)param.get("startDate");
 		String endDate = (String)param.get("endDate");
-		String cpnPrice = (String)param.get("cpnPrice");
-		String cpnRatio = (String)param.get("cpnRatio");
-		String minOdAmt = (String)param.get("minOdAmt");
-		String maxAmt = (String)param.get("maxAmt");
+		BigDecimal cpnPrice = (BigDecimal)param.get("cpnPrice");
+		BigDecimal cpnRatio = (BigDecimal)param.get("cpnRatio");
+		BigDecimal minOdAmt = (BigDecimal)param.get("minOdAmt");
+		BigDecimal maxAmt = (BigDecimal)param.get("maxAmt");
 		String dtlDesc = (String)param.get("dtlDesc");
 		String useReq = (String)param.get("useReq");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
