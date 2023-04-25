@@ -11,6 +11,7 @@
     <div class="container" style="display: flex; flex-direction: column; border: 1px solid lightgrey;">
         <div style="display: flex;">
             <div style="padding: 10px 15px; flex: 0 20%;">
+                <span style="color: #ff0000">*</span>
                 <b>쿠폰코드</b>
             </div>
             <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
@@ -45,16 +46,16 @@
             <div style="padding: 10px 15px; flex: 0 20%;">
                 <b>시작일시</b>
             </div>
-            <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="cpnDtlStartDate" value="" class="form-control me-2" type="text" placeholder="ex) 20230427000000" aria-label="Search">
+            <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
+                <input class="datepicker" id="cpnDtlStartDate" type="text" placeholder="yyyyMMddHHmmss">
             </div>
         </div>
         <div style="display: flex;">
             <div style="padding: 10px 15px; flex: 0 20%;">
                 <b>만료일시</b>
             </div>
-            <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; flex: 0 80%;">
-                <input id="cpnDtlEndDate" value="" class="form-control me-2" type="text" placeholder="ex) 20230427000000" aria-label="Search">
+            <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
+                <input class="datepicker" id="cpnDtlEndDate" type="text" placeholder="yyyyMMddHHmmss">
             </div>
         </div>
         <div style="display: flex;">
