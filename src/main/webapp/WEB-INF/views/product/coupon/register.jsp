@@ -9,7 +9,7 @@
 </div>
 <div class="container" style="margin-top: 20px;">
     <div class="container" style="display: flex; flex-direction: column; border: 1px solid lightgrey;">
-        <div style="display: flex;">
+        <div id="cpnCodeDiv" style="display: flex;">
             <div style="padding: 10px 15px; flex: 0 20%;">
                 <span style="color: #ff0000">*</span>
                 <b>쿠폰코드</b>

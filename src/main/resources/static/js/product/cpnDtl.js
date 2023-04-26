@@ -10,17 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if($("#clickStateCpn", opener.document).val() == "REG") {
         $("#regCpn").text("등록");
         $("#cpnDtlCpnCode").attr("readonly", false); // 등록일때는 쿠폰코드 readonly 해제
+        $("#cpnCodeDiv").hide(); // 등록일때는 쿠폰코드 div는 안보이게.
         $("#cpnStateDiv").hide(); // 등록일때는 쿠폰상태 div는 안보이게. 어차피 초기값은 10으로 고정이니까.
         // 등록 버튼 눌렀을 경우
         $("#regCpn").click(function () {
             var reply = confirm("등록하시겠습니까?");
             if(reply) {
-                if($("#cpnDtlCpnCode").val() == "") {
-                    alert("쿠폰코드는 필수값입니다.");
-                    return;
-                }
                 var regParam = {
-                    cpnCode: $("#cpnDtlCpnCode").val(),
                     cpnGubun: $("#cpnDtlCpnGubun").val(),
                     cpnNm: $("#cpnDtlCpnNm").val(),
                     cpnStat: "10",
@@ -31,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     minOdAmt: nullChk($("#cpnDtlMinOdAmt").val()),
                     maxAmt: nullChk($("#cpnDtlMaxAmt").val()),
                     dtlDesc: $("#cpnDtlDtlDesc").val(),
-                    useReq: $("#cpnDtlUseReq").html(),
+                    useReq: $("#cpnDtlUseReq").val(),
                     regId: $("#myId").html()
                 };
                 ajax("/product/regCoupon", regParam, function (returnData) {

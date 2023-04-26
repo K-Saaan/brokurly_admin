@@ -229,16 +229,15 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping(value = "/regCoupon", produces = "application/json;charset=utf-8")
 	public int regCoupon(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-		String cpnCode = (String)param.get("cpnCode");
 		String cpnGubun = (String)param.get("cpnGubun");
 		String cpnNm = (String)param.get("cpnNm");
 		String cpnStat = (String)param.get("cpnStat");
 		String startDate = (String)param.get("startDate");
 		String endDate = (String)param.get("endDate");
-		BigDecimal cpnPrice = (BigDecimal)param.get("cpnPrice");
-		BigDecimal cpnRatio = (BigDecimal)param.get("cpnRatio");
-		BigDecimal minOdAmt = (BigDecimal)param.get("minOdAmt");
-		BigDecimal maxAmt = (BigDecimal)param.get("maxAmt");
+		BigDecimal cpnPrice = new BigDecimal((String)param.get("cpnPrice"));
+		BigDecimal cpnRatio = new BigDecimal((String)param.get("cpnRatio"));
+		BigDecimal minOdAmt = new BigDecimal((String)param.get("minOdAmt"));
+		BigDecimal maxAmt = new BigDecimal((String)param.get("maxAmt"));
 		String dtlDesc = (String)param.get("dtlDesc");
 		String useReq = (String)param.get("useReq");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -246,8 +245,13 @@ public class ProductController {
 		try{
 			HttpSession session = request.getSession();
 			String regId = (String)session.getAttribute("mngId");
-
-			CouponEntity coupon = CouponEntity.builder().cpnCode(cpnCode).cpnGubun(cpnGubun).cpnNm(cpnNm)
+			CouponEntity cpn = couponRepository.findTop1ByOrderByCpnCodeDesc(); // 내림차순으로 쿠폰코드 값 조회
+			String cpnCode = cpn.getCpnCode();
+			String cpEnglish = cpnCode.substring(0,2); // 앞에 있는 CP만 떼놓기
+			int cpNumber = Integer.parseInt(cpnCode.substring(2)) + 1; // 뒤에 있는 숫자 떼서 1 더해주기
+			String cpNumToString = String.format("%08d", cpNumber); // 자리수만큼 앞에 0 채워주기
+			cpNumToString = cpEnglish + cpNumToString; // 앞에 CP와 뒤의 숫자 합쳐주기
+			CouponEntity coupon = CouponEntity.builder().cpnCode(cpNumToString).cpnGubun(cpnGubun).cpnNm(cpnNm)
 					.cpnStat(cpnStat).startDate(startDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
 					.minOdAmt(minOdAmt).maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
 			couponRepository.save(coupon);
