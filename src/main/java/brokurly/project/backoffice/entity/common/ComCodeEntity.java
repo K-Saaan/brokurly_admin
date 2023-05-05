@@ -34,4 +34,8 @@ public class ComCodeEntity {
 	private String regId;
 	@Column(name = "REG_DATE")
 	private Timestamp regDate;
+	@Column(name = "CHGR_ID")
+	private String chgrId;
+	@Column(name = "CHGR_DATE")
+	private Timestamp chgrDate;
 }
