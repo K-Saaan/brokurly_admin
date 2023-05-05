@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 @Service
@@ -33,12 +35,14 @@ public class CouponServiceImpl implements CouponService {
     }
     // 쿠폰 수정 처리
     @Transactional
-    public int modCpn(String cpnCode, CouponDto couponDto) {
+    public int modCpn(String cpnCode, CouponDto couponDto, HttpServletRequest request) {
         CouponEntity couponEntity = couponRepository.findById(cpnCode).orElseThrow(() -> new IllegalArgumentException("No data"));
+        HttpSession session = request.getSession();
+        String modId = (String)session.getAttribute("mngId");
         couponEntity.modCpn(couponDto.getCpnCode(), couponDto.getCpnGubun(), couponDto.getCpnNm(), couponDto.getCpnStat(), couponDto.getStartDate(),
                 couponDto.getEndDate(), couponDto.getCpnPrice(), couponDto.getCpnRatio(), couponDto.getMinOdAmt(),
                 couponDto.getMaxAmt(), couponDto.getDtlDesc(), couponDto.getUseReq(),
-                couponDto.getChgrId(), couponDto.getChgrDate());
+                modId, couponDto.getChgrDate());
         return 1;
     }
 }

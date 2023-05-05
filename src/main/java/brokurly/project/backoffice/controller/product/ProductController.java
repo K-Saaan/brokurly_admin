@@ -276,7 +276,7 @@ public class ProductController {
 	// 쿠폰 수정 처리
 	@ResponseBody
 	@PostMapping(value = "/modCpn/{id}", produces = "application/json;charset=utf-8")
-	public int modCpn(@PathVariable("id") String cpnCode, @RequestBody CouponDto couponDto) throws Throwable {
-		return couponService.modCpn(cpnCode, couponDto);
+	public int modCpn(@PathVariable("id") String cpnCode, @RequestBody CouponDto couponDto, HttpServletRequest request) throws Throwable {
+		return couponService.modCpn(cpnCode, couponDto, request);
 	}
 }

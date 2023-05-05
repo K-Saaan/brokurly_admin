@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fieldName: "cpnRatio",
             type: "number",
             width: "120",
-            numberFormat: "#,##0.0##",
+            numberFormat: "#,##0",
             header: {
                 text: "할인률",
             },

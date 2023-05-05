@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#cpnDtlCpnStat").attr('value', gridData[0].cpnStat);
             $("#cpnDtlStartDate").attr('value', gridData[0].startDate);
             $("#cpnDtlEndDate").attr('value', gridData[0].endDate);
-            $("#cpnDtlCpnPrice").attr('value', gridData[0].cpnPrice);
-            $("#cpnDtlCpnRatio").attr('value', gridData[0].cpnRatio);
-            $("#cpnDtlMinOdAmt").attr('value', gridData[0].minOdAmt);
-            $("#cpnDtlMaxAmt").attr('value', gridData[0].maxAmt);
+            $("#cpnDtlCpnPrice").attr('value', parseFloat(gridData[0].cpnPrice));
+            $("#cpnDtlCpnRatio").attr('value', parseFloat(gridData[0].cpnRatio));
+            $("#cpnDtlMinOdAmt").attr('value', parseFloat(gridData[0].minOdAmt));
+            $("#cpnDtlMaxAmt").attr('value', parseFloat(gridData[0].maxAmt));
             $("#cpnDtlDtlDesc").attr('value', gridData[0].dtlDesc);
             $("#cpnDtlUseReq").val(gridData[0].useReq);
         })
@@ -82,10 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     cpnStat: $("#cpnDtlCpnStat").val(),
                     startDate: $("#cpnDtlStartDate").val(),
                     endDate: $("#cpnDtlEndDate").val(),
-                    cpnPrice: nullChk($("#cpnDtlCpnPrice").val()),
-                    cpnRatio: nullChk($("#cpnDtlCpnRatio").val()),
-                    minOdAmt: nullChk($("#cpnDtlMinOdAmt").val()),
-                    maxAmt: nullChk($("#cpnDtlMaxAmt").val()),
+                    cpnPrice: nullChk(parseFloat($("#cpnDtlCpnPrice").val())),
+                    cpnRatio: nullChk(parseFloat($("#cpnDtlCpnRatio").val())),
+                    minOdAmt: nullChk(parseFloat($("#cpnDtlMinOdAmt").val())),
+                    maxAmt: nullChk(parseFloat($("#cpnDtlMaxAmt").val())),
                     dtlDesc: $("#cpnDtlDtlDesc").val(),
                     useReq: $("#cpnDtlUseReq").val(),
                     chgrId: $("#myIdCpn").text(),
