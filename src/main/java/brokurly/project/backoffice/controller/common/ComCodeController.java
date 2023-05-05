@@ -3,6 +3,7 @@ package brokurly.project.backoffice.controller.common;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +31,16 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/showCode")
 	public Map<String, Object> findCode(@RequestBody Map<String, Object> param, HttpServletRequest request){
 		String comCdGrpId = (String)param.get("COM_CD_GRP_ID");
-		List<ComCodeEntity> gridDataList = comCodeRepository.findAllByComCdGrpId(comCdGrpId);
+		logger.info("comCode : " + comCdGrpId);
+//		List<ComCodeEntity> gridDataList = comCodeRepository.findComCd();
+
+		List<String> gridDataList = comCodeRepository.findComCd(comCdGrpId);
+
+		for(int i=0; i<gridDataList.size(); i++){
+//			logger.info("cd : " + gridDataList.get(i).getComCd() + " " + gridDataList.get(i).getComNm());
+			logger.info("cd : " + gridDataList.get(i));
+		}
+
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;

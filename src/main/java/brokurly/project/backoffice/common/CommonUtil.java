@@ -113,4 +113,13 @@ public class CommonUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * 문자열에서 숫자만 추출
+	 * @param str : 문자열
+	 * @return : 문자열에서 숫자만 추출
+	 */
+	public static String StringOnlyNum(String str){
+		str = str.replaceAll("[^0-9]", "");;
+		return str;
+	}
 }
