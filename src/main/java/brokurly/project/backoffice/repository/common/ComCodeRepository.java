@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComCodeRepository extends JpaRepository<ComCodeEntity, String> {
 
-	@Query(value = "select COM_CD_NM from co.com_code where COM_CD_GRP_ID = :comCdGrpId", nativeQuery = true)
+	@Query(value = "select c.COM_CD_NM from co.com_code as c where c.COM_CD_GRP_ID = :comCdGrpId order by c.index", nativeQuery = true)
 	List<String> findComCd(String comCdGrpId); // 카테고리로 조회
 
 }
