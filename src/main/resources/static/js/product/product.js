@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	})
 	
 	var dropdownParam = {
-		COM_CD		:	"PACK0001"
+		COM_CD_GRP_ID		:	"PD00001"
 	};
 	// common에 있는 공통 펑션으로 드롭다운 구성
 	setSelbox("dropdownProduct", "/common/showCode", dropdownParam);

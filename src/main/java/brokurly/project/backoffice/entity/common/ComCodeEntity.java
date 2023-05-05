@@ -21,7 +21,7 @@ public class ComCodeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "COM_CD_GRP_ID")
-	private int codeSeq;
+	private String comCdGrpId;
 	@Column(name = "COM_CD")
 	private String comCd;
 	@Column(name = "COM_CD_NM")

@@ -86,7 +86,7 @@ function setSelbox(objectId, url, param) {
 	ajax(url, param, function(returnData){
 		var codeList = returnData.codeList;
 		for(var i = 0; i < codeList.length; i++) {
-			$(tagId).append("<li class = 'dropdown-item' value='" + codeList[i].label + "'>" + codeList[i].label + "</li>")
+			$(tagId).append("<li class = 'dropdown-item' value='" + codeList[i].comNm + "'>" + codeList[i].comNm + "</li>")
 		}
 	})
 }

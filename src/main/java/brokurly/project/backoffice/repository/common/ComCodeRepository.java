@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import brokurly.project.backoffice.entity.common.ComCodeEntity;
 
 public interface ComCodeRepository extends JpaRepository<ComCodeEntity, String> {
-	List<ComCodeEntity> findAllByComCdOrderByIndexAsc(String comCd); // 카테고리로 조회
+	List<ComCodeEntity> findAllByComCdGrpIdOrderByIndexAsc(String comCdGrpId); // 카테고리로 조회
 }
