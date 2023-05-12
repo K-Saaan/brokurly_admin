@@ -11,15 +11,18 @@ import javax.servlet.http.HttpSession;
 
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
+import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.product.CouponDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.*;
 import brokurly.project.backoffice.repository.product.*;
+import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.product.CouponService;
 import brokurly.project.backoffice.service.product.QnaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +52,10 @@ public class ProductController {
 	private final ReviewService reviewService;
 	private final QnaService qnaService;
 	private final CouponService couponService;
+	private final SequenceService sequenceService;
 
 	// 상품 조회 화면
+
 	@GetMapping("/show")
 	public String show() {
 		return "product/show";
@@ -246,12 +251,17 @@ public class ProductController {
 			HttpSession session = request.getSession();
 			String regId = (String)session.getAttribute("mngId");
 			CouponEntity cpn = couponRepository.findTop1ByOrderByCpnCodeDesc(); // 내림차순으로 쿠폰코드 값 조회
-			String cpnCode = cpn.getCpnCode();
+
+			// 쿠폰코드 채번
+			String cpnCode = sequenceService.createNewSequence(Consts.TBL_CODE.CPN_INFO, 10);
+
+			/*String cpnCode = cpn.getCpnCode();
 			String cpEnglish = cpnCode.substring(0,2); // 앞에 있는 CP만 떼놓기
 			int cpNumber = Integer.parseInt(cpnCode.substring(2)) + 1; // 뒤에 있는 숫자 떼서 1 더해주기
 			String cpNumToString = String.format("%08d", cpNumber); // 자리수만큼 앞에 0 채워주기
-			cpNumToString = cpEnglish + cpNumToString; // 앞에 CP와 뒤의 숫자 합쳐주기
-			CouponEntity coupon = CouponEntity.builder().cpnCode(cpNumToString).cpnGubun(cpnGubun).cpnNm(cpnNm)
+			cpNumToString = cpEnglish + cpNumToString; // 앞에 CP와 뒤의 숫자 합쳐주기*/
+
+			CouponEntity coupon = CouponEntity.builder().cpnCode(cpnCode).cpnGubun(cpnGubun).cpnNm(cpnNm)
 					.cpnStat(cpnStat).startDate(startDate).endDate(endDate).cpnPrice(cpnPrice).cpnRatio(cpnRatio)
 					.minOdAmt(minOdAmt).maxAmt(maxAmt).dtlDesc(dtlDesc).useReq(useReq).regId(regId).regDate(now).build();
 			couponRepository.save(coupon);
