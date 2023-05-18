@@ -3,10 +3,10 @@ package brokurly.project.backoffice.controller.common;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import brokurly.project.backoffice.dto.co.ComCodeListDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import brokurly.project.backoffice.entity.common.ComCodeEntity;
 import brokurly.project.backoffice.repository.common.ComCodeRepository;
 import lombok.RequiredArgsConstructor;
+
 
 @Controller // ResponseBody 필요없음
 @RequiredArgsConstructor // final 객체를 Constructor Injection 해줌. Autowired 필요없음
@@ -32,15 +33,13 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	public Map<String, Object> findCode(@RequestBody Map<String, Object> param, HttpServletRequest request){
 		String comCdGrpId = (String)param.get("COM_CD_GRP_ID");
 		logger.info("comCode : " + comCdGrpId);
-//		List<ComCodeEntity> gridDataList = comCodeRepository.findComCd();
 
-		List<String> gridDataList = comCodeRepository.findComCd(comCdGrpId);
+		List<ComCodeListDto> gridDataList = comCodeRepository.findAllByComCdGrpId(comCdGrpId);
 
-		for(int i=0; i<gridDataList.size(); i++){
-//			logger.info("cd : " + gridDataList.get(i).getComCd() + " " + gridDataList.get(i).getComNm());
-			logger.info("cd : " + gridDataList.get(i));
+		for(ComCodeListDto comCodeListDto : gridDataList){
+			System.out.println("comCdNm : " + comCodeListDto.comCdNm);
 		}
-
+//		System.out.println("comCdNm2 : " + gridDataList.get(0).comCdNm);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;

@@ -2,17 +2,16 @@ package brokurly.project.backoffice.repository.common;
 
 import java.util.List;
 
-import brokurly.project.backoffice.entity.common.ComCodeMastEntity;
+import brokurly.project.backoffice.dto.co.ComCodeListDto;
+import brokurly.project.backoffice.entity.common.ComCodeList;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import brokurly.project.backoffice.entity.common.ComCodeEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ComCodeRepository extends JpaRepository<ComCodeEntity, String> {
+public interface ComCodeRepository extends JpaRepository<ComCodeEntity, ComCodeList> {
 
-	@Query(value = "select c.COM_CD_NM from co.com_code as c where c.COM_CD_GRP_ID = :comCdGrpId order by c.index", nativeQuery = true)
-	List<String> findComCd(String comCdGrpId); // 카테고리로 조회
-
+    @Query("select new brokurly.project.backoffice.dto.co.ComCodeListDto(c.comCdNm) from ComCodeEntity c where c.comCodeList.comCdGrpId = :comCdGrpId order by c.index")
+    List<ComCodeListDto> findAllByComCdGrpId(String comCdGrpId);
 }

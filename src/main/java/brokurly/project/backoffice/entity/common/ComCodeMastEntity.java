@@ -1,20 +1,22 @@
 package brokurly.project.backoffice.entity.common;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
+@AllArgsConstructor
+@ToString
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "com_code_mast", catalog="co")
 public class ComCodeMastEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COM_CD_GRP_ID")
     private String comCdGrpId;
 
@@ -35,4 +37,8 @@ public class ComCodeMastEntity {
     private String chgrId;
     @Column(name = "CHGR_DATE")
     private Timestamp chgrDate;
+
+    /*@OneToMany(mappedBy = "comCodeMastEntity")
+    private List<ComCodeEntity> comCodeEntityList = new ArrayList<>();*/
+
 }
