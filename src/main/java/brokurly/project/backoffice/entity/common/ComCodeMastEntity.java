@@ -16,7 +16,8 @@ import java.util.List;
 @Table(name = "com_code_mast", catalog="co")
 public class ComCodeMastEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COM_CD_GRP_ID")
     private String comCdGrpId;
 
@@ -39,6 +40,6 @@ public class ComCodeMastEntity {
     private Timestamp chgrDate;
 
     /*@OneToMany(mappedBy = "comCodeMastEntity")
-    private List<ComCodeEntity> comCodeEntityList = new ArrayList<>();*/
-
+    private List<ComCodeEntity> comCodeEntityList = new ArrayList<>();
+    */
 }

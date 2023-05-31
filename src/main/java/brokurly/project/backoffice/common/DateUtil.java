@@ -3,6 +3,7 @@ package brokurly.project.backoffice.common;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
@@ -72,6 +73,33 @@ public class DateUtil {
 		String dTime = formatter.format ( currentTime );
 		
 		return dTime;
+	}
+
+	/**
+	 * YYYY 형태의 문자열로 반환.
+	 * @return String 변환문자열
+	 */
+	public static String getYYYY() {
+		LocalDate now = LocalDate.now();
+		return String.valueOf(now.getYear());
+	}
+
+	/**
+	 * mm 형태의 문자열로 반환.
+	 * @return String 변환문자열
+	 */
+	public static String getMm() {
+		LocalDate now = LocalDate.now();
+		return String.format("%02d", now.getMonthValue());
+	}
+
+	/**
+	 * dd 형태의 문자열로 반환.
+	 * @return String 변환문자열
+	 */
+	public static String getDd() {
+		LocalDate now = LocalDate.now();
+		return String.format("%02d", now.getDayOfMonth());
 	}
 	
 	

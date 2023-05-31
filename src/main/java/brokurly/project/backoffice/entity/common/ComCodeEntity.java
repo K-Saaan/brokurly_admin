@@ -15,6 +15,7 @@ import lombok.*;
 @Table(name = "com_code", catalog="co")
 public class ComCodeEntity {
 //	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	@EmbeddedId
 	private ComCodeList comCodeList;
 

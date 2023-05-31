@@ -16,6 +16,4 @@ public class ComCodeList implements Serializable {
     @Column(name = "COM_CD_GRP_ID")
     private String comCdGrpId;
 
-    @Column(name = "COM_CD_NM")
-    private String comCdNm;
 }

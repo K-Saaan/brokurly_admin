@@ -35,16 +35,16 @@ public class SequenceEntity {
     private int currNo;
 
     @Column(name = "CURR_YYYY")
-    private int currYyyy;
+    private String currYyyy;
 
     @Column(name = "CURR_MM")
-    private int currMm;
+    private String currMm;
 
     @Column(name = "CURR_DD")
-    private int currDd;
+    private String currDd;
 
     @Transactional
-    public void CreateSeqDateDto(String tblCode, int currNo, int currYyyy, int currMm, int currDd){
+    public void CreateSeqDateDto(String tblCode, int currNo, String currYyyy, String currMm, String currDd){
         this.tblCode = tblCode;
         this.currNo = currNo;
         this.currYyyy = currYyyy;
@@ -59,7 +59,7 @@ public class SequenceEntity {
     }
 
     @Transactional
-    public void updateSeqDto(String tblCode, int currNo, int currYyyy, int currMm, int currDd){
+    public void updateSeqDto(String tblCode, int currNo, String currYyyy, String currMm, String currDd){
         this.tblCode = tblCode;
         this.currNo = currNo;
         this.currYyyy = currYyyy;
