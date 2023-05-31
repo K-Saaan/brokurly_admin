@@ -26,6 +26,7 @@
 </div>
 
 <div id="realgridCoupon" style="height: 400px; margin-top: 30px;"></div>
+<div id="subgridCoupon" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">
     <input type="hidden" id="clickCouponCode" name="clickData" value="" />
     <input type="hidden" id="clickStateCpn" name="clickData" value="" />

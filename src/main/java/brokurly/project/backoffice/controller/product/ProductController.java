@@ -48,6 +48,7 @@ public class ProductController {
 	private final ProductDtlRepository productDtlRepository;
 	private final ReviewRepository reviewRepository;
 	private final CouponRepository couponRepository;
+	private final CouponDtlRepository couponDtlRepository;
 	private final QnaRepository qnaRepository;
 	private final ReviewService reviewService;
 	private final QnaService qnaService;
@@ -288,5 +289,16 @@ public class ProductController {
 	@PostMapping(value = "/modCpn/{id}", produces = "application/json;charset=utf-8")
 	public int modCpn(@PathVariable("id") String cpnCode, @RequestBody CouponDto couponDto, HttpServletRequest request) throws Throwable {
 		return couponService.modCpn(cpnCode, couponDto, request);
+	}
+
+	// 특정 쿠폰 세부정보 조회. ajax로 STRINGIFY.json 형태로 param 받을때는 @RequestBody 사용할것
+	@ResponseBody
+	@RequestMapping(value = "/showCouponDtl")
+	public Map<String, Object> findCouponDetailInfo(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		String cpnCode = (String)param.get("CPN_CODE");
+		List<CouponDtlEntity> gridDataList = couponDtlRepository.findByCpnCode(cpnCode);
+		Map<String, Object> result = new HashMap();
+		result.put("codeList", gridDataList);
+		return result;
 	}
 }

@@ -3,9 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('realgridCoupon');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
+    // 서브그리드를 그리기 위한 사전 설정
+    const subcontainer = document.getElementById('subgridCoupon');
+    const subprovider = new RealGrid.LocalDataProvider(false);
+    const subgridView = new RealGrid.GridView(subcontainer);
 
     gridView.setDataSource(provider);
+    subgridView.setDataSource(subprovider);
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
 
     var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
     var urlIndex = realPath.lastIndexOf("/");
@@ -231,6 +237,105 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 서브그리드 컬럼
+    subprovider.setFields([
+        {
+            fieldName: "cpnCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "useYn",
+            dataType: "text",
+        },
+        {
+            fieldName: "regId",
+            dataType: "text",
+        },
+        {
+            fieldName: "regDate",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
+        },
+        {
+            fieldName: "chgrId",
+            dataType: "text",
+        },
+        {
+            fieldName: "chgrDate",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
+        },
+    ]);
+
+    subgridView.setColumns([
+        {
+            name: "cpnCode",
+            fieldName: "cpnCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰코드",
+            },
+        },
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "useYn",
+            fieldName: "useYn",
+            type: "data",
+            width: "120",
+            header: {
+                text: "사용여부",
+            },
+        },
+        {
+            name: "regId",
+            fieldName: "regId",
+            type: "data",
+            width: "120",
+            header: {
+                text: "등록자아이디",
+            },
+        },
+        {
+            name: "regDate",
+            fieldName: "regDate",
+            type: "datetime",
+            width: "120",
+            header: {
+                text: "등록일시",
+            },
+        },
+        {
+            name: "chgrId",
+            fieldName: "chgrId",
+            type: "data",
+            width: "120",
+            header: {
+                text: "수정자아이디",
+            },
+        },
+        {
+            name: "chgrDate",
+            fieldName: "chgrDate",
+            type: "datetime",
+            width: "120",
+            header: {
+                text: "수정일시",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -251,7 +356,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 쿠폰 조회 조회버튼 클릭시
     $("#couponSearch").click(function(){
-        provider.clearRows(); // 서브 그리드 비우기
+        provider.clearRows(); // 메인 그리드 비우기
+        subprovider.clearRows(); // 서브 그리드 비우기
         pagingIndex = 0;
         pagingRows = 50;
         var param = {
@@ -294,15 +400,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
     function gridCellClicked(){
         gridView.onCellClicked = function(grid, clickData){
-//			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-//			var pdcode = selectOneData.pdcode;
-//			var param = {
-//					PRODUCT_CODE	:	pdcode
-//			}
-//			ajax("/product/showProductDtl", param, function(returnData){
-//				var detailData = returnData.codeList;
-//				subprovider.fillJsonData(detailData, { fillMode : "set"});
-//			})
+			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+			var cpnCode = selectOneData.cpnCode;
+			var param = {
+					CPN_CODE	:	cpnCode
+			}
+			ajax("/product/showCouponDtl", param, function(returnData){
+				var detailData = returnData.codeList;
+				subprovider.fillJsonData(detailData, { fillMode : "set"});
+			})
         }
     }
     // 메인그리드 더블클릭했을때 모달 호출
