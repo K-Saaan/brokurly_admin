@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 public class CreateSeqDateDto {
     public String tblCode;
     public int currNo;
-    public int currYyyy;
-    public int currMm;
-    public int currDd;
+    public String currYyyy;
+    public String currMm;
+    public String currDd;
 
     @Builder
-    public CreateSeqDateDto(String tblCode, int currNo, int currYyyy, int currMm, int currDd){
+    public CreateSeqDateDto(String tblCode, int currNo, String currYyyy, String currMm, String currDd){
         this.tblCode = tblCode;
         this.currNo = currNo;
         this.currYyyy = currYyyy;
