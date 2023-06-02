@@ -402,12 +402,14 @@ document.addEventListener('DOMContentLoaded', function () {
         gridView.onCellClicked = function(grid, clickData){
 			var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
 			var cpnCode = selectOneData.cpnCode;
+            $("#clickCouponCd").val(cpnCode);
 			var param = {
 					CPN_CODE	:	cpnCode
 			}
 			ajax("/product/showCouponDtl", param, function(returnData){
 				var detailData = returnData.codeList;
 				subprovider.fillJsonData(detailData, { fillMode : "set"});
+                subgridCellClicked();
 			})
         }
     }
@@ -451,6 +453,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // 서브그리드 클릭했을때
+    function subgridCellClicked(){
+        subgridView.onCellClicked = function(grid, clickData){
+            var selectOneData = subgridView.getDataSource().getJsonRow(subgridView.getCurrent().dataRow);
+            var subcpnCode = selectOneData.cpnCode;
+            var param = {
+                CPN_CODE	:	subcpnCode
+            }
+            // ajax("/product/showCouponDtl", param, function(returnData){
+            //     var detailData = returnData.codeList;
+            //     subprovider.fillJsonData(detailData, { fillMode : "set"});
+            // })
+        }
+    }
+
     $(".dropdown-toggle").click(function(){
         if($('.dropdown-menu').is(':visible')){
             $('.dropdown-menu').hide();
@@ -475,6 +492,15 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#couponReg").click(function(){
         openPopup(usingUrl + "/coupon/register", "쿠폰 정보 등록", 800, 700);
         $("#clickStateCpn").val("REG"); // 모달을 열때 등록임을 마킹
+    });
+    // 상품 등록 버튼 클릭시
+    $("#couponDtlReg").click(function(){
+        if(!$("#clickCouponCd").val()) {
+            alert("상품 등록할 쿠폰을 선택하십시오.")
+            return;
+        }
+        openPopup(usingUrl + "/coupon/regProduct", "쿠폰 상품 정보 등록", 600, 700);
+        // $("#clickStateCpn").val("REG"); // 모달을 열때 등록임을 마킹
     });
 
 });

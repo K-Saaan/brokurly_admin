@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     gridView.setDataSource(provider);
     subgridView.setDataSource(subprovider);
-	// commit testing
-    
+
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     // 데이트피커 날짜 형식 지정
@@ -436,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	// 상품정보조회 조회버튼 클릭시 // 테스트
 	$("#productSearch").click(function(){
+		provider.clearRows(); // 메인 그리드 비우기
 		subprovider.clearRows(); // 서브 그리드 비우기
 		pagingIndex = 0;
 		pagingRows = 50;

@@ -26,8 +26,12 @@
 </div>
 
 <div id="realgridCoupon" style="height: 400px; margin-top: 30px;"></div>
+<div class="container" style="">
+    <button type="button" class="btn btn-primary" style="float: right; margin-top: 10px; margin-bottom: 10px;" id="couponDtlReg">상품등록</button>
+</div>
 <div id="subgridCoupon" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">
     <input type="hidden" id="clickCouponCode" name="clickData" value="" />
+    <input type="hidden" id="clickCouponCd" name="clickData" value="" />
     <input type="hidden" id="clickStateCpn" name="clickData" value="" />
 </form>
