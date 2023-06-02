@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Entity
+@IdClass(CouponList.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 아무런 값도 갖지 않는 의미 없는 객체의 생성을 막아줌
 @Table(name = "cpn_dtl", catalog = "pd")
-public class CouponDtlEntity {
+public class CouponDtlEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CPN_CODE")
     private String cpnCode;
-
+    @Id
     @Column(name = "PD_CODE")
     private String pdCode;
     @Column(name = "USE_YN")
