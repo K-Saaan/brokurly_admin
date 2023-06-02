@@ -25,7 +25,7 @@
 	      <li><a href="#" class="menu4_down" style="display: none; padding-left: 20px;">납부내역조회</a></li>
 	      <li><a href="#" class="menu4_down" style="display: none; padding-left: 20px;">결제정보조회</a></li>
       <li><a href="#" class="menu5">공통</a></li>
-	      <li><a href="#" class="menu5_down" style="display: none; padding-left: 20px;">공지사항</a></li>
+	      <li><a href="${pageContext.request.contextPath}/etc/notice" class="menu5_down" style="display: none; padding-left: 20px;">공지사항</a></li>
 	      <li><a href="#" class="menu5_down" style="display: none; padding-left: 20px;">자주묻는질문</a></li>
     </ul>
   </div>
