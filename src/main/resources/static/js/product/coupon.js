@@ -499,8 +499,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("상품 등록할 쿠폰을 선택하십시오.")
             return;
         }
-        openPopup(usingUrl + "/coupon/regProduct", "쿠폰 상품 정보 등록", 600, 700);
-        // $("#clickStateCpn").val("REG"); // 모달을 열때 등록임을 마킹
+        openPopup(usingUrl + "/coupon/regProduct", "쿠폰 상품 정보 등록", 900, 700);
     });
 
 });

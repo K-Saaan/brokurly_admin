@@ -8,16 +8,10 @@
     }
 </style>
 <div class="container">
-    <div style="float: right; margin-top: 15px;">
-        <button type="button" style="margin-bottom: 10px;" class="btn btn-primary" id="regCpnPd">등록</button>
+    <div class="container">
+        <button type="button" class="btn btn-primary" style="float: right; margin-top: 20px; margin-bottom: 10px;" id="cpnDtlPdSearch">조회</button>
     </div>
-</div>
-<div class="container" style="margin-top: 20px;">
-    <div id="gridCpnPd" style="height: 400px; margin-top: 30px; margin-bottom: 30px;"></div>
-    <div class="container" style="margin-top: 20px;">
-        <button type="button" class="btn btn-primary" style="float: right; margin-top: 60px; margin-bottom: 10px;" id="cpnDtlPdSearch">조회</button>
-    </div>
-    <div class="container" style="margin-top: 40px;">
+    <div class="container">
         <div class="container" style="display: flex; flex-direction: column; border: 1px solid lightgrey;">
             <div style="display: flex;">
                 <div style="padding: 10px 15px; flex: 0 20%;">
@@ -28,5 +22,19 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container" style="display: flex; flex-direction: column; ">
+        <div id="gridCpnPd" style="height: 400px; margin-top: 30px; margin-bottom: 30px;"></div>
+        <div style="float: right;">
+            <button type="button" style="margin-bottom: 10px;" class="btn btn-primary" id="regWishPd">추가</button>
+            <button type="button" style="margin-bottom: 10px;" class="btn btn-primary" id="resetWishPd">초기화</button>
+            <button type="button" style="margin-bottom: 10px;" class="btn btn-primary" id="removeWishPd">삭제</button>
+        </div>
+        <div id="gridCpnPdWish" style="height: 400px; margin-top: 30px; margin-bottom: 30px;"></div>
+    </div>
+</div>
+<div class="container">
+    <div style="float: right;">
+        <button type="button" style="margin-bottom: 10px;" class="btn btn-primary" id="regCpnPd">등록</button>
     </div>
 </div>

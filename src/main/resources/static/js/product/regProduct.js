@@ -8,10 +8,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const containerCpnPd = document.getElementById('gridCpnPd');
     const providerCpnPd = new RealGrid.LocalDataProvider(false);
     const gridViewCpnPd = new RealGrid.GridView(containerCpnPd);
+    // 서브그리드를 그리기 위한 사전 설정
+    const containerCpnPdWish = document.getElementById('gridCpnPdWish');
+    const providerCpnPdWish = new RealGrid.LocalDataProvider(false);
+    const gridViewCpnPdWish = new RealGrid.GridView(containerCpnPdWish);
 
     gridViewCpnPd.setDataSource(providerCpnPd);
     gridViewCpnPd.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewCpnPd.displayOptions.fitStyle = "fill"; // 그리드 컬럼 너비 자동조정
+
+    gridViewCpnPdWish.setDataSource(providerCpnPdWish);
+    gridViewCpnPdWish.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewCpnPdWish.displayOptions.fitStyle = "fill"; // 그리드 컬럼 너비 자동조정
 
     var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
     var urlIndex = realPath.lastIndexOf("/");
@@ -30,6 +38,39 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     gridViewCpnPd.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "100",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "300",
+            styleName: "left-align",
+            header: {
+                text: "상품이름",
+            },
+        },
+    ]);
+    // 서브그리드 컬럼
+    providerCpnPdWish.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+    ]);
+
+    gridViewCpnPdWish.setColumns([
         {
             name: "pdCode",
             fieldName: "pdCode",
@@ -87,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 providerCpnPd.fillJsonData(gridData, { fillMode : "set"});
                 gridPaging();
             } else {
-                provider.clearRows(); // 조회 결과가 없을시 그리드 비우기
+                providerCpnPd.clearRows(); // 조회 결과가 없을시 그리드 비우기
             }
         })
     });
@@ -125,26 +166,26 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#regCpnPd").click(function(){
         var reply = confirm("등록하시겠습니까?");
         if(reply) {
-            var checkedRows = gridViewCpnPd.getCheckedRows();
-            var rowDatas = [];
-            for (var i in checkedRows) {
-                var chkdata = providerCpnPd.getJsonRow(checkedRows[i]);
-                rowDatas.push(chkdata);
+            var checkedRowsReg = gridViewCpnPdWish.getCheckedRows();
+            var rowDatasReg = [];
+            for (var i in checkedRowsReg) {
+                var chkdataReg = providerCpnPdWish.getJsonRow(checkedRowsReg[i]);
+                rowDatasReg.push(chkdataReg);
             }
-            var regData = [];
-            for(var i in rowDatas) {
-                regData.push(rowDatas[i].pdCode);
+            var regDataReg = [];
+            for(var i in rowDatasReg) {
+                regDataReg.push(rowDatasReg[i].pdCode);
             }
 
-            if(regData.length == 0) {
+            if(regDataReg.length == 0) {
                 alert("등록할 상품을 선택하십시오.")
                 return;
             }
 
-            for(var i in regData) {
+            for(var i in regDataReg) {
                 var regParam = {
                     cpnCode: modalCpnCode,
-                    pdCode: regData[i]
+                    pdCode: regDataReg[i]
                 }
                 ajax("/product/regCpnProduct", regParam, function(returnData){
                     if(returnData == 1) {
@@ -156,9 +197,33 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
             }
-
         }
+    });
 
+    // 추가 버튼 클릭시
+    $("#regWishPd").click(function(){
+        var checkedRows = gridViewCpnPd.getCheckedRows();
+        var rowDatas = [];
+        for (var i in checkedRows) {
+            var chkdata = providerCpnPd.getJsonRow(checkedRows[i]);
+            rowDatas.push(chkdata);
+        }
+        providerCpnPdWish.fillJsonData(rowDatas, { fillMode : "insert"});
+        var regData = [];
+        for(var i in rowDatas) {
+            regData.push(rowDatas[i].pdCode);
+        }
+    });
+
+    // 초기화 버튼 클릭시
+    $("#resetWishPd").click(function(){
+        providerCpnPdWish.clearRows(); // 서브 그리드 비우기
+    });
+
+    // 삭제 버튼 클릭시
+    $("#removeWishPd").click(function(){
+        var checkedRowsWish = gridViewCpnPdWish.getCheckedRows();
+        providerCpnPdWish.removeRows(checkedRowsWish);
     });
 
 });
