@@ -1,8 +1,16 @@
+spring:
+  profiles:
+    default: local
+
+
 server:
   servlet:
     jsp:
       init-parameters:
         development: true
+
+---
+
 spring:
   mvc:
     view:
@@ -12,6 +20,7 @@ spring:
   profiles:
     include:
       secret
+    active: local
   web:
     resources:
       static-locations:
