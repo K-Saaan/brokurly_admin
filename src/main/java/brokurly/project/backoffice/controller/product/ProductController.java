@@ -336,4 +336,16 @@ public class ProductController {
             return 0;
         }
     }
+
+    // 쿠폰에 등록된 상품 삭제
+    @ResponseBody
+    @PostMapping(value = "/deleteCpnPd")
+    public int deleteCpnPd(@RequestBody List<Object> param, HttpServletRequest request) {
+        try {
+            return couponService.deleteCpnPd(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return couponService.deleteCpnPd(param);
+        }
+    }
 }

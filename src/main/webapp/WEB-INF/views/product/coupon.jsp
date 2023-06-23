@@ -28,6 +28,7 @@
 <div id="realgridCoupon" style="height: 400px; margin-top: 30px;"></div>
 <div class="container" style="">
     <button type="button" class="btn btn-primary" style="float: right; margin-top: 10px; margin-bottom: 10px;" id="couponDtlReg">상품등록</button>
+    <button type="button" class="btn btn-primary" style="float: right; margin-top: 10px; margin-bottom: 10px; margin-right: 10px;" id="couponDtlRmv">상품삭제</button>
 </div>
 <div id="subgridCoupon" style="height: 400px; margin-top: 30px;"></div>
 <form name="openForm">

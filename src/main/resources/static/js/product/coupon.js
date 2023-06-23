@@ -502,4 +502,39 @@ document.addEventListener('DOMContentLoaded', function () {
         openPopup(usingUrl + "/coupon/regProduct", "쿠폰 상품 정보 등록", 900, 700);
     });
 
+    // 삭제 버튼 클릭시
+    $("#couponDtlRmv").click(function(){
+        var reply = confirm("삭제하시겠습니까?");
+        if(reply) {
+            var checkedRowsRmv = subgridView.getCheckedRows();
+            var rowDatasRmv = [];
+            var selectedCpnCd = "";
+            for (var i in checkedRowsRmv) {
+                var chkdataRmv = subprovider.getJsonRow(checkedRowsRmv[i]);
+                rowDatasRmv.push(chkdataRmv);
+            }
+            var delDatas = [];
+            var delData = [];
+            for(var i in rowDatasRmv) {
+                delData.push(rowDatasRmv[i].pdCode);
+                selectedCpnCd = rowDatasRmv[i].cpnCode;
+            }
+            delDatas.push(delData);
+
+            var paramCpnCd = {
+                CPN_CODE    :   selectedCpnCd
+            }
+            delDatas.push(paramCpnCd);
+            ajax("/product/deleteCpnPd", delDatas, function(returnData){
+                if(returnData == 1) {
+                    alert("삭제가 완료됐습니다.");
+                    $("#couponSearch").trigger("click");
+                } else {
+                    alert("delete fail!");
+                }
+            })
+        }
+
+    });
+
 });

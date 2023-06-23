@@ -9,6 +9,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Embeddable
 public class CouponList implements Serializable {
