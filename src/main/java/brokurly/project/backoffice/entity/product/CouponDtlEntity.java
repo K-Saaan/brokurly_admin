@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -25,9 +26,9 @@ public class CouponDtlEntity implements Serializable {
     @Column(name = "REG_ID")
     private String regId;
     @Column(name = "REG_DATE")
-    private Timestamp regDate;
+    private LocalDateTime regDate;
     @Column(name = "CHGR_ID")
     private String chgrId;
     @Column(name = "CHGR_DATE")
-    private Timestamp chgrDate;
+    private LocalDateTime chgrDate;
 }

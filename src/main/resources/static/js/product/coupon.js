@@ -248,6 +248,10 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "text",
         },
         {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+        {
             fieldName: "useYn",
             dataType: "text",
         },
@@ -288,6 +292,15 @@ document.addEventListener('DOMContentLoaded', function () {
             width: "120",
             header: {
                 text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품명",
             },
         },
         {

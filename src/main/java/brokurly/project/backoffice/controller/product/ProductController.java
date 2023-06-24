@@ -12,9 +12,7 @@ import javax.servlet.http.HttpSession;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.common.Consts;
-import brokurly.project.backoffice.dto.product.CouponDto;
-import brokurly.project.backoffice.dto.product.ProductReviewDto;
-import brokurly.project.backoffice.dto.product.QnaDto;
+import brokurly.project.backoffice.dto.product.*;
 import brokurly.project.backoffice.entity.product.*;
 import brokurly.project.backoffice.repository.product.*;
 import brokurly.project.backoffice.service.common.SequenceService;
@@ -309,7 +307,7 @@ public class ProductController {
     @RequestMapping(value = "/showCouponDtl")
     public Map<String, Object> findCouponDetailInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) {
         String cpnCode = (String) param.get("CPN_CODE");
-        List<CouponDtlEntity> gridDataList = couponDtlRepository.findByCpnCode(cpnCode);
+        List<CouponDtlDto> gridDataList = couponDtlRepository.showCpnPdInfo(cpnCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
         return result;
@@ -328,7 +326,7 @@ public class ProductController {
             String regId = (String) session.getAttribute("mngId");
 
             CouponDtlEntity cpn = CouponDtlEntity.builder().cpnCode(cpnCode).pdCode(pdCode)
-                    .useYn("Y").regId(regId).regDate(now).build();
+                    .useYn("Y").regId(regId).regDate(now.toLocalDateTime()).build();
             couponDtlRepository.save(cpn);
             return 1;
         } catch (Exception e) {
