@@ -346,4 +346,16 @@ public class ProductController {
             return couponService.deleteCpnPd(param);
         }
     }
+
+    // 쿠폰에 등록된 상품 사용처리
+    @ResponseBody
+    @PostMapping(value = "/updateUseY")
+    public int updateUseY(@RequestBody List<Object> param, HttpServletRequest request) {
+        try {
+            return couponService.updateUseY(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return couponService.updateUseY(param);
+        }
+    }
 }

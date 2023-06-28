@@ -12,4 +12,5 @@ public interface CouponService {
     Specification<CouponEntity> getByCpnNm(String cpnNm); // 조회조건 쿠폰명
     public int modCpn(String cpnCode, CouponDto couponDto, HttpServletRequest request); // 쿠폰 수정 처리
     public int deleteCpnPd(List<Object> param); // 쿠폰 등록상품 삭제
+    public int updateUseY(List<Object> param); // 쿠폰 등록상품 사용처리
 }
