@@ -618,7 +618,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
         }
-
     });
 
 });

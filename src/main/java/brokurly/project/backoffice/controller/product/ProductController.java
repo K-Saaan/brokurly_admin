@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.common.Consts;
+import brokurly.project.backoffice.dto.co.ComCodeListDto;
 import brokurly.project.backoffice.dto.product.*;
 import brokurly.project.backoffice.entity.product.*;
 import brokurly.project.backoffice.repository.product.*;
@@ -47,6 +48,7 @@ public class ProductController {
     private final ReviewRepository reviewRepository;
     private final CouponRepository couponRepository;
     private final CouponDtlRepository couponDtlRepository;
+    private final CateInfoRepository cateInfoRepository;
     private final QnaRepository qnaRepository;
     private final ReviewService reviewService;
     private final QnaService qnaService;
@@ -357,5 +359,21 @@ public class ProductController {
             e.printStackTrace();
             return couponService.updateUseY(param);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/showCategory")
+    public Map<String, Object> showCategory(@RequestBody Map<String, Object> param, HttpServletRequest request){
+        String cateFlag = (String) param.get("CATE_FLAG");
+        String upperCateCode = (String) param.get("UPPER_CATE_CODE");
+        List<CateInfoEntity> gridDataList = null;
+        if(cateFlag.equals("ONE")) {
+            gridDataList = cateInfoRepository.findByUpperCateCodeIsNull();
+        } else {
+            gridDataList = cateInfoRepository.findByUpperCateCode(upperCateCode);
+        }
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
+        return result;
     }
 }
