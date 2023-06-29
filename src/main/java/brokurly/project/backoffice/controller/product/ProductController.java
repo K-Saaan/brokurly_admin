@@ -2,6 +2,7 @@ package brokurly.project.backoffice.controller.product;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.common.Consts;
-import brokurly.project.backoffice.dto.product.*;
+import brokurly.project.backoffice.dto.product.CouponDto;
+import brokurly.project.backoffice.dto.product.ProductReviewDto;
+import brokurly.project.backoffice.dto.product.QnaDto;
 import brokurly.project.backoffice.entity.product.*;
 import brokurly.project.backoffice.repository.product.*;
 import brokurly.project.backoffice.service.common.SequenceService;
@@ -307,7 +310,7 @@ public class ProductController {
     @RequestMapping(value = "/showCouponDtl")
     public Map<String, Object> findCouponDetailInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) {
         String cpnCode = (String) param.get("CPN_CODE");
-        List<CouponDtlDto> gridDataList = couponDtlRepository.showCpnPdInfo(cpnCode);
+        List<CouponDtlEntity> gridDataList = couponDtlRepository.findByCpnCode(cpnCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
         return result;
@@ -319,31 +322,19 @@ public class ProductController {
     public int regCpnProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
         String cpnCode = (String) param.get("cpnCode");
         String pdCode = (String) param.get("pdCode");
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+        LocalDateTime now = LocalDateTime.now();
 
         try {
             HttpSession session = request.getSession();
             String regId = (String) session.getAttribute("mngId");
 
             CouponDtlEntity cpn = CouponDtlEntity.builder().cpnCode(cpnCode).pdCode(pdCode)
-                    .useYn("Y").regId(regId).regDate(now.toLocalDateTime()).build();
+                    .useYn("Y").regId(regId).regDate(now).build();
             couponDtlRepository.save(cpn);
             return 1;
         } catch (Exception e) {
             logger.info("error");
             return 0;
-        }
-    }
-
-    // 쿠폰에 등록된 상품 삭제
-    @ResponseBody
-    @PostMapping(value = "/deleteCpnPd")
-    public int deleteCpnPd(@RequestBody List<Object> param, HttpServletRequest request) {
-        try {
-            return couponService.deleteCpnPd(param);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return couponService.deleteCpnPd(param);
         }
     }
 }
