@@ -1,7 +1,10 @@
 package brokurly.project.backoffice.repository.product;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
+import brokurly.project.backoffice.dto.product.CateDto;
 import brokurly.project.backoffice.dto.product.ProductCateDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -37,11 +40,14 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String>,
 //			"AND ( :pdNm IS NULL OR p.PD_NM = :pdNm )", nativeQuery = true)
 //	Lisg<Object[]> showProductWithCate(@Param("pdNm") String pdNm, @Param("bigCate") String bigCate, @Param("smallCate") String smallCate, Pageable pageable);
 
+	@Query("select new brokurly.project.backoffice.dto.product.CateDto(c.cateCode) from CateInfoEntity c where c.upperCateCode = :bigCate")
+	List<CateDto> getSubCategory(@Param("bigCate") String bigCate);
+
 	@Query("select distinct new brokurly.project.backoffice.dto.product.ProductCateDto(p.pdCode, p.pdNm) from ProductEntity p join ProductCateEntity pc " +
 			"on p.pdCode = pc.pdCode " +
-			"where ( :pdNm is null or p.pdNm = :pdNm ) " +
-//			"and ( :bigCate is null or pc.cateCode in ( select c.cateCode from c where c.upperCateCode = :bigCate ) )" +
+			"where ( :pdNm is null or p.pdNm like concat('%', :pdNm, '%') ) " +
+			"and ( :bigCate is null or pc.cateCode like concat(:bigCate, '%') ) " +
 			"and ( :smallCate is null or pc.cateCode = :smallCate ) ")
-	Page<ProductCateDto> showProductWithCate(@Param("pdNm") String pdNm, @Param("smallCate") String smallCate, Pageable pageable);
+	Page<ProductCateDto> showProductWithCate(@Param("pdNm") String pdNm, @Param("smallCate") String smallCate, @Param("bigCate") String bigCate, Pageable pageable);
 
 }

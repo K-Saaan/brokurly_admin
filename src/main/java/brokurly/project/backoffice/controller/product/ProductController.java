@@ -2,6 +2,7 @@ package brokurly.project.backoffice.controller.product;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,8 +135,18 @@ public class ProductController {
         int pagingIndex = (int) param.get("pagingIndex");
         int pagingRows = (int) param.get("pagingRows");
         PageRequest page = PageRequest.of(pagingIndex, pagingRows);
-//        Page<ProductEntity> specProduct = productRepository.showProductWithCate(pdNm, bigCate, smallCate, page);
-        Page<ProductCateDto> specProduct = productRepository.showProductWithCate(pdNm, smallCate, page);
+        List<String> bigCategory = new ArrayList();
+//        if(bigCate != null) {
+//            List<CateDto> subCategory = productRepository.getSubCategory(bigCate);
+//            for(int i = 0; i < subCategory.size(); i++) {
+//                System.out.println(subCategory.get(i).getCateCode().toString());
+//                bigCategory.add(subCategory.get(i).getCateCode().toString());
+//            }
+//        }
+//        if(bigCategory.size() == 0) {
+//            bigCategory = null;
+//        }
+        Page<ProductCateDto> specProduct = productRepository.showProductWithCate(pdNm, smallCate, bigCate, page);
         Map<String, Object> result = new HashMap();
         result.put("codeList", specProduct);
         return result;
