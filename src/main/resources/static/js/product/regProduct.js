@@ -109,13 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
         pagingIndex = 0;
         pagingRows = 50;
         var param = {
-            PRODUCT_NAME			:	$("#cpnDtlPdNm").val(),
-            PAKG_TYPE		:	"",
+            PRODUCT_NAME			:	nullChk( $("#cpnDtlPdNm").val() ),
+            BIG_CATE		:	nullChk( $("#pdCategory").val() ),
+            SMALL_CATE		:	nullChk( $("#pdCategory2").val() ),
             pagingIndex		:	pagingIndex,
             pagingRows		:	pagingRows
         };
 
-        ajax("/product/showProduct", param, function(returnData){
+        ajax("/product/showProductWithCate", param, function(returnData){
             totalCount = returnData.codeList.totalElements;
             countData = returnData.codeList.size;
             // 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
@@ -141,12 +142,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             var param = {
-                PRODUCT_NAME			:	$("#cpnDtlPdNm").val(),
-                PAKG_TYPE		:	"",
+                PRODUCT_NAME			:	nullChk( $("#cpnDtlPdNm").val() ),
+                BIG_CATE		:	nullChk( $("#pdCategory").val() ),
+                SMALL_CATE		:	nullChk( $("#pdCategory2").val() ),
                 pagingIndex		:	pagingIndex,
                 pagingRows		:	pagingRows
             };
-            ajax("/product/showProduct", param, function(returnData){
+            ajax("/product/showProductWithCate", param, function(returnData){
                 totalCount = returnData.codeList.totalElements;
                 countData = returnData.codeList.size;
                 // 스크롤 시 추가 데이터가 있을때만 show

@@ -125,6 +125,22 @@ public class ProductController {
         return result;
     }
 
+    @ResponseBody
+    @PostMapping(value = "/showProductWithCate", produces = "application/json;charset=utf-8")
+    public Map<String, Object> showProductWithCate(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String pdNm = (String) param.get("PRODUCT_NAME");
+        String bigCate = (String) param.get("BIG_CATE");
+        String smallCate = (String) param.get("SMALL_CATE");
+        int pagingIndex = (int) param.get("pagingIndex");
+        int pagingRows = (int) param.get("pagingRows");
+        PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+//        Page<ProductEntity> specProduct = productRepository.showProductWithCate(pdNm, bigCate, smallCate, page);
+        Page<ProductCateDto> specProduct = productRepository.showProductWithCate(pdNm, smallCate, page);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", specProduct);
+        return result;
+    }
+
     // 특정 상품 세부정보 조회. ajax로 STRINGIFY.json 형태로 param 받을때는 @RequestBody 사용할것
     @ResponseBody
     @RequestMapping(value = "/showProductDtl")
