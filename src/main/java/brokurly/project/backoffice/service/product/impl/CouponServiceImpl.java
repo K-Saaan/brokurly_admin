@@ -79,4 +79,27 @@ public class CouponServiceImpl implements CouponService {
         }
 
     }
+    @Transactional
+    public int updateUseY(List<Object> param) {
+        try {
+            Object cpnCd = param.get(1);
+            Map<String, Object> map = (Map<String, Object>)cpnCd;
+            Object cpnCdval = map.get("CPN_CODE");
+            String cpnCode = cpnCdval.toString();
+            Object useYnval = map.get("USE_YN");
+            String useYn = useYnval.toString();
+            Object pdCd = param.get(0);
+            List<String> pdCode = (List<String>)pdCd;
+            for(int i = 0; i < pdCode.size(); i++) {
+                if(couponDtlRepository.showCntCpnPd(cpnCode, pdCode.get(i)) == 1) {
+                    couponDtlRepository.updateUseY(cpnCode, pdCode.get(i), useYn);
+                }
+            }
+            return 1;
+        } catch (NullPointerException e) {
+            logger.error("error", e);
+            return 0;
+        }
+
+    }
 }

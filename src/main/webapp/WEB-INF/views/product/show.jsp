@@ -16,7 +16,6 @@
 		<b>포장타입</b>
 	</div>
 	<div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
-<!-- 		<input id="packType" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search"> -->
 		<div class="btn-group">
 		  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
 		    <span id="packType" class="visually-hidden"></span>

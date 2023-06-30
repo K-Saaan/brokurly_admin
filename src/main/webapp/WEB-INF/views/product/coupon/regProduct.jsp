@@ -21,6 +21,34 @@
                     <input id="cpnDtlPdNm" value="" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
                 </div>
             </div>
+            <div style="display: flex;">
+                <div style="padding: 10px 15px; flex: 0 20%;">
+                    <b>대분류</b>
+                </div>
+                <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split pdCateToggle" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span id="pdCategory" class="visually-hidden"></span>
+                        </button>
+                        <ul class="dropdown-menu pdCateMenu" id="dropdownPdCate">
+                            <li class="dropdown-item pdCateItem" value="">선택하세요</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="padding: 10px 15px; flex: 0 20%;">
+                    <b>소분류</b>
+                </div>
+                <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 30%;">
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split pdCateToggle2" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span id="pdCategory2" class="visually-hidden"></span>
+                        </button>
+                        <ul class="dropdown-menu pdCateMenu2" id="dropdownPdCate2">
+                            <li class="dropdown-item pdCateItem2" value="">선택하세요</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container" style="display: flex; flex-direction: column; ">

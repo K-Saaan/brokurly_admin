@@ -85,8 +85,6 @@ function setSelbox(objectId, url, param) {
 	var tagId = "#" + objectId;
 	ajax(url, param, function(returnData){
 		var codeList = returnData.codeList;
-		console.log("dropdown")
-		console.log(codeList)
 		for(var i = 0; i < codeList.length; i++) {
 			$(tagId).append("<li class = 'dropdown-item' value='" + codeList[i].comCdNm + "'>" + codeList[i].comCdNm + "</li>")
 		}
@@ -100,4 +98,3 @@ function nullChk(object){
 		return object;
 	}
 }
-

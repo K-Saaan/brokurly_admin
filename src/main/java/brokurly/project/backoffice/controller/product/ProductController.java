@@ -2,7 +2,7 @@ package brokurly.project.backoffice.controller.product;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +13,8 @@ import javax.servlet.http.HttpSession;
 import brokurly.project.backoffice.common.AES256Util;
 import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.common.Consts;
-import brokurly.project.backoffice.dto.product.CouponDto;
-import brokurly.project.backoffice.dto.product.ProductReviewDto;
-import brokurly.project.backoffice.dto.product.QnaDto;
+import brokurly.project.backoffice.dto.co.ComCodeListDto;
+import brokurly.project.backoffice.dto.product.*;
 import brokurly.project.backoffice.entity.product.*;
 import brokurly.project.backoffice.repository.product.*;
 import brokurly.project.backoffice.service.common.SequenceService;
@@ -50,6 +49,7 @@ public class ProductController {
     private final ReviewRepository reviewRepository;
     private final CouponRepository couponRepository;
     private final CouponDtlRepository couponDtlRepository;
+    private final CateInfoRepository cateInfoRepository;
     private final QnaRepository qnaRepository;
     private final ReviewService reviewService;
     private final QnaService qnaService;
@@ -122,6 +122,32 @@ public class ProductController {
         }
         PageRequest page = PageRequest.of(pagingIndex, pagingRows);
         Page<ProductEntity> specProduct = productRepository.findAll(spec, page);
+        result.put("codeList", specProduct);
+        return result;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/showProductWithCate", produces = "application/json;charset=utf-8")
+    public Map<String, Object> showProductWithCate(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String pdNm = (String) param.get("PRODUCT_NAME");
+        String bigCate = (String) param.get("BIG_CATE");
+        String smallCate = (String) param.get("SMALL_CATE");
+        int pagingIndex = (int) param.get("pagingIndex");
+        int pagingRows = (int) param.get("pagingRows");
+        PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+        List<String> bigCategory = new ArrayList();
+//        if(bigCate != null) {
+//            List<CateDto> subCategory = productRepository.getSubCategory(bigCate);
+//            for(int i = 0; i < subCategory.size(); i++) {
+//                System.out.println(subCategory.get(i).getCateCode().toString());
+//                bigCategory.add(subCategory.get(i).getCateCode().toString());
+//            }
+//        }
+//        if(bigCategory.size() == 0) {
+//            bigCategory = null;
+//        }
+        Page<ProductCateDto> specProduct = productRepository.showProductWithCate(pdNm, smallCate, bigCate, page);
+        Map<String, Object> result = new HashMap();
         result.put("codeList", specProduct);
         return result;
     }
@@ -310,7 +336,7 @@ public class ProductController {
     @RequestMapping(value = "/showCouponDtl")
     public Map<String, Object> findCouponDetailInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) {
         String cpnCode = (String) param.get("CPN_CODE");
-        List<CouponDtlEntity> gridDataList = couponDtlRepository.findByCpnCode(cpnCode);
+        List<CouponDtlDto> gridDataList = couponDtlRepository.showCpnPdInfo(cpnCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
         return result;
@@ -322,19 +348,59 @@ public class ProductController {
     public int regCpnProduct(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
         String cpnCode = (String) param.get("cpnCode");
         String pdCode = (String) param.get("pdCode");
-        LocalDateTime now = LocalDateTime.now();
+        Timestamp now = new Timestamp(System.currentTimeMillis());
 
         try {
             HttpSession session = request.getSession();
             String regId = (String) session.getAttribute("mngId");
 
             CouponDtlEntity cpn = CouponDtlEntity.builder().cpnCode(cpnCode).pdCode(pdCode)
-                    .useYn("Y").regId(regId).regDate(now).build();
+                    .useYn("Y").regId(regId).regDate(now.toLocalDateTime()).build();
             couponDtlRepository.save(cpn);
             return 1;
         } catch (Exception e) {
             logger.info("error");
             return 0;
         }
+    }
+
+    // 쿠폰에 등록된 상품 삭제
+    @ResponseBody
+    @PostMapping(value = "/deleteCpnPd")
+    public int deleteCpnPd(@RequestBody List<Object> param, HttpServletRequest request) {
+        try {
+            return couponService.deleteCpnPd(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return couponService.deleteCpnPd(param);
+        }
+    }
+
+    // 쿠폰에 등록된 상품 사용처리
+    @ResponseBody
+    @PostMapping(value = "/updateUseY")
+    public int updateUseY(@RequestBody List<Object> param, HttpServletRequest request) {
+        try {
+            return couponService.updateUseY(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return couponService.updateUseY(param);
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/showCategory")
+    public Map<String, Object> showCategory(@RequestBody Map<String, Object> param, HttpServletRequest request){
+        String cateFlag = (String) param.get("CATE_FLAG");
+        String upperCateCode = (String) param.get("UPPER_CATE_CODE");
+        List<CateInfoEntity> gridDataList = null;
+        if(cateFlag.equals("ONE")) {
+            gridDataList = cateInfoRepository.findByUpperCateCodeIsNull();
+        } else {
+            gridDataList = cateInfoRepository.findByUpperCateCode(upperCateCode);
+        }
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
+        return result;
     }
 }

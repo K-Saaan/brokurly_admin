@@ -550,4 +550,74 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+    // 사용처리 버튼 클릭시
+    $("#couponUseY").click(function(){
+        var reply = confirm("사용 처리하시겠습니까?");
+        if(reply) {
+            var checkedRowsUseY = subgridView.getCheckedRows();
+            var rowDatasUseY = [];
+            var selectedCpnCd = "";
+            for (var i in checkedRowsUseY) {
+                var chkdataUseY = subprovider.getJsonRow(checkedRowsUseY[i]);
+                rowDatasUseY.push(chkdataUseY);
+            }
+            var useYDatas = [];
+            var useYData = [];
+            for(var i in rowDatasUseY) {
+                useYData.push(rowDatasUseY[i].pdCode);
+                selectedCpnCd = rowDatasUseY[i].cpnCode;
+            }
+            useYDatas.push(useYData);
+
+            var paramCpnCd = {
+                CPN_CODE    :   selectedCpnCd,
+                USE_YN      :   'Y'
+            }
+            useYDatas.push(paramCpnCd);
+            ajax("/product/updateUseY", useYDatas, function(returnData){
+                if(returnData == 1) {
+                    alert("사용 처리가 완료됐습니다.");
+                    $("#couponSearch").trigger("click");
+                } else {
+                    alert("update fail!");
+                }
+            })
+        }
+
+    });
+    // 미사용처리 버튼 클릭시
+    $("#couponUseN").click(function(){
+        var reply = confirm("미사용 처리하시겠습니까?");
+        if(reply) {
+            var checkedRowsUseY = subgridView.getCheckedRows();
+            var rowDatasUseY = [];
+            var selectedCpnCd = "";
+            for (var i in checkedRowsUseY) {
+                var chkdataUseY = subprovider.getJsonRow(checkedRowsUseY[i]);
+                rowDatasUseY.push(chkdataUseY);
+            }
+            var useYDatas = [];
+            var useYData = [];
+            for(var i in rowDatasUseY) {
+                useYData.push(rowDatasUseY[i].pdCode);
+                selectedCpnCd = rowDatasUseY[i].cpnCode;
+            }
+            useYDatas.push(useYData);
+
+            var paramCpnCd = {
+                CPN_CODE    :   selectedCpnCd,
+                USE_YN      :   'N'
+            }
+            useYDatas.push(paramCpnCd);
+            ajax("/product/updateUseY", useYDatas, function(returnData){
+                if(returnData == 1) {
+                    alert("미사용 처리가 완료됐습니다.");
+                    $("#couponSearch").trigger("click");
+                } else {
+                    alert("update fail!");
+                }
+            })
+        }
+    });
+
 });
