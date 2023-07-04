@@ -90,11 +90,13 @@ public class CouponServiceImpl implements CouponService {
             String useYn = useYnval.toString();
             Object pdCd = param.get(0);
             List<String> pdCode = (List<String>)pdCd;
-            for(int i = 0; i < pdCode.size(); i++) {
-                if(couponDtlRepository.showCntCpnPd(cpnCode, pdCode.get(i)) == 1) {
-                    couponDtlRepository.updateUseY(cpnCode, pdCode.get(i), useYn);
-                }
-            }
+            couponDtlRepository.updateUseY(cpnCode, pdCode, useYn);
+
+//            for(int i = 0; i < pdCode.size(); i++) {
+//                if(couponDtlRepository.showCntCpnPd(cpnCode, pdCode.get(i)) == 1) {
+//                    couponDtlRepository.updateUseY(cpnCode, pdCode.get(i), useYn);
+//                }
+//            }
             return 1;
         } catch (NullPointerException e) {
             logger.error("error", e);
