@@ -83,8 +83,10 @@
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
         <input id="orderDeliCustCode" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
     </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 25%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
-        <button type="button" class="btn btn-primary" id="orderDeliSearch">조회</button>
+        <button type="button" style="float:right; margin-right: 10px;" class="btn btn-primary" id="orderDeliAdd">추가</button>
+        <button type="button" style="float: right;" class="btn btn-primary" id="orderDeliSearch">조회</button>
     </div>
 </div>
 <div id="orderDeliGrid" class="bottomSpace" style="height: 400px;"></div>

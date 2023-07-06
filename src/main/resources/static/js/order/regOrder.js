@@ -873,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    // 추가 버튼 클릭시
+    // 멤버조회 추가 버튼 클릭시
     $("#orderMemberAdd").click(function(){
         var checkedRowMember = gridViewMember.getCheckedRows();
         var chkDataMember = providerMember.getJsonRow(checkedRowMember[0]).custCode;
@@ -882,6 +882,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         $("#orderMemberCode").val(chkDataMember);
+    });
+    // 배송지조회 추가 버튼 클릭시
+    $("#orderDeliAdd").click(function(){
+        var checkedRowDeli = gridViewDeli.getCheckedRows();
+        var chkDataDeli = providerDeli.getJsonRow(checkedRowDeli[0]).deliLocCode;
+        if(checkedRowDeli.length != 1) {
+            alert("하나만 체크하십시오.")
+            return;
+        }
+        $("#orderDeliLocCode").val(chkDataDeli);
     });
 
 });
