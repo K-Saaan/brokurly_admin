@@ -383,11 +383,11 @@ document.addEventListener('DOMContentLoaded', function () {
 				return;
 			}
 			var param = {
-				MEMBER_NAME		:	$("#memberName").val(),
+				CUST_NM		:	$("#memberName").val(),
 				pagingIndex		:	pagingIndex,
 				pagingRows		:	pagingRows
 			};
-			ajax("/product/showMember", param, function(returnData){
+			ajax("/member/showMember", param, function(returnData){
 				totalCount = returnData.codeList.totalElements;
 				countData = returnData.codeList.size;
 				// 스크롤 시 추가 데이터가 있을때만 show

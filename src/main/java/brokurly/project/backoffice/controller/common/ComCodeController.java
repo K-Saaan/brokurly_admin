@@ -36,10 +36,6 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 
 		List<ComCodeListDto> gridDataList = comCodeRepository.findAllByComCdGrpId(comCdGrpId);
 
-		for(ComCodeListDto comCodeListDto : gridDataList){
-			System.out.println("comCdNm : " + comCodeListDto.comCdNm);
-		}
-//		System.out.println("comCdNm2 : " + gridDataList.get(0).comCdNm);
 		Map<String, Object> result = new HashMap();
 		result.put("codeList", gridDataList);
 		return result;

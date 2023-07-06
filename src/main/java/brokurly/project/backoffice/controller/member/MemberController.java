@@ -7,10 +7,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import brokurly.project.backoffice.common.AES256Util;
+import brokurly.project.backoffice.common.CipherUtil;
 import brokurly.project.backoffice.entity.member.MemberEntity;
 import brokurly.project.backoffice.entity.product.ProductEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,6 +38,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/member")
 public class MemberController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Value("${key.aesKey}")
+	private String key;
 	
 	private final MemberRepository memberRepository;
 	private final MemberDtlRepository memberDtlRepository;
@@ -61,16 +67,20 @@ public class MemberController {
 	@PostMapping(value="/showMember", produces = "application/json;charset=utf-8")
 	public Map<String, Object> findMember(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
 		String custNm = (String)param.get("CUST_NM");
+		String custNmChanged = "";
+		if(custNm != "") {
+			custNmChanged = AES256Util.enCode(custNm, key);
+		}
 		int pagingIndex = (int) param.get("pagingIndex");
 		int pagingRows = (int) param.get("pagingRows");
 		Specification<MemberEntity> spec = (root, query, criteriaBuilder) -> null;
 		Map<String, Object> result = new HashMap();
 		if(custNm != "") {
-			spec = spec.and(memberService.getByCustNm(custNm));
+			spec = spec.and(memberService.getByCustNm(custNmChanged));
 		}
 		PageRequest page = PageRequest.of(pagingIndex, pagingRows);
 		Page<MemberEntity> specMember = memberRepository.findAll(spec, page);
-		result.put("codeList", specMember);
+		result.put("codeList", CipherUtil.changeDecodeObjectList(specMember, MemberEntity.class, key));
 		return result;
 	}
 	// 특정 멤버 세부정보 조회. ajax로 STRINGIFY.json 형태로 param 받을때는 @RequestBody 사용할것
