@@ -7,11 +7,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const containerMember = document.getElementById('orderMemberGrid');
     const providerMember = new RealGrid.LocalDataProvider(false);
     const gridViewMember = new RealGrid.GridView(containerMember);
+    // 배송지그리드를 그리기 위한 사전 설정
+    const containerDeli = document.getElementById('orderDeliGrid');
+    const providerDeli = new RealGrid.LocalDataProvider(false);
+    const gridViewDeli = new RealGrid.GridView(containerDeli);
 
     gridView.setDataSource(provider);
     gridViewMember.setDataSource(providerMember);
+    gridViewDeli.setDataSource(providerDeli);
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewMember.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewDeli.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+
+    // 데이트피커 날짜 형식 지정
+    $("#datepickerOrder").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
     // 메인그리드 컬럼
     provider.setFields([
@@ -81,7 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "regDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
         {
             fieldName: "chgrId",
@@ -89,7 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "chgrDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
     ]);
 
@@ -250,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "regDate",
             fieldName: "regDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "등록일시",
@@ -268,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "chgrDate",
             fieldName: "chgrDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "변경일시",
@@ -280,7 +293,8 @@ document.addEventListener('DOMContentLoaded', function () {
     providerMember.setFields([
         {
             fieldName: "chgrDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
         {
             fieldName: "chgrId",
@@ -312,7 +326,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "regDate",
-            dataType: "text",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
         },
         {
             fieldName: "regId",
@@ -324,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "chgrDate",
             fieldName: "chgrDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "수정일시",
@@ -396,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: "regDate",
             fieldName: "regDate",
-            type: "data",
+            type: "datetime",
             width: "120",
             header: {
                 text: "등록일시",
@@ -412,6 +427,131 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 배송지그리드 컬럼
+    providerDeli.setFields([
+        {
+            fieldName: "deliLocCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "custCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "siteCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "deliLocNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "siteDtl",
+            dataType: "text",
+        },
+        {
+            fieldName: "regId",
+            dataType: "text",
+        },
+        {
+            fieldName: "regDate",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
+        },
+        {
+            fieldName: "chgrId",
+            dataType: "text",
+        },
+        {
+            fieldName: "chgrDate",
+            dataType: "datetime",
+            datetimeFormat: "yyyy.MM.dd"
+        },
+    ]);
+
+    gridViewDeli.setColumns([
+        {
+            name: "deliLocCode",
+            fieldName: "deliLocCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "배송지코드",
+            },
+        },
+        {
+            name: "custCode",
+            fieldName: "custCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "고객코드",
+            },
+        },
+        {
+            name: "siteCode",
+            fieldName: "siteCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "주소코드",
+            },
+        },
+        {
+            name: "deliLocNm",
+            fieldName: "deliLocNm",
+            type: "data",
+            width: "120",
+            header: {
+                text: "배송지명",
+            },
+        },
+        {
+            name: "siteDtl",
+            fieldName: "siteDtl",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상세주소",
+            },
+        },
+        {
+            name: "regId",
+            fieldName: "regId",
+            type: "data",
+            width: "120",
+            header: {
+                text: "등록자아이디",
+            },
+        },
+        {
+            name: "regDate",
+            fieldName: "regDate",
+            type: "datetime",
+            width: "120",
+            header: {
+                text: "등록일시",
+            },
+        },
+        {
+            name: "chgrId",
+            fieldName: "chgrId",
+            type: "data",
+            width: "120",
+            header: {
+                text: "수정자아이디",
+            },
+        },
+        {
+            name: "chgrDate",
+            fieldName: "chgrDate",
+            type: "datetime",
+            width: "120",
+            header: {
+                text: "수정일시",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -423,6 +563,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var pagingIndexMember = 0;
     var pagingRowsMember = 50;
 
+    var totalCountDeli = 0;
+    var countDataDeli = 0;
+    var pagingIndexDeli = 0;
+    var pagingRowsDeli = 50;
+
     // 이름 입력하고 엔터키 눌렀을시 조회되게
     $('#orderPdName').keypress(function(event) {
         if(event.keyCode == 13){
@@ -433,6 +578,12 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#orderMemberName').keypress(function(event) {
         if(event.keyCode == 13){
             $("#orderMemberSearch").trigger("click");
+        }
+    });
+    // 고객코드 입력하고 엔터키 눌렀을시 조회되게
+    $('#orderDeliCustCode').keypress(function(event) {
+        if(event.keyCode == 13){
+            $("#orderDeliSearch").trigger("click");
         }
     });
 
@@ -505,12 +656,12 @@ document.addEventListener('DOMContentLoaded', function () {
             pagingRows		:	pagingRowsMember
         };
         ajax("/member/showMember", param, function(returnData){
-            totalCount = returnData.codeList.totalElements;
-            countData = returnData.codeList.size;
+            totalCountMember = returnData.codeList.totalElements;
+            countDataMember = returnData.codeList.size;
             // 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
-            if(countData > 0){
+            if(countDataMember > 0){
                 // 만약 이번 조회된 카운트값이 pagingRows 값과 같다면 다음 페이지가 있는것이므로 pagingIndex 증가
-                if(countData == pagingRowsMember) {
+                if(countDataMember == pagingRowsMember) {
                     pagingIndexMember++;
                 }
                 var gridData = returnData.codeList.content;
@@ -535,16 +686,71 @@ document.addEventListener('DOMContentLoaded', function () {
                 pagingRows		:	pagingRowsMember
             };
             ajax("/member/showMember", param, function(returnData){
-                totalCount = returnData.codeList.totalElements;
-                countData = returnData.codeList.size;
+                totalCountMember = returnData.codeList.totalElements;
+                countDataMember = returnData.codeList.size;
                 // 스크롤 시 추가 데이터가 있을때만 show
-                if(countData > 0) {
+                if(countDataMember > 0) {
                     var gridData = returnData.codeList.content;
                     pagingIndexMember++;
                     providerMember.fillJsonData(gridData, { fillMode : "append", noStates: true});
                     gridViewMember.refresh();
                 } else {
                     providerMember.clearRows(); // 조회 결과가 없을시 그리드 비우기
+                }
+            })
+        }
+    }
+    // 배송지정보조회 조회버튼 클릭시
+    $("#orderDeliSearch").click(function(){
+        providerDeli.clearRows(); // 서브 그리드 비우기
+        pagingIndexDeli = 0;
+        pagingRowsDeli = 50;
+        var param = {
+            CUST_CODE		:	$("#orderDeliCustCode").val(),
+            pagingIndex		:	pagingIndexDeli,
+            pagingRows		:	pagingRowsDeli
+        };
+        ajax("/order/showDeliInfo", param, function(returnData){
+            totalCountDeli = returnData.codeList.totalElements;
+            countDataDeli = returnData.codeList.size;
+            // 조회된 값이 있을때만 실제 조회 쿼리 돌리게 설정
+            if(countDataDeli > 0){
+                // 만약 이번 조회된 카운트값이 pagingRows 값과 같다면 다음 페이지가 있는것이므로 pagingIndex 증가
+                if(countDataDeli == pagingRowsDeli) {
+                    pagingIndexDeli++;
+                }
+                var gridData = returnData.codeList.content;
+                providerDeli.fillJsonData(gridData, { fillMode : "set"});
+                gridPagingDeli();
+            } else {
+                providerDeli.clearRows(); // 조회 결과가 없을시 그리드 비우기
+            }
+        })
+    });
+
+    // 스크롤 가장 아래로 내렸을때 추가로 조회
+    function gridPagingDeli(){
+        gridViewDeli.onScrollToBottom = function() {
+            // pagingIndex가 1이라면 카운트값이 pagingRows 보다 적은것이므로 return 처리
+            if(pagingIndexDeli == 0) {
+                return;
+            }
+            var param = {
+                CUST_CODE		:	$("#orderDeliCustCode").val(),
+                pagingIndex		:	pagingIndexDeli,
+                pagingRows		:	pagingRowsDeli
+            };
+            ajax("/order/showDeliInfo", param, function(returnData){
+                totalCountDeli = returnData.codeList.totalElements;
+                countDataDeli = returnData.codeList.size;
+                // 스크롤 시 추가 데이터가 있을때만 show
+                if(countDataDeli > 0) {
+                    var gridData = returnData.codeList.content;
+                    pagingIndexDeli++;
+                    providerDeli.fillJsonData(gridData, { fillMode : "append", noStates: true});
+                    gridViewDeli.refresh();
+                } else {
+                    providerDeli.clearRows(); // 조회 결과가 없을시 그리드 비우기
                 }
             })
         }
@@ -558,4 +764,124 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(returnData)
         })
     });
+
+    $(".toggleOrderState").click(function(){
+        if($('.orderStateMenu').is(':visible')){
+            $('.orderStateMenu').hide();
+            $('.itemOrderState').hide();
+        } else {
+            $('.orderStateMenu').show();
+            $('.itemOrderState').show();
+        }
+    });
+    $(".toggleOrderPayState").click(function(){
+        if($('.payStateMenu').is(':visible')){
+            $('.payStateMenu').hide();
+            $('.itemOrderPayState').hide();
+        } else {
+            $('.payStateMenu').show();
+            $('.itemOrderPayState').show();
+        }
+    });
+    $(".toggleRevePlace").click(function(){
+        if($('.revePlaceMenu').is(':visible')){
+            $('.revePlaceMenu').hide();
+            $('.itemRevePlace').hide();
+        } else {
+            $('.revePlaceMenu').show();
+            $('.itemRevePlace').show();
+        }
+    });
+
+    // 드롭다운 리스트 밖으로 마우스 옮겼을때 드롭다운 해제되도록 설정
+    $(".toggleOrderState").mouseleave(function(){
+        $(".orderStateMenu").mouseover(function(){
+            $('.orderStateMenu').show();
+            $('.itemOrderState').show();
+        });
+        $(".orderStateMenu").mouseleave(function(){
+            $('.orderStateMenu').hide();
+            $('.itemOrderState').hide();
+        })
+    });
+    // 드롭다운 리스트 밖으로 마우스 옮겼을때 드롭다운 해제되도록 설정
+    $(".toggleOrderPayState").mouseleave(function(){
+        $(".payStateMenu").mouseover(function(){
+            $('.payStateMenu').show();
+            $('.itemOrderPayState').show();
+        });
+        $(".payStateMenu").mouseleave(function(){
+            $('.payStateMenu').hide();
+            $('.itemOrderPayState').hide();
+        })
+    });
+    $(".toggleRevePlace").mouseleave(function(){
+        $(".revePlaceMenu").mouseover(function(){
+            $('.revePlaceMenu').show();
+            $('.itemRevePlace').show();
+        });
+        $(".revePlaceMenu").mouseleave(function(){
+            $('.revePlaceMenu').hide();
+            $('.itemRevePlace').hide();
+        })
+    });
+
+    $("#dropdownOrderState").on('click', ".itemOrderState", function(){
+        $('#orderStateValue').text( $(this).text() ).val( $(this).val() );
+        if($('.itemOrderState').is(':visible')){
+            $('.orderStateMenu').hide();
+            $('.itemOrderState').hide();
+        } else {
+            $('.orderStateMenu').show();
+            $('.itemOrderState').show();
+        }
+    })
+    $("#dropdownOrderPayState").on('click', ".itemOrderPayState", function(){
+        $('#orderPayStateValue').text( $(this).text() ).val( $(this).val() );
+        if($('.itemOrderPayState').is(':visible')){
+            $('.payStateMenu').hide();
+            $('.itemOrderPayState').hide();
+        } else {
+            $('.payStateMenu').show();
+            $('.itemOrderPayState').show();
+        }
+    })
+    $("#dropdownRevePlace").on('click', ".itemRevePlace", function(){
+        $('#revePlaceValue').text( $(this).text() ).val( $(this).val() );
+        if($('.itemRevePlace').is(':visible')){
+            $('.revePlaceMenu').hide();
+            $('.itemRevePlace').hide();
+        } else {
+            $('.revePlaceMenu').show();
+            $('.itemRevePlace').show();
+        }
+    })
+
+    var dropdownParam = {
+        COM_CD_GRP_ID		:	"OD00001"
+    };
+    // common에 있는 공통 펑션으로 드롭다운 구성
+    setSelboxOrderState("dropdownOrderState", "/common/showCode", dropdownParam);
+
+    function setSelboxOrderState(objectId, url, param) {
+        var tagId = "#" + objectId;
+        ajax(url, param, function(returnData){
+            var codeList = returnData.codeList;
+            for(var i = 0; i < codeList.length; i++) {
+                $(tagId).append("<li class = 'dropdown-item itemOrderState' value='" + codeList[i].comCdNm + "'>" + codeList[i].comCdNm + "</li>")
+            }
+        })
+    }
+
+    // 추가 버튼 클릭시
+    $("#orderMemberAdd").click(function(){
+        var checkedRowMember = gridViewMember.getCheckedRows();
+        var chkDataMember = providerMember.getJsonRow(checkedRowMember[0]).custCode;
+        if(checkedRowMember.length != 1) {
+            alert("하나만 체크하십시오.")
+            return;
+        }
+        $("#orderMemberCode").val(chkDataMember);
+    });
+
 });

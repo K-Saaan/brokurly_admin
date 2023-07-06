@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     // 소분류 드롭다운 값 선택시 실리게 하는 동작
     $("#dropdownPdCate2").on('click', ".pdCateItem2", function(){
-        $('#pdCategory2').text( $(this).text() ).val( $(this).attr('value') );
+        $('#pdCategory2').text( $(this).text() ).val( $(this).val() );
         if($('.pdCateItem2').is(':visible')){
             $('.pdCateMenu2').hide();
             $('.pdCateItem2').hide();
