@@ -893,5 +893,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         $("#orderDeliLocCode").val(chkDataDeli);
     });
+    // 상품조회 추가 버튼 클릭시
+    $("#orderOdAdd").click(function(){
+        var checkedRowProd = gridView.getCheckedRows();
+        var chkDataProd = provider.getJsonRow(checkedRowProd[0]).pdCode;
+        if(checkedRowProd.length != 1) {
+            alert("하나만 체크하십시오.")
+            return;
+        }
+        $("#orderPdCode").val(chkDataProd);
+    });
 
 });
