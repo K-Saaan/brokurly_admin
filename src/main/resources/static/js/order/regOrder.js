@@ -15,16 +15,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const containerDisc = document.getElementById('orderPdDiscGrid');
     const providerDisc = new RealGrid.LocalDataProvider(false);
     const gridViewDisc = new RealGrid.GridView(containerDisc);
+    // 쿠폰가그리드를 그리기 위한 사전 설정
+    const containerCpn = document.getElementById('orderPdCpnGrid');
+    const providerCpn = new RealGrid.LocalDataProvider(false);
+    const gridViewCpn = new RealGrid.GridView(containerCpn);
 
     gridView.setDataSource(provider);
     gridViewMember.setDataSource(providerMember);
     gridViewDeli.setDataSource(providerDeli);
     gridViewDisc.setDataSource(providerDisc);
+    gridViewCpn.setDataSource(providerCpn);
 
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewMember.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewDeli.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewDisc.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewCpn.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+
+    // insert시 맨 왼쪽에 + 기호 안보이게 처리
+    gridViewDisc.setStateBar({visible: false});
+    gridViewCpn.setStateBar({visible: false});
 
     // 데이트피커 날짜 형식 지정
     $("#datepickerOrder").datepicker({
@@ -630,6 +640,77 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 쿠폰가그리드 컬럼
+    providerCpn.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdPrice",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnRatio",
+            dataType: "text",
+        },
+    ]);
+
+    gridViewCpn.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "250",
+            header: {
+                text: "상품명",
+            },
+        },
+        {
+            name: "pdPrice",
+            fieldName: "pdPrice",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품가격",
+            },
+        },
+        {
+            name: "cpnCode",
+            fieldName: "cpnCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰코드",
+            },
+        },
+        {
+            name: "cpnRatio",
+            fieldName: "cpnRatio",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰할인률",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -645,11 +726,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var countDataDeli = 0;
     var pagingIndexDeli = 0;
     var pagingRowsDeli = 50;
-
-    var totalCountDisc = 0;
-    var countDataDisc = 0;
-    var pagingIndexDisc = 0;
-    var pagingRowsDisc = 50;
 
     // 이름 입력하고 엔터키 눌렀을시 조회되게
     $('#orderPdName').keypress(function(event) {
@@ -983,25 +1059,39 @@ document.addEventListener('DOMContentLoaded', function () {
         for(var i = 0; i < checkedRowProd.length; i++) {
             checkedProdList.push(provider.getJsonRow(checkedRowProd[i]).pdCode)
         }
-        // 할인가 조회
+
         var param = {
             PD_CODE		:	checkedProdList
         };
+        // 할인가 조회
         ajax("/product/showPdDiscPrice", param, function(returnData){
             var gridDataDisc = returnData.codeList;
             providerDisc.fillJsonData(gridDataDisc, { fillMode : "insert"});
         })
+        // 쿠폰가 조회
+        ajax("/product/showPdCpnPrice", param, function(returnData){
+            var gridDataCpn = returnData.codeList;
+            providerCpn.fillJsonData(gridDataCpn, { fillMode : "insert"});
+        })
     });
 
-    // 상품조회 초기화 버튼 클릭시
+    // 할인가조회 초기화 버튼 클릭시
     $("#orderPdDiscReset").click(function(){
         providerDisc.clearRows(); // 메인 그리드 비우기
     });
-
-    // 삭제 버튼 클릭시
+    // 할인가조회 삭제 버튼 클릭시
     $("#orderPdDiscRemove").click(function(){
-        var checkedRowsRmv = gridDataDisc.getCheckedRows();
+        var checkedRowsRmv = gridViewDisc.getCheckedRows();
         providerDisc.removeRows(checkedRowsRmv);
+    });
+    // 쿠폰가조회 초기화 버튼 클릭시
+    $("#orderPdCpnReset").click(function(){
+        providerCpn.clearRows(); // 메인 그리드 비우기
+    });
+    // 쿠폰가조회 삭제 버튼 클릭시
+    $("#orderPdCpnRemove").click(function(){
+        var checkedRowsCpnRmv = gridViewCpn.getCheckedRows();
+        providerCpn.removeRows(checkedRowsCpnRmv);
     });
 
 });
