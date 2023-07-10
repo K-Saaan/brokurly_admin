@@ -11,13 +11,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const containerDeli = document.getElementById('orderDeliGrid');
     const providerDeli = new RealGrid.LocalDataProvider(false);
     const gridViewDeli = new RealGrid.GridView(containerDeli);
+    // 할인가그리드를 그리기 위한 사전 설정
+    const containerDisc = document.getElementById('orderPdDiscGrid');
+    const providerDisc = new RealGrid.LocalDataProvider(false);
+    const gridViewDisc = new RealGrid.GridView(containerDisc);
 
     gridView.setDataSource(provider);
     gridViewMember.setDataSource(providerMember);
     gridViewDeli.setDataSource(providerDeli);
+    gridViewDisc.setDataSource(providerDisc);
+
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewMember.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewDeli.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewDisc.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
 
     // 데이트피커 날짜 형식 지정
     $("#datepickerOrder").datepicker({
@@ -552,6 +559,77 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 할인가그리드 컬럼
+    providerDisc.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdPrice",
+            dataType: "text",
+        },
+        {
+            fieldName: "discCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "discRatio",
+            dataType: "text",
+        },
+    ]);
+
+    gridViewDisc.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "250",
+            header: {
+                text: "상품명",
+            },
+        },
+        {
+            name: "pdPrice",
+            fieldName: "pdPrice",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품가격",
+            },
+        },
+        {
+            name: "discCode",
+            fieldName: "discCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "할인코드",
+            },
+        },
+        {
+            name: "discRatio",
+            fieldName: "discRatio",
+            type: "data",
+            width: "120",
+            header: {
+                text: "할인률",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -567,6 +645,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var countDataDeli = 0;
     var pagingIndexDeli = 0;
     var pagingRowsDeli = 50;
+
+    var totalCountDisc = 0;
+    var countDataDisc = 0;
+    var pagingIndexDisc = 0;
+    var pagingRowsDisc = 50;
 
     // 이름 입력하고 엔터키 눌렀을시 조회되게
     $('#orderPdName').keypress(function(event) {
@@ -896,12 +979,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // 상품조회 추가 버튼 클릭시
     $("#orderOdAdd").click(function(){
         var checkedRowProd = gridView.getCheckedRows();
-        var chkDataProd = provider.getJsonRow(checkedRowProd[0]).pdCode;
-        if(checkedRowProd.length != 1) {
-            alert("하나만 체크하십시오.")
-            return;
+        var checkedProdList = [];
+        for(var i = 0; i < checkedRowProd.length; i++) {
+            checkedProdList.push(provider.getJsonRow(checkedRowProd[i]).pdCode)
         }
-        $("#orderPdCode").val(chkDataProd);
+        // 할인가 조회
+        var param = {
+            PD_CODE		:	checkedProdList
+        };
+        ajax("/product/showPdDiscPrice", param, function(returnData){
+            var gridDataDisc = returnData.codeList;
+            providerDisc.fillJsonData(gridDataDisc, { fillMode : "insert"});
+        })
+    });
+
+    // 상품조회 초기화 버튼 클릭시
+    $("#orderPdDiscReset").click(function(){
+        providerDisc.clearRows(); // 메인 그리드 비우기
+    });
+
+    // 삭제 버튼 클릭시
+    $("#orderPdDiscRemove").click(function(){
+        var checkedRowsRmv = gridDataDisc.getCheckedRows();
+        providerDisc.removeRows(checkedRowsRmv);
     });
 
 });

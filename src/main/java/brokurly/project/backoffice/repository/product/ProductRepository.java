@@ -6,6 +6,7 @@ import java.util.List;
 
 import brokurly.project.backoffice.dto.product.CateDto;
 import brokurly.project.backoffice.dto.product.ProductCateDto;
+import brokurly.project.backoffice.dto.product.ProductDiscPriceDto;
 import brokurly.project.backoffice.dto.product.ProductReviewDto;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
@@ -49,5 +50,14 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String>,
 			"and ( :bigCate is null or pc.cateCode like concat(:bigCate, '%') ) " +
 			"and ( :smallCate is null or pc.cateCode = :smallCate ) ")
 	Page<ProductCateDto> showProductWithCate(@Param("pdNm") String pdNm, @Param("smallCate") String smallCate, @Param("bigCate") String bigCate, Pageable pageable);
+
+	@Query("select new brokurly.project.backoffice.dto.product.ProductDiscPriceDto(p.pdCode, p.pdNm, p.pdPrice, pd.discCode, d.discRatio) " +
+			"from ProductDtlEntity pd " +
+			"right outer join ProductEntity p " +
+			"on p.pdCode = pd.pdCode " +
+			"left outer join DiscInfoEntity d "+
+			"on pd.discCode = d.discCode " +
+			"where p.pdCode in (:pdCode) ")
+	List<ProductDiscPriceDto> showPdDiscPrice(@Param("pdCode") List<String> pdCode);
 
 }

@@ -403,4 +403,14 @@ public class ProductController {
         result.put("codeList", gridDataList);
         return result;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/showPdDiscPrice")
+    public Map<String, Object> showPdDiscPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+        List<String> pdCode = (List<String>) param.get("PD_CODE");
+        List<ProductDiscPriceDto> gridDataList = productRepository.showPdDiscPrice(pdCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
+        return result;
+    }
 }
