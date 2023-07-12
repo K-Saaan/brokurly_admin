@@ -160,6 +160,7 @@
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 5%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscReset">초기화</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderOdAdd">추가</button>
         <button type="button" class="btn btn-primary" style="float: right;" id="orderOdSearch">조회</button>
     </div>
@@ -170,7 +171,7 @@
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 50%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
-        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscReset">초기화</button>
+<%--        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscReset">초기화</button>--%>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscRemove">삭제</button>
     </div>
 </div>
@@ -180,8 +181,65 @@
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 50%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
-        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnReset">초기화</button>
+<%--        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnReset">초기화</button>--%>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnRemove">삭제</button>
     </div>
 </div>
 <div id="orderPdCpnGrid" class="bottomSpace" style="height: 400px;"></div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>적립예정금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderTobeReserve" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>배송비</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderDeliPrice" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>총 주문금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderTotOdAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>상품 할인금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderPdDiscAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>쿠폰 할인금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderCpnDiscAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>총 할인금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderTotDiscAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>총 결제금액</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderTotPayAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+    <span id="infoDeliPrice" style="padding-top: 10px; color: red;"></span>
+</div>

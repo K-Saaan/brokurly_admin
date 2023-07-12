@@ -727,6 +727,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var pagingIndexDeli = 0;
     var pagingRowsDeli = 50;
 
+    var priceSum = 0; // 총 결제금액
+    var originalPriceSum = 0; // 총 주문금액 (정가)
+    var discPriceSum = 0; // 총 할인금액
+
     // 이름 입력하고 엔터키 눌렀을시 조회되게
     $('#orderPdName').keypress(function(event) {
         if(event.keyCode == 13){
@@ -1032,6 +1036,65 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
+    function setPriceSum() {
+        var priceSum = 0; // 총 결제금액
+        var originalPriceSum = 0; // 총 주문금액 (정가)
+        var discPriceSum = 0; // 총 할인금액
+        var discPrice = 0; // 할인 적용 금액
+        var pdDiscAmt = 0; // 상품 할인 금액
+        var cpnDiscAmt = 0; // 쿠폰 할인 금액
+        for(var i = 0; i < providerDisc.getJsonRows().length; i++) {
+            // 총 주문금액은 상품의 정가들만 더해주기
+            originalPriceSum += parseFloat(providerDisc.getJsonRow(i).pdPrice);
+            // 할인코드가 Null이 아니면, 즉 할인중인 상품이라면 할인가 적용
+            if(providerDisc.getJsonRow(i).discCode != null) {
+                discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
+                pdDiscAmt += parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                // 쿠폰코드가 null이 아니면, 즉 쿠폰 적용 상품이라면 쿠폰가 적용
+                if(providerCpn.getJsonRow(i).cpnCode != null) {
+                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                }
+                // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
+                else {
+                    priceSum += parseFloat(discPrice);
+                }
+            }
+            // 할인코드가 null이면, 즉 할인중이지 않은 상품이라면 상품 정가 그대로 적용
+            else {
+                discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice);
+                // 쿠폰코드가 null이 아니면, 즉 쿠폰 적용 상품이라면 쿠폰가 적용
+                if(providerCpn.getJsonRow(i).cpnCode != null) {
+                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                }
+                // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
+                else {
+                    priceSum += parseFloat(discPrice);
+                }
+            }
+        }
+        // 총할인금액 = 총주문금액 - 총결제금액
+        discPriceSum = originalPriceSum - priceSum;
+        // console.log("총주문금액 - " + originalPriceSum)
+        // console.log("총할인금액 - " + discPriceSum)
+        // console.log("총결제금액 - " + priceSum)
+
+        // 배송비
+        if(originalPriceSum > 30000) {
+            $("#orderDeliPrice").val(0);
+            $("#infoDeliPrice").text(); //배송비 포함여부 info
+        } else {
+            $("#orderDeliPrice").val(3000);
+            $("#infoDeliPrice").text("배송비 포함"); //배송비 포함여부 info
+        }
+        $("#orderTotOdAmt").val(originalPriceSum); // 총주문금액
+        $("#orderPdDiscAmt").val(pdDiscAmt); //상품할인금액
+        $("#orderCpnDiscAmt").val(cpnDiscAmt); //쿠폰할인금액
+        $("#orderTotDiscAmt").val(discPriceSum); //총할인금액
+        $("#orderTotPayAmt").val(priceSum + parseFloat($("#orderDeliPrice").val())); //총결제금액
+    }
+
     // 멤버조회 추가 버튼 클릭시
     $("#orderMemberAdd").click(function(){
         var checkedRowMember = gridViewMember.getCheckedRows();
@@ -1073,25 +1136,41 @@ document.addEventListener('DOMContentLoaded', function () {
             var gridDataCpn = returnData.codeList;
             providerCpn.fillJsonData(gridDataCpn, { fillMode : "insert"});
         })
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSum, 1000)
     });
 
     // 할인가조회 초기화 버튼 클릭시
     $("#orderPdDiscReset").click(function(){
-        providerDisc.clearRows(); // 메인 그리드 비우기
+        providerDisc.clearRows(); // 할인가 그리드 비우기
+        providerCpn.clearRows(); // 쿠폰가 그리드 비우기
+
+        var priceSum = 0; // 총 결제금액
+        var originalPriceSum = 0; // 총 주문금액 (정가)
+        var discPriceSum = 0; // 총 할인금액
+        $("#orderTotOdAmt").val(0); // 총주문금액
+        $("#orderTotDiscAmt").val(0); //총할인금액
+        $("#orderTotPayAmt").val(0); //총결제금액
     });
-    // 할인가조회 삭제 버튼 클릭시
+    // 할인가조회 삭제 버튼 클릭시. 할인가 쿠폰가 어느곳에서 삭제를 하든 양쪽에서 같이 삭제되게.
     $("#orderPdDiscRemove").click(function(){
         var checkedRowsRmv = gridViewDisc.getCheckedRows();
         providerDisc.removeRows(checkedRowsRmv);
+        providerCpn.removeRows(checkedRowsRmv);
+
+        // 삭제했으니까 주문금액 계산 다시해주기
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSum, 1000)
     });
     // 쿠폰가조회 초기화 버튼 클릭시
-    $("#orderPdCpnReset").click(function(){
-        providerCpn.clearRows(); // 메인 그리드 비우기
-    });
+    // $("#orderPdCpnReset").click(function(){
+    //     providerCpn.clearRows(); // 메인 그리드 비우기
+    // });
     // 쿠폰가조회 삭제 버튼 클릭시
     $("#orderPdCpnRemove").click(function(){
         var checkedRowsCpnRmv = gridViewCpn.getCheckedRows();
         providerCpn.removeRows(checkedRowsCpnRmv);
+        providerDisc.removeRows(checkedRowsCpnRmv);
     });
 
 });

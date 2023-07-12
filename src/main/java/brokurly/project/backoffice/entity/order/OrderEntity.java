@@ -52,6 +52,10 @@ public class OrderEntity {
     private String totDiscAmt;
     @Column(name = "DELI_PRICE")
     private String deliPrice;
+    @Column(name = "TOBE_RESERVE")
+    private String tobeReserve;
+    @Column(name = "RESERVE_YN")
+    private String reserveYn;
     @Column(name = "REG_ID")
     private String regId;
     @Column(name = "REG_DATE")
