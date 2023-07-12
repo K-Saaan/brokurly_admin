@@ -24,7 +24,8 @@ public interface CouponDtlRepository extends JpaRepository<CouponDtlEntity, Coup
     @Query(value = "update pd.cpn_dtl set use_yn = :useYn where CPN_CODE = :cpnCode and PD_CODE in (:pdCode)", nativeQuery = true)
     void updateUseY(@Param("cpnCode") String cpnCode, @Param("pdCode") List<String> pdCode, @Param("useYn") String useYn);
 
-    @Query("select new brokurly.project.backoffice.dto.product.ProductCpnPriceDto(p.pdCode, p.pdNm, p.pdPrice, cd.cpnCode, c.cpnRatio) " +
+    @Query("select new brokurly.project.backoffice.dto.product.ProductCpnPriceDto(p.pdCode, p.pdNm, p.pdPrice, cd.cpnCode, c.cpnNm, cd.useYn, " +
+            "c.minOdAmt, c.maxAmt, c.cpnPrice, c.cpnRatio) " +
             "from CouponDtlEntity cd " +
             "join CouponEntity c " +
             "on cd.cpnCode = c.cpnCode " +

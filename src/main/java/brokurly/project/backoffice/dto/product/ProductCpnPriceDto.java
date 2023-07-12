@@ -13,13 +13,24 @@ public class ProductCpnPriceDto {
     private String pdNm;
     private String pdPrice;
     private String cpnCode;
+    private String cpnNm;
+    private String useYn;
+    private BigDecimal minOdAmt;
+    private BigDecimal maxAmt;
+    private BigDecimal cpnPrice;
     private BigDecimal cpnRatio;
     @Builder
-    public ProductCpnPriceDto(String pdCode, String pdNm, String pdPrice, String cpnCode, BigDecimal cpnRatio) {
+    public ProductCpnPriceDto(String pdCode, String pdNm, String pdPrice, String cpnCode, String cpnNm, String useYn,
+                              BigDecimal minOdAmt, BigDecimal maxAmt, BigDecimal cpnPrice, BigDecimal cpnRatio) {
         this.pdCode = pdCode;
         this.pdNm = pdNm;
         this.pdPrice = pdPrice;
         this.cpnCode = cpnCode;
+        this.cpnNm = cpnNm;
+        this.useYn = useYn;
+        this.minOdAmt = minOdAmt;
+        this.maxAmt = maxAmt;
+        this.cpnPrice = cpnPrice;
         this.cpnRatio = cpnRatio;
     }
 }

@@ -24,7 +24,7 @@
         <button type="button" style="float: right;" class="btn btn-primary" id="orderMemberSearch">조회</button>
     </div>
 </div>
-<div id="orderMemberGrid" class="bottomSpace" style="height: 400px;"></div>
+<div id="orderMemberGrid" class="bottomSpace" style="height: 300px;"></div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
         <b>고객코드</b>
@@ -89,7 +89,7 @@
         <button type="button" style="float: right;" class="btn btn-primary" id="orderDeliSearch">조회</button>
     </div>
 </div>
-<div id="orderDeliGrid" class="bottomSpace" style="height: 400px;"></div>
+<div id="orderDeliGrid" class="bottomSpace" style="height: 300px;"></div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
         <b>배송지코드</b>
@@ -165,7 +165,7 @@
         <button type="button" class="btn btn-primary" style="float: right;" id="orderOdSearch">조회</button>
     </div>
 </div>
-<div id="orderPdGrid" class="bottomSpace" style="height: 400px;"></div>
+<div id="orderPdGrid" class="bottomSpace" style="height: 300px;"></div>
 <hr>
 <h5>할인가 조회</h5>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
@@ -175,17 +175,18 @@
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscRemove">삭제</button>
     </div>
 </div>
-<div id="orderPdDiscGrid" class="bottomSpace" style="height: 400px;"></div>
+<div id="orderPdDiscGrid" class="bottomSpace" style="height: 300px;"></div>
 <hr>
 <h5>쿠폰가 조회</h5>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 50%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
 <%--        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnReset">초기화</button>--%>
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnApply">적용</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdCpnRemove">삭제</button>
     </div>
 </div>
-<div id="orderPdCpnGrid" class="bottomSpace" style="height: 400px;"></div>
+<div id="orderPdCpnGrid" class="bottomSpace" style="height: 300px;"></div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
         <b>적립예정금액</b>
