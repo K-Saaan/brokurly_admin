@@ -726,6 +726,10 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "text",
         },
         {
+            fieldName: "custCode",
+            dataType: "text",
+        },
+        {
             fieldName: "minOdAmt",
             dataType: "text",
         },
@@ -796,6 +800,15 @@ document.addEventListener('DOMContentLoaded', function () {
             width: "120",
             header: {
                 text: "사용여부",
+            },
+        },
+        {
+            name: "custCode",
+            fieldName: "custCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "고객코드",
             },
         },
         {
@@ -1043,6 +1056,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function nullToZero(str){
+        if(str == null) {
+            return 0;
+        } else {
+            return str;
+        }
+    }
+
     $("#regOrder").click(function(){
         var reply = confirm("등록하시겠습니까?");
         if(reply) {
@@ -1074,8 +1095,16 @@ document.addEventListener('DOMContentLoaded', function () {
             //     alert("적립 예정금액을 입력하십시오.")
             //     return;
             // }
-            var pdCodeArr = $("#hiddenPdCode").val().split(",")
-            var pdCountArr = $("#hiddenPdCount").val().split(",")
+            var pdCodeStr = $("#hiddenPdCode").val();
+            var pdCodeArr = pdCodeStr.split(",")
+            var pdCountStr = $("#hiddenPdCnt").val();
+            var pdCountArr = pdCountStr.split(",");
+            var pdDiscAmtStr = $("#hiddenPdDiscAmt").val();
+            var pdDiscAmtArr = pdDiscAmtStr.split(",");
+            var cpnDiscAmtStr = $("#hiddenCpnDiscAmt").val();
+            var cpnDiscAmtArr = cpnDiscAmtStr.split(",");
+            var cpnCodeStr = $("#hiddenCpnCode").val();
+            var cpnCodeArr = cpnCodeStr.split(",");
             var param = {
                 // od.OD_INFO 관련 파라미터
                 custCode        :   $("#orderMemberCode").val(),
@@ -1088,17 +1117,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 revePlace        :   $("#revePlaceValue").val(),
                 revePlaceDtl        :   $("#orderRevePlaceDtl").val(),
                 deliComMsg        :   $("#orderDeliComMsg").val(),
-                totPayAmt        :   $("#infoDeliPrice").val(),
-                totOdAmt        :   $("#orderTotOdAmt").val(),
-                cpnDiscAmt        :   $("#orderCpnDiscAmt").val(),
-                pdDiscAmt        :   $("#orderPdDiscAmt").val(),
-                totDiscAmt        :   $("#orderPdDiscAmt").val(),
-                deliPrice        :   $("#orderDeliPrice").val(),
-                tobeReserve        :   $("#orderTobeReserve").val(),
+                totPayAmt        :   nullToZero($("#orderTotPayAmt").val()),
+                totOdAmt        :   nullToZero($("#orderTotOdAmt").val()),
+                cpnDiscAmt        :   nullToZero($("#orderCpnDiscAmt").val()),
+                pdDiscAmt        :   nullToZero($("#orderPdDiscAmt").val()),
+                totDiscAmt        :   nullToZero($("#orderTotDiscAmt").val()),
+                deliPrice        :   nullToZero($("#orderDeliPrice").val()),
+                tobeReserve        :   nullToZero($("#orderTobeReserve").val()),
                 // od.OD_INFO_DTL 관련 파라미터
                 pdCode        :   pdCodeArr,
                 pdCount        :   pdCountArr,
                 pdOptCode        :   "",
+                pdDiscAmtDtl        :   pdDiscAmtArr,
+                cpnCode        :   cpnCodeArr,
+                cpnDiscAmtDtl        :   cpnDiscAmtArr,
             }
             ajax("/order/addOrder", param, function(returnData){
                 console.log(returnData)
@@ -1221,37 +1253,42 @@ document.addEventListener('DOMContentLoaded', function () {
         var discPriceSum = 0; // 총 할인금액
         var discPrice = 0; // 할인 적용 금액
         var pdDiscAmt = 0; // 상품 할인 금액
+        var pdDiscAmtArr = []; // od.OD_INFO_DTL에 담길 상품별 할인 금액
         var cpnDiscAmt = 0; // 쿠폰 할인 금액
         for(var i = 0; i < provider.getJsonRows().length; i++) {
             // pdCount가 undefined면 1개인거니까 그냥 정상적으로 정가 계산해주고
             // 값이 실려있으면 임의로 수정한거니까 해당 개수만큼 계산해주기
             if(provider.getJsonRow(i).pdCount != undefined){
-                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+                originalPriceSum += parseFloat(provider.getJsonRow(i).pdPrice) * parseFloat(provider.getJsonRow(i).pdCount);
             } else {
-                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice);
+                originalPriceSum += parseFloat(provider.getJsonRow(i).pdPrice);
             }
             if(providerDisc.getJsonRows().length > 0) {
                 // 할인코드가 Null이 아니면, 즉 할인중인 상품이라면 할인가 적용
                 if(providerDisc.getJsonRow(i).discCode != null) {
                     // 카운트가 있는 경우
                     if(provider.getJsonRow(i).pdCount != undefined) {
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount);
-                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount);
+                        pdDiscAmt += parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                        pdDiscAmtArr.push(parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount));
                     } else { // 카운트 없는 경우
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
-                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
+                        pdDiscAmt += parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                        pdDiscAmtArr.push(parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100);
                     }
-                    priceSum += parseInt(discPrice);
+                    priceSum += parseFloat(discPrice);
                 }
                 // 할인코드가 null이면, 즉 할인중이지 않은 상품이라면 상품 정가 그대로 적용
                 else {
                     // 카운트가 있는 경우
                     if(provider.getJsonRow(i).pdCount != undefined) {
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * parseFloat(provider.getJsonRow(i).pdCount);
                     } else {
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice);
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice);
                     }
-                    priceSum += parseInt(discPrice);
+                    // 할인중인 상품이 아니라면 0 실어주기
+                    pdDiscAmtArr.push(0);
+                    priceSum += parseFloat(discPrice);
                 }
             }
         }
@@ -1265,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 배송비
         if(originalPriceSum > 30000) {
             $("#orderDeliPrice").val(0);
-            $("#infoDeliPrice").text(); //배송비 포함여부 info
+            $("#infoDeliPrice").text(""); //배송비 포함여부 info
         } else {
             $("#orderDeliPrice").val(3000);
             $("#infoDeliPrice").text("배송비 포함"); //배송비 포함여부 info
@@ -1274,6 +1311,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#orderPdDiscAmt").val(pdDiscAmt); //상품할인금액
         $("#orderCpnDiscAmt").val(cpnDiscAmt); //쿠폰할인금액
         $("#orderTotDiscAmt").val(discPriceSum); //총할인금액
+        $("#hiddenPdDiscAmt").val(pdDiscAmtArr); //상품별 할인금액
         $("#orderTotPayAmt").val(priceSum + parseFloat($("#orderDeliPrice").val())); //총결제금액
     }
     // 쿠폰 적용하려면 쿠폰 그리드에서 체크박스 선택하고 적용버튼 누르면 쿠폰 할인도 같이 적용
@@ -1283,15 +1321,18 @@ document.addEventListener('DOMContentLoaded', function () {
         var discPriceSum = 0; // 총 할인금액
         var discPrice = 0; // 할인 적용 금액
         var pdDiscAmt = 0; // 상품 할인 금액
+        var pdDiscAmtArr = []; // od.OD_INFO_DTL에 담길 상품별 할인 금액
         var cpnDiscAmt = 0; // 쿠폰 할인 금액
+        var cpnDiscAmtArr = []; // od.OD_INFO_DTL에 담길 상품별 할인 금액
+        var cpnCodeArr = []; // od.OD_INFO_DTL에 담길 상품별 쿠폰코드
         var checkedCpn = gridViewCpn.getCheckedRows();
         for(var i = 0; i < provider.getJsonRows().length; i++) {
             // pdCount가 undefined면 1개인거니까 그냥 정상적으로 정가 계산해주고
             // 카운트 값이 실려있으면 임의로 수정한거니까 해당 개수만큼 계산해주기
             if(provider.getJsonRow(i).pdCount != undefined){
-                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+                originalPriceSum += parseFloat(provider.getJsonRow(i).pdPrice) * parseFloat(provider.getJsonRow(i).pdCount);
             } else {
-                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice);
+                originalPriceSum += parseFloat(provider.getJsonRow(i).pdPrice);
             }
             // 할인 그리드 그려져있을때만
             if(providerDisc.getJsonRows().length > 0) {
@@ -1299,128 +1340,180 @@ document.addEventListener('DOMContentLoaded', function () {
                 if(providerDisc.getJsonRow(i).discCode != null) {
                     // 카운트가 있는 경우
                     if(provider.getJsonRow(i).pdCount != undefined) {
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount);
-                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount);
+                        pdDiscAmt += parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                        pdDiscAmtArr.push(parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseFloat(provider.getJsonRow(i).pdCount));
                     } else { // 카운트 없는 경우
-                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
-                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
+                        pdDiscAmt += parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                        pdDiscAmtArr.push(parseFloat(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100);
                     }
                     // 해당 쿠폰이 체크되어있지 않다면 할인가 적용된 가격 그대로
                     if(checkedCpn.indexOf(i) < 0) {
                         priceSum += parseFloat(discPrice);
+                        cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                        cpnCodeArr.push(""); // 상품별 쿠폰코드 비워서 실어주기
                     }
                     // 해당 쿠폰이 체크되어있다면 다음 조건 적용
                     else {
                         if(providerCpn.getJsonRows().length > 0) {
                             // 쿠폰코드가 null이 아닐때 (쿠폰정보가 있음)
                             if(providerCpn.getJsonRow(i).cpnCode != null) {
-                                // 사용여부가 Y면 쿠폰할인 적용
-                                if(providerCpn.getJsonRow(i).useYn != null) {
-                                    if(providerCpn.getJsonRow(i).useYn == 'Y') {
-                                        if(providerCpn.getJsonRow(i).minOdAmt != null) {
-                                            // 총주문금액이 최소주문금액보다 작다면 정가 그대로
-                                            if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
-                                                priceSum += parseFloat(discPrice);
-                                            }
-                                            // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
-                                            else {
-                                                // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
-                                                if(providerCpn.getJsonRow(i).cpnPrice != null) {
-                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                    if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
-                                                        // 카운트가 있는 경우
-                                                        if(provider.getJsonRow(i).pdCount != undefined) {
-                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                        } else { // 카운트 없는 경우
+                                // 고객코드가 null이 아닐때
+                                if(providerCpn.getJsonRow(i).custCode != null) {
+                                    // 고객코드가 주문자 고객코드와 동일하다면 쿠폰 사용 가능
+                                    if(providerCpn.getJsonRow(i).custCode == $("#orderMemberCode").val()) {
+                                        // 사용여부가 Y면 쿠폰할인 적용
+                                        if(providerCpn.getJsonRow(i).useYn != null) {
+                                            if(providerCpn.getJsonRow(i).useYn == 'Y') {
+                                                if(providerCpn.getJsonRow(i).minOdAmt != null) {
+                                                    // 총주문금액이 최소주문금액보다 작다면 정가 그대로
+                                                    if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
+                                                        priceSum += parseFloat(discPrice);
+                                                    }
+                                                    // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
+                                                    else {
+                                                        // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                                        if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                            if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                                // 카운트가 있는 경우
+                                                                if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                    cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount))
+                                                                    cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                                } else { // 카운트 없는 경우
+                                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                                    cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                                    cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                                }
+                                                            }
+                                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                            else {
+                                                                // 카운트가 있는 경우
+                                                                if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                    cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                    cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                                } else { // 카운트 없는 경우
+                                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                                    cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice));
+                                                                    cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                                }
+                                                            }
+                                                        }
+                                                        // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                                        else {
+                                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                            if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                                // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                            else {
+                                                                // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
+                                                                priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                                cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100);
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
+                                                else {
+                                                    // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                                    if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                        // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                        if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                            // 카운트가 있는 경우
+                                                            if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            } else { // 카운트 없는 경우
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                        // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                        else {
+                                                            // 카운트가 있는 경우
+                                                            if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            } else { // 카운트 없는 경우
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                    }
+                                                    // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                                    else {
+                                                        // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                        if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
                                                             priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
                                                             cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
                                                         }
-                                                    }
-                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                                    else {
-                                                        // 카운트가 있는 경우
-                                                        if(provider.getJsonRow(i).pdCount != undefined) {
-                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                        } else { // 카운트 없는 경우
-                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
-                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                        // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                        else {
+                                                            priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                            cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100);
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
                                                         }
                                                     }
                                                 }
-                                                // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
-                                                else {
-                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                    if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
-                                                        // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                                    }
-                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                                    else {
-                                                        // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
-                                                        priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
-                                                        cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
-                                                    }
-                                                }
+                                            }
+                                            // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                            else {
+                                                priceSum += parseFloat(discPrice);
+                                                cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                                cpnCodeArr.push("");
                                             }
                                         }
-                                        // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
+                                        // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
                                         else {
-                                            // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
-                                            if(providerCpn.getJsonRow(i).cpnPrice != null) {
-                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
-                                                    // 카운트가 있는 경우
-                                                    if(provider.getJsonRow(i).pdCount != undefined) {
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                    } else { // 카운트 없는 경우
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                                    }
-                                                }
-                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                                else {
-                                                    // 카운트가 있는 경우
-                                                    if(provider.getJsonRow(i).pdCount != undefined) {
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                    } else { // 카운트 없는 경우
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
-                                                    }
-                                                }
-                                            }
-                                            // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
-                                            else {
-                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
-                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                                }
-                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                                else {
-                                                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
-                                                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
-                                                }
-                                            }
+                                            priceSum += parseFloat(discPrice);
+                                            cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                            cpnCodeArr.push("");
                                         }
                                     }
-                                    // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                    // 고객코드가 주문자 고객코드와 불일치한다면 상품정가 그대로 적용
                                     else {
                                         priceSum += parseFloat(discPrice);
+                                        cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                        cpnCodeArr.push("");
                                     }
                                 }
-                                // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
+                                // 고객코드 null이면 상품정가 그대로 적용
                                 else {
                                     priceSum += parseFloat(discPrice);
+                                    cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                    cpnCodeArr.push("");
                                 }
                             }
                             // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
                             else {
                                 priceSum += parseFloat(discPrice);
+                                cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                cpnCodeArr.push("");
                             }
                         }
                     }
@@ -1433,127 +1526,179 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else { // 카운트 없는 경우
                         discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice);
                     }
+                    pdDiscAmtArr.push(0); // 할인 적용 상품이 아니므로 0 값 실어주기
                     // 해당 쿠폰이 체크되어있지 않다면 상품 정가 그대로
                     if(checkedCpn.indexOf(i) < 0) {
                         priceSum += parseFloat(discPrice);
+                        cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
                     }
                     // 해당 쿠폰이 체크되어있다면 다음 조건 적용
                     else {
                         // 쿠폰코드가 null이 아닐때 (쿠폰정보가 있음)
                         if(providerCpn.getJsonRow(i).cpnCode != null) {
-                            // 사용여부가 Y면 쿠폰할인 적용
-                            if(providerCpn.getJsonRow(i).useYn != null) {
-                                if(providerCpn.getJsonRow(i).useYn == 'Y') {
-                                    if(providerCpn.getJsonRow(i).minOdAmt != null) {
-                                        // 총주문금액이 최소주문금액보다 작다면 정가 그대로
-                                        if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
-                                            priceSum += parseFloat(discPrice);
-                                        }
-                                        // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
-                                        else {
-                                            // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
-                                            if(providerCpn.getJsonRow(i).cpnPrice != null) {
-                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
-                                                    // 카운트가 있는 경우
-                                                    if(provider.getJsonRow(i).pdCount != undefined) {
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                    } else { // 카운트 없는 경우
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                                    }
+                            // 고객코드가 Null이 아닐때
+                            if(providerCpn.getJsonRow(i).custCode != null) {
+                                // 고객코드가 주문자 고객코드와 동일하다면 쿠폰 적용
+                                if(providerCpn.getJsonRow(i).custCode == $("#orderMemberCode").val()) {
+                                    // 사용여부가 Y면 쿠폰할인 적용
+                                    if(providerCpn.getJsonRow(i).useYn != null) {
+                                        if(providerCpn.getJsonRow(i).useYn == 'Y') {
+                                            if(providerCpn.getJsonRow(i).minOdAmt != null) {
+                                                // 총주문금액이 최소주문금액보다 작다면 정가 그대로
+                                                if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
+                                                    priceSum += parseFloat(discPrice);
                                                 }
-                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
                                                 else {
-                                                    // 카운트가 있는 경우
-                                                    if(provider.getJsonRow(i).pdCount != undefined) {
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                    } else { // 카운트 없는 경우
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                    // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                                    if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                        // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                        if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                            // 카운트가 있는 경우
+                                                            if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            } else { // 카운트 없는 경우
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                        // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                        else {
+                                                            // 카운트가 있는 경우
+                                                            if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            } else { // 카운트 없는 경우
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                    }
+                                                    // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                                    else {
+                                                        // 쿠폰 할인가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                        if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                            // 카운트가 있는 경우
+                                                            if(provider.getJsonRow(i).pdCount != undefined) {
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            } else { // 카운트 없는 경우
+                                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                                cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                                cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                            }
+                                                        }
+                                                        // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                        else {
+                                                            // 할인쪽에서 이미 카운트를 세서 왔기 떄문에 쿠폰 비율쪽에선 카운트 생각 안해도됨
+                                                            priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                            cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100);
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                        }
                                                     }
                                                 }
                                             }
-                                            // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                            // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
                                             else {
-                                                // 쿠폰 할인가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                                if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
-                                                    // 카운트가 있는 경우
-                                                    if(provider.getJsonRow(i).pdCount != undefined) {
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                    } else { // 카운트 없는 경우
-                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                                if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                    if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                        // 카운트가 있는 경우
+                                                        if(provider.getJsonRow(i).pdCount != undefined) {
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                        } else { // 카운트 없는 경우
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                        }
+                                                    }
+                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                    else {
+                                                        // 카운트가 있는 경우
+                                                        if(provider.getJsonRow(i).pdCount != undefined) {
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount));
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                        } else { // 카운트 없는 경우
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                            cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).cpnPrice));
+                                                            cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                        }
                                                     }
                                                 }
-                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
                                                 else {
-                                                    // 할인쪽에서 이미 카운트를 세서 왔기 떄문에 쿠폰 비율쪽에선 카운트 생각 안해도됨
-                                                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
-                                                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                    if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                        // 비율 할인 시에는 쿠폰쪽에선 카운트 생각 안해도됨
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                        cpnDiscAmtArr.push(parseFloat(providerCpn.getJsonRow(i).maxAmt));
+                                                        cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                    }
+                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                    else {
+                                                        priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                        cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                        cpnDiscAmtArr.push(parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100);
+                                                        cpnCodeArr.push(providerCpn.getJsonRow(i).cpnCode);
+                                                    }
                                                 }
                                             }
+                                        }
+                                        // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                        else {
+                                            priceSum += parseFloat(discPrice);
+                                            cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                            cpnCodeArr.push("");
                                         }
                                     }
-                                    // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
+                                    // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
                                     else {
-                                        // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
-                                        if(providerCpn.getJsonRow(i).cpnPrice != null) {
-                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                            if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
-                                                // 카운트가 있는 경우
-                                                if(provider.getJsonRow(i).pdCount != undefined) {
-                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                } else { // 카운트 없는 경우
-                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                                }
-                                            }
-                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                            else {
-                                                // 카운트가 있는 경우
-                                                if(provider.getJsonRow(i).pdCount != undefined) {
-                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
-                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
-                                                } else { // 카운트 없는 경우
-                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
-                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
-                                                }
-                                            }
-                                        }
-                                        // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
-                                        else {
-                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
-                                            if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
-                                                // 비율 할인 시에는 쿠폰쪽에선 카운트 생각 안해도됨
-                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
-                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
-                                            }
-                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
-                                            else {
-                                                priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
-                                                cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
-                                            }
-                                        }
+                                        priceSum += parseFloat(discPrice);
+                                        cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                        cpnCodeArr.push("");
                                     }
                                 }
-                                // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                // 고객코드와 주문자 고객코드가 불일치한다면 상품정가 그대로 적용
                                 else {
                                     priceSum += parseFloat(discPrice);
+                                    cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                    cpnCodeArr.push("");
                                 }
                             }
-                            // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
+                            // 고객코드가 null이면 상품정가 그대로 적용
                             else {
                                 priceSum += parseFloat(discPrice);
+                                cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                                cpnCodeArr.push("");
                             }
                         }
                         // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
                         else {
                             priceSum += parseFloat(discPrice);
+                            cpnDiscAmtArr.push(0); // 상품별 쿠폰할인금액 0원으로 실어주기
+                            cpnCodeArr.push("");
                         }
                     }
                 }
@@ -1570,7 +1715,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 배송비
         if(originalPriceSum > 30000) {
             $("#orderDeliPrice").val(0);
-            $("#infoDeliPrice").text(); //배송비 포함여부 info
+            $("#infoDeliPrice").text(""); //배송비 포함여부 info
         } else {
             $("#orderDeliPrice").val(3000);
             $("#infoDeliPrice").text("배송비 포함"); //배송비 포함여부 info
@@ -1579,6 +1724,9 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#orderPdDiscAmt").val(pdDiscAmt); //상품할인금액
         $("#orderCpnDiscAmt").val(cpnDiscAmt); //쿠폰할인금액
         $("#orderTotDiscAmt").val(discPriceSum); //총할인금액
+        $("#hiddenPdDiscAmt").val(pdDiscAmtArr); //상품별 상품할인금액
+        $("#hiddenCpnDiscAmt").val(cpnDiscAmtArr); //상품별 쿠폰할인금액
+        $("#hiddenCpnCode").val(cpnCodeArr); //상품별 쿠폰코드
         $("#orderTotPayAmt").val(priceSum + parseFloat($("#orderDeliPrice").val())); //총결제금액
     }
 
@@ -1604,6 +1752,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     // 상품조회 추가 버튼 클릭시
     $("#orderOdAdd").click(function(){
+        if($("#orderMemberCode").val() == "") {
+            alert("고객코드를 먼저 입력하십시오.")
+            return;
+        }
+
         var checkedRowProd = gridView.getCheckedRows();
         var checkedProdList = [];
         var checkedPdCntList = [];
@@ -1618,7 +1771,8 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#hiddenPdCode").val(checkedProdList);
         $("#hiddenPdCnt").val(checkedPdCntList);
         var param = {
-            PD_CODE		:	checkedProdList
+            PD_CODE		:	checkedProdList,
+            CUST_CODE   :   $("#orderMemberCode").val()
         };
         // 할인가 조회
         ajax("/product/showPdDiscPrice", param, function(returnData){
@@ -1639,6 +1793,8 @@ document.addEventListener('DOMContentLoaded', function () {
         providerDisc.clearRows(); // 할인가 그리드 비우기
         providerCpn.clearRows(); // 쿠폰가 그리드 비우기
         $("#hiddenPdCode").val("");
+        $("#hiddenPdCnt").val("");
+        $("#hiddenPdDiscAmt").val("");
 
         var priceSum = 0; // 총 결제금액
         var originalPriceSum = 0; // 총 주문금액 (정가)
@@ -1672,7 +1828,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 삭제했으니까 주문금액 계산 다시해주기
         // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
-        setTimeout(setPriceSumWithoutCoupon, 1000)
+        setTimeout(setPriceSumWithCoupon, 1000)
     });
     // 할인가조회 삭제 버튼 클릭시. 할인가 쿠폰가 어느곳에서 삭제를 하든 양쪽에서 같이 삭제되게.
     $("#orderPdDiscRemove").click(function(){
@@ -1696,7 +1852,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 삭제했으니까 주문금액 계산 다시해주기
         // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
-        setTimeout(setPriceSumWithoutCoupon, 1000)
+        setTimeout(setPriceSumWithCoupon, 1000)
     });
     // 쿠폰가조회 삭제 버튼 클릭시
     $("#orderPdCpnRemove").click(function(){
@@ -1720,7 +1876,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 삭제했으니까 주문금액 계산 다시해주기
         // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
-        setTimeout(setPriceSumWithoutCoupon, 1000)
+        setTimeout(setPriceSumWithCoupon, 1000)
     });
     // 쿠폰가조회 적용 버튼 클릭시
     $("#orderPdCpnApply").click(function(){

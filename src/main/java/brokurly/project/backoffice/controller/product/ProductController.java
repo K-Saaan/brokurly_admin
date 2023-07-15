@@ -419,7 +419,8 @@ public class ProductController {
     @RequestMapping(value = "/showPdCpnPrice")
     public Map<String, Object> showPdCpnPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
         List<String> pdCode = (List<String>) param.get("PD_CODE");
-        List<ProductCpnPriceDto> gridDataList = couponDtlRepository.showPdCpnPrice(pdCode);
+        String custCode = (String) param.get("CUST_CODE");
+        List<ProductCpnPriceDto> gridDataList = couponDtlRepository.showPdCpnPrice(pdCode, custCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
         return result;

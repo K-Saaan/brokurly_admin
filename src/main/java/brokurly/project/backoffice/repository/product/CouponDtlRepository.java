@@ -25,12 +25,15 @@ public interface CouponDtlRepository extends JpaRepository<CouponDtlEntity, Coup
     void updateUseY(@Param("cpnCode") String cpnCode, @Param("pdCode") List<String> pdCode, @Param("useYn") String useYn);
 
     @Query("select new brokurly.project.backoffice.dto.product.ProductCpnPriceDto(p.pdCode, p.pdNm, p.pdPrice, cd.cpnCode, c.cpnNm, cd.useYn, " +
-            "c.minOdAmt, c.maxAmt, c.cpnPrice, c.cpnRatio) " +
+            "c.minOdAmt, c.maxAmt, c.cpnPrice, c.cpnRatio, ch.custCode ) " +
             "from CouponDtlEntity cd " +
             "join CouponEntity c " +
             "on cd.cpnCode = c.cpnCode " +
             "right outer join ProductEntity p " +
             "on cd.pdCode = p.pdCode " +
+            "left outer join CouponHistEntity ch " +
+            "on cd.cpnCode = ch.cpnCode " +
+            "and ch.custCode = :custCode " +
             "where p.pdCode in (:pdCode) ")
-    List<ProductCpnPriceDto> showPdCpnPrice(@Param("pdCode") List<String> pdCode);
+    List<ProductCpnPriceDto> showPdCpnPrice(@Param("pdCode") List<String> pdCode, @Param("custCode") String custCode);
 }

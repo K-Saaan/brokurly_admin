@@ -249,3 +249,6 @@
 </div>
 <input id="hiddenPdCode" type="text" style="display: none;">
 <input id="hiddenPdCnt" type="text" style="display: none;">
+<input id="hiddenPdDiscAmt" type="text" style="display: none;">
+<input id="hiddenCpnDiscAmt" type="text" style="display: none;">
+<input id="hiddenCpnCode" type="text" style="display: none;">

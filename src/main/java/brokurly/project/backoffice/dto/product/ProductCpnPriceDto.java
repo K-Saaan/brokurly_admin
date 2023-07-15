@@ -19,9 +19,11 @@ public class ProductCpnPriceDto {
     private BigDecimal maxAmt;
     private BigDecimal cpnPrice;
     private BigDecimal cpnRatio;
+    private String custCode;
     @Builder
     public ProductCpnPriceDto(String pdCode, String pdNm, String pdPrice, String cpnCode, String cpnNm, String useYn,
-                              BigDecimal minOdAmt, BigDecimal maxAmt, BigDecimal cpnPrice, BigDecimal cpnRatio) {
+                              BigDecimal minOdAmt, BigDecimal maxAmt, BigDecimal cpnPrice, BigDecimal cpnRatio,
+                              String custCode) {
         this.pdCode = pdCode;
         this.pdNm = pdNm;
         this.pdPrice = pdPrice;
@@ -32,5 +34,6 @@ public class ProductCpnPriceDto {
         this.maxAmt = maxAmt;
         this.cpnPrice = cpnPrice;
         this.cpnRatio = cpnRatio;
+        this.custCode = custCode;
     }
 }
