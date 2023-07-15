@@ -1,10 +1,12 @@
 package brokurly.project.backoffice.controller.order;
 
 import brokurly.project.backoffice.common.Consts;
+import brokurly.project.backoffice.dto.order.OrderDto;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
 import brokurly.project.backoffice.repository.order.DeliLocInfoRepository;
 import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.order.DeliLocInfoService;
+import brokurly.project.backoffice.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ public class OrderController {
     private final DeliLocInfoRepository deliLocInfoRepository;
     private final SequenceService sequenceService;
     private final DeliLocInfoService deliLocInfoService;
+    private final OrderService orderService;
 
     @GetMapping("/regOrder")
     public String regOrder() {
@@ -53,16 +56,7 @@ public class OrderController {
 
     @ResponseBody
     @PostMapping(value = "/addOrder", produces = "application/json;charset=utf-8")
-    public int addOrder(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-        try {
-            HttpSession session = request.getSession();
-            String regId = (String) session.getAttribute("mngId");
-
-            String orderCode = sequenceService.createNewSequence(Consts.TBL_CODE.OD_INFO, 10);
-            return 1;
-        } catch (Exception e) {
-            logger.info("error");
-            return 0;
-        }
+    public int addOrder(@RequestBody OrderDto orderDto, HttpServletRequest request) throws Throwable {
+        return orderService.addOrder(orderDto, request);
     }
 }

@@ -7,9 +7,6 @@
     }
 </style>
 <h3>주문정보 등록 화면</h3>
-<div class="container bottomSpace" style="float:right;">
-    <button type="button" style="float: right; margin-bottom: 10px;" class="btn btn-primary" id="regOrder">등록</button>
-</div>
 <h5>주문고객 조회</h5>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
@@ -34,47 +31,47 @@
     </div>
 </div>
 <hr>
-<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
-    <div style="padding: 10px 15px; flex: 0 15%;">
-        <b>주문일시</b>
-    </div>
-    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
-        <input id="datepickerOrder" type="text">
-    </div>
-</div>
-<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
-    <div style="padding: 10px 15px; flex: 0 15%; ">
-        <b>주문상태</b>
-    </div>
-    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; ">
-        <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle dropdown-toggle-split toggleOrderState" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
-                <span id="orderStateValue" class="visually-hidden"></span>
-            </button>
-            <ul class="dropdown-menu orderStateMenu" id="dropdownOrderState">
-                <li class="dropdown-item itemOrderState" value="">선택하세요</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
-    <div style="padding: 10px 15px; flex: 0 15%;">
-        <b>납부방식</b>
-    </div>
-    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
-        <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle dropdown-toggle-split toggleOrderPayState" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
-                <span id="orderPayStateValue" class="visually-hidden"></span>
-            </button>
-            <ul class="dropdown-menu payStateMenu" id="dropdownOrderPayState">
-                <li class="dropdown-item itemOrderPayState" value="">선택하세요</li>
-                <li class="dropdown-item itemOrderPayState" value="10">납부전</li>
-                <li class="dropdown-item itemOrderPayState" value="20">납부완료</li>
-                <li class="dropdown-item itemOrderPayState" value="30">환불처리</li>
-            </ul>
-        </div>
-    </div>
-</div>
+<%--<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">--%>
+<%--    <div style="padding: 10px 15px; flex: 0 15%;">--%>
+<%--        <b>주문일시</b>--%>
+<%--    </div>--%>
+<%--    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">--%>
+<%--        <input id="datepickerOrder" type="text">--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">--%>
+<%--    <div style="padding: 10px 15px; flex: 0 15%; ">--%>
+<%--        <b>주문상태</b>--%>
+<%--    </div>--%>
+<%--    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; ">--%>
+<%--        <div class="btn-group">--%>
+<%--            <button type="button" class="btn dropdown-toggle dropdown-toggle-split toggleOrderState" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--                <span id="orderStateValue" class="visually-hidden"></span>--%>
+<%--            </button>--%>
+<%--            <ul class="dropdown-menu orderStateMenu" id="dropdownOrderState">--%>
+<%--                <li class="dropdown-item itemOrderState" value="">선택하세요</li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">--%>
+<%--    <div style="padding: 10px 15px; flex: 0 15%;">--%>
+<%--        <b>납부방식</b>--%>
+<%--    </div>--%>
+<%--    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">--%>
+<%--        <div class="btn-group">--%>
+<%--            <button type="button" class="btn dropdown-toggle dropdown-toggle-split toggleOrderPayState" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--                <span id="orderPayStateValue" class="visually-hidden"></span>--%>
+<%--            </button>--%>
+<%--            <ul class="dropdown-menu payStateMenu" id="dropdownOrderPayState">--%>
+<%--                <li class="dropdown-item itemOrderPayState" value="">선택하세요</li>--%>
+<%--                <li class="dropdown-item itemOrderPayState" value="10">납부전</li>--%>
+<%--                <li class="dropdown-item itemOrderPayState" value="20">납부완료</li>--%>
+<%--                <li class="dropdown-item itemOrderPayState" value="30">환불처리</li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <h5>배송지코드 조회</h5>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
@@ -161,6 +158,7 @@
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 5%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdDiscReset">초기화</button>
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdRemove">삭제</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderOdAdd">추가</button>
         <button type="button" class="btn btn-primary" style="float: right;" id="orderOdSearch">조회</button>
     </div>
@@ -244,3 +242,10 @@
     </div>
     <span id="infoDeliPrice" style="padding-top: 10px; color: red;"></span>
 </div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit;">
+    <div class="container bottomSpace" style="float:right;">
+        <button type="button" style="float: right; margin-bottom: 10px;" class="btn btn-primary" id="regOrder">등록</button>
+    </div>
+</div>
+<input id="hiddenPdCode" type="text" style="display: none;">
+<input id="hiddenPdCnt" type="text" style="display: none;">
