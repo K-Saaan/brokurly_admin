@@ -219,6 +219,20 @@ public class CipherUtil {
                         }
                         method.invoke(obj, chgValue);
                     }
+                }else if (method.getName().equals("getCustTel")) {  // 상세주소
+                    method = clz.getMethod("getCustTel", (Class<?>[]) null);
+
+                    invokeObj = method.invoke(obj);
+                    if (invokeObj != null) {
+                        orgValue = String.valueOf(method.invoke(obj));
+                        method = clz.getMethod("setCustTel", new Class[]{String.class});
+                        try {
+                            chgValue = AES256Util.deCode(orgValue, key);
+                        } catch (Exception e) {
+                            chgValue = "";
+                        }
+                        method.invoke(obj, chgValue);
+                    }
                 }
             } catch (IllegalAccessException e) {
                 logger.error("CipherUtil IllegalAccessException " + e);
