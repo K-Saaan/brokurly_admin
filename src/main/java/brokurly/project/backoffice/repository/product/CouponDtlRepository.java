@@ -3,6 +3,7 @@ package brokurly.project.backoffice.repository.product;
 import java.util.List;
 
 import brokurly.project.backoffice.dto.product.CouponDtlDto;
+import brokurly.project.backoffice.dto.product.ProductCpnPriceDto;
 import brokurly.project.backoffice.entity.product.CouponDtlEntity;
 import brokurly.project.backoffice.entity.product.CouponList;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -22,4 +23,14 @@ public interface CouponDtlRepository extends JpaRepository<CouponDtlEntity, Coup
     @Modifying
     @Query(value = "update pd.cpn_dtl set use_yn = :useYn where CPN_CODE = :cpnCode and PD_CODE in (:pdCode)", nativeQuery = true)
     void updateUseY(@Param("cpnCode") String cpnCode, @Param("pdCode") List<String> pdCode, @Param("useYn") String useYn);
+
+    @Query("select new brokurly.project.backoffice.dto.product.ProductCpnPriceDto(p.pdCode, p.pdNm, p.pdPrice, cd.cpnCode, c.cpnNm, cd.useYn, " +
+            "c.minOdAmt, c.maxAmt, c.cpnPrice, c.cpnRatio) " +
+            "from CouponDtlEntity cd " +
+            "join CouponEntity c " +
+            "on cd.cpnCode = c.cpnCode " +
+            "right outer join ProductEntity p " +
+            "on cd.pdCode = p.pdCode " +
+            "where p.pdCode in (:pdCode) ")
+    List<ProductCpnPriceDto> showPdCpnPrice(@Param("pdCode") List<String> pdCode);
 }

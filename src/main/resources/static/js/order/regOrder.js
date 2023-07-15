@@ -11,21 +11,82 @@ document.addEventListener('DOMContentLoaded', function () {
     const containerDeli = document.getElementById('orderDeliGrid');
     const providerDeli = new RealGrid.LocalDataProvider(false);
     const gridViewDeli = new RealGrid.GridView(containerDeli);
+    // 할인가그리드를 그리기 위한 사전 설정
+    const containerDisc = document.getElementById('orderPdDiscGrid');
+    const providerDisc = new RealGrid.LocalDataProvider(false);
+    const gridViewDisc = new RealGrid.GridView(containerDisc);
+    // 쿠폰가그리드를 그리기 위한 사전 설정
+    const containerCpn = document.getElementById('orderPdCpnGrid');
+    const providerCpn = new RealGrid.LocalDataProvider(false);
+    const gridViewCpn = new RealGrid.GridView(containerCpn);
 
     gridView.setDataSource(provider);
     gridViewMember.setDataSource(providerMember);
     gridViewDeli.setDataSource(providerDeli);
+    gridViewDisc.setDataSource(providerDisc);
+    gridViewCpn.setDataSource(providerCpn);
+
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewMember.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
     gridViewDeli.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewDisc.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    gridViewCpn.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
 
-    // 데이트피커 날짜 형식 지정
-    $("#datepickerOrder").datepicker({
-        dateFormat: "yy-mm-dd"
-    });
+    // insert시 맨 왼쪽에 + 기호 안보이게 처리
+    gridViewDisc.setStateBar({visible: false});
+    gridViewCpn.setStateBar({visible: false});
+
+    // 상품 그리드 정렬 못하게 막기
+    gridView.sortingOptions.style = 'none';
+
+    // 직접 수정했을때의 동작
+    gridView.onEditRowChanged = function (grid, itemIndex, dataRow, field, oldValue, newValue) {
+        setTimeout(setPriceSumWithCoupon, 1000);
+        setTimeout(function () {
+            var arrPdCnt = []
+            for(var i = 0; i < provider.getJsonRows().length; i++) {
+                if(provider.getJsonRow(i).pdCount != null) {
+                    arrPdCnt.push(provider.getJsonRow(i).pdCount);
+                } else {
+                    arrPdCnt.push("1");
+                }
+            }
+            $("#hiddenPdCnt").val(arrPdCnt);
+        }, 1000);
+
+    };
+
+    function getToday() {
+        var today = new Date();
+        var year = addZero(today.getFullYear(), 4);
+        var month = addZero(today.getMonth() + 1, 2);
+        var date = addZero(today.getDate(), 2);
+        var hour = addZero(today.getHours(), 2);
+        var min = addZero(today.getMinutes(), 2);
+        var sec = addZero(today.getSeconds(), 2);
+        var milSec = addZero(today.getMilliseconds(), 3);
+        milSec = milSec.substring(0, 2);
+        var nowTime = year + month + date + hour + min + sec + milSec;
+        return nowTime;
+    }
+    function addZero(x,n) {
+        while (x.toString().length < n) {
+            x = "0" + x;
+        }
+        if(typeof(x) == "number") {
+            x = x.toString();
+        }
+        return x;
+    }
+
+
 
     // 메인그리드 컬럼
     provider.setFields([
+        {
+            fieldName: "pdCount",
+            dataType: "text",
+        },
         {
             fieldName: "pdCode",
             dataType: "text",
@@ -107,6 +168,21 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     gridView.setColumns([
+        {
+            name: "pdCount",
+            fieldName: "pdCount",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품개수",
+            },
+            // 상품개수 컬럼만 직접 수정가능하게 설정
+            styleCallback: function (grid, dataCell) {
+                return {
+                    editable: true
+                }
+            }
+        },
         {
             name: "pdCode",
             fieldName: "pdCode",
@@ -552,6 +628,213 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 할인가그리드 컬럼
+    providerDisc.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdPrice",
+            dataType: "text",
+        },
+        {
+            fieldName: "discCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "discRatio",
+            dataType: "text",
+        },
+    ]);
+
+    gridViewDisc.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "250",
+            header: {
+                text: "상품명",
+            },
+        },
+        {
+            name: "pdPrice",
+            fieldName: "pdPrice",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품가격",
+            },
+        },
+        {
+            name: "discCode",
+            fieldName: "discCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "할인코드",
+            },
+        },
+        {
+            name: "discRatio",
+            fieldName: "discRatio",
+            type: "data",
+            width: "120",
+            header: {
+                text: "할인률",
+            },
+        },
+    ]);
+    // 쿠폰가그리드 컬럼
+    providerCpn.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdPrice",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnNm",
+            dataType: "text",
+        },
+        {
+            fieldName: "useYn",
+            dataType: "text",
+        },
+        {
+            fieldName: "minOdAmt",
+            dataType: "text",
+        },
+        {
+            fieldName: "maxAmt",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnPrice",
+            dataType: "text",
+        },
+        {
+            fieldName: "cpnRatio",
+            dataType: "text",
+        },
+    ]);
+
+    gridViewCpn.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdNm",
+            fieldName: "pdNm",
+            type: "data",
+            width: "250",
+            header: {
+                text: "상품명",
+            },
+        },
+        {
+            name: "pdPrice",
+            fieldName: "pdPrice",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품가격",
+            },
+        },
+        {
+            name: "cpnCode",
+            fieldName: "cpnCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰코드",
+            },
+        },
+        {
+            name: "cpnNm",
+            fieldName: "cpnNm",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰명",
+            },
+        },
+        {
+            name: "useYn",
+            fieldName: "useYn",
+            type: "data",
+            width: "120",
+            header: {
+                text: "사용여부",
+            },
+        },
+        {
+            name: "minOdAmt",
+            fieldName: "minOdAmt",
+            type: "data",
+            width: "120",
+            header: {
+                text: "최소주문금액",
+            },
+        },
+        {
+            name: "maxAmt",
+            fieldName: "maxAmt",
+            type: "data",
+            width: "120",
+            header: {
+                text: "최대할인금액",
+            },
+        },
+        {
+            name: "cpnPrice",
+            fieldName: "cpnPrice",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰금액",
+            },
+        },
+        {
+            name: "cpnRatio",
+            fieldName: "cpnRatio",
+            type: "data",
+            width: "120",
+            header: {
+                text: "쿠폰할인률",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -567,6 +850,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var countDataDeli = 0;
     var pagingIndexDeli = 0;
     var pagingRowsDeli = 50;
+
+    var priceSum = 0; // 총 결제금액
+    var originalPriceSum = 0; // 총 주문금액 (정가)
+    var discPriceSum = 0; // 총 할인금액
 
     // 이름 입력하고 엔터키 눌렀을시 조회되게
     $('#orderPdName').keypress(function(event) {
@@ -757,32 +1044,86 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     $("#regOrder").click(function(){
-        var param = {
-
+        var reply = confirm("등록하시겠습니까?");
+        if(reply) {
+            // if(!$("#orderMemberCode").val()) {
+            //     alert("고객코드를 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#orderDeliLocCode").val()) {
+            //     alert("배송지코드를 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#orderReveNm").val()) {
+            //     alert("수령인을 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#orderReveTelNo").val()) {
+            //     alert("수령인 전화번호를 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#revePlaceValue").val()) {
+            //     alert("수령장소를 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#orderRevePlaceDtl").val()) {
+            //     alert("수령장소 상세정보를 입력하십시오.")
+            //     return;
+            // }
+            // if(!$("#orderTobeReserve").val()) {
+            //     alert("적립 예정금액을 입력하십시오.")
+            //     return;
+            // }
+            var pdCodeArr = $("#hiddenPdCode").val().split(",")
+            var pdCountArr = $("#hiddenPdCount").val().split(",")
+            var param = {
+                // od.OD_INFO 관련 파라미터
+                custCode        :   $("#orderMemberCode").val(),
+                odDate          :   getToday(),
+                odState         :   "10",
+                payState        :   "10",
+                deliLocCode        :   $("#orderDeliLocCode").val(),
+                reveNm        :   $("#orderReveNm").val(),
+                reveTelNo        :   $("#orderReveTelNo").val(),
+                revePlace        :   $("#revePlaceValue").val(),
+                revePlaceDtl        :   $("#orderRevePlaceDtl").val(),
+                deliComMsg        :   $("#orderDeliComMsg").val(),
+                totPayAmt        :   $("#infoDeliPrice").val(),
+                totOdAmt        :   $("#orderTotOdAmt").val(),
+                cpnDiscAmt        :   $("#orderCpnDiscAmt").val(),
+                pdDiscAmt        :   $("#orderPdDiscAmt").val(),
+                totDiscAmt        :   $("#orderPdDiscAmt").val(),
+                deliPrice        :   $("#orderDeliPrice").val(),
+                tobeReserve        :   $("#orderTobeReserve").val(),
+                // od.OD_INFO_DTL 관련 파라미터
+                pdCode        :   pdCodeArr,
+                pdCount        :   pdCountArr,
+                pdOptCode        :   "",
+            }
+            ajax("/order/addOrder", param, function(returnData){
+                console.log(returnData)
+            })
         }
-        ajax("/order/addOrder", param, function(returnData){
-            console.log(returnData)
-        })
     });
 
-    $(".toggleOrderState").click(function(){
-        if($('.orderStateMenu').is(':visible')){
-            $('.orderStateMenu').hide();
-            $('.itemOrderState').hide();
-        } else {
-            $('.orderStateMenu').show();
-            $('.itemOrderState').show();
-        }
-    });
-    $(".toggleOrderPayState").click(function(){
-        if($('.payStateMenu').is(':visible')){
-            $('.payStateMenu').hide();
-            $('.itemOrderPayState').hide();
-        } else {
-            $('.payStateMenu').show();
-            $('.itemOrderPayState').show();
-        }
-    });
+    // $(".toggleOrderState").click(function(){
+    //     if($('.orderStateMenu').is(':visible')){
+    //         $('.orderStateMenu').hide();
+    //         $('.itemOrderState').hide();
+    //     } else {
+    //         $('.orderStateMenu').show();
+    //         $('.itemOrderState').show();
+    //     }
+    // });
+    // $(".toggleOrderPayState").click(function(){
+    //     if($('.payStateMenu').is(':visible')){
+    //         $('.payStateMenu').hide();
+    //         $('.itemOrderPayState').hide();
+    //     } else {
+    //         $('.payStateMenu').show();
+    //         $('.itemOrderPayState').show();
+    //     }
+    // });
     $(".toggleRevePlace").click(function(){
         if($('.revePlaceMenu').is(':visible')){
             $('.revePlaceMenu').hide();
@@ -794,27 +1135,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 드롭다운 리스트 밖으로 마우스 옮겼을때 드롭다운 해제되도록 설정
-    $(".toggleOrderState").mouseleave(function(){
-        $(".orderStateMenu").mouseover(function(){
-            $('.orderStateMenu').show();
-            $('.itemOrderState').show();
-        });
-        $(".orderStateMenu").mouseleave(function(){
-            $('.orderStateMenu').hide();
-            $('.itemOrderState').hide();
-        })
-    });
+    // $(".toggleOrderState").mouseleave(function(){
+    //     $(".orderStateMenu").mouseover(function(){
+    //         $('.orderStateMenu').show();
+    //         $('.itemOrderState').show();
+    //     });
+    //     $(".orderStateMenu").mouseleave(function(){
+    //         $('.orderStateMenu').hide();
+    //         $('.itemOrderState').hide();
+    //     })
+    // });
     // 드롭다운 리스트 밖으로 마우스 옮겼을때 드롭다운 해제되도록 설정
-    $(".toggleOrderPayState").mouseleave(function(){
-        $(".payStateMenu").mouseover(function(){
-            $('.payStateMenu').show();
-            $('.itemOrderPayState').show();
-        });
-        $(".payStateMenu").mouseleave(function(){
-            $('.payStateMenu').hide();
-            $('.itemOrderPayState').hide();
-        })
-    });
+    // $(".toggleOrderPayState").mouseleave(function(){
+    //     $(".payStateMenu").mouseover(function(){
+    //         $('.payStateMenu').show();
+    //         $('.itemOrderPayState').show();
+    //     });
+    //     $(".payStateMenu").mouseleave(function(){
+    //         $('.payStateMenu').hide();
+    //         $('.itemOrderPayState').hide();
+    //     })
+    // });
     $(".toggleRevePlace").mouseleave(function(){
         $(".revePlaceMenu").mouseover(function(){
             $('.revePlaceMenu').show();
@@ -826,26 +1167,26 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 
-    $("#dropdownOrderState").on('click', ".itemOrderState", function(){
-        $('#orderStateValue').text( $(this).text() ).val( $(this).val() );
-        if($('.itemOrderState').is(':visible')){
-            $('.orderStateMenu').hide();
-            $('.itemOrderState').hide();
-        } else {
-            $('.orderStateMenu').show();
-            $('.itemOrderState').show();
-        }
-    })
-    $("#dropdownOrderPayState").on('click', ".itemOrderPayState", function(){
-        $('#orderPayStateValue').text( $(this).text() ).val( $(this).val() );
-        if($('.itemOrderPayState').is(':visible')){
-            $('.payStateMenu').hide();
-            $('.itemOrderPayState').hide();
-        } else {
-            $('.payStateMenu').show();
-            $('.itemOrderPayState').show();
-        }
-    })
+    // $("#dropdownOrderState").on('click', ".itemOrderState", function(){
+    //     $('#orderStateValue').text( $(this).text() ).val( $(this).val() );
+    //     if($('.itemOrderState').is(':visible')){
+    //         $('.orderStateMenu').hide();
+    //         $('.itemOrderState').hide();
+    //     } else {
+    //         $('.orderStateMenu').show();
+    //         $('.itemOrderState').show();
+    //     }
+    // })
+    // $("#dropdownOrderPayState").on('click', ".itemOrderPayState", function(){
+    //     $('#orderPayStateValue').text( $(this).text() ).val( $(this).val() );
+    //     if($('.itemOrderPayState').is(':visible')){
+    //         $('.payStateMenu').hide();
+    //         $('.itemOrderPayState').hide();
+    //     } else {
+    //         $('.payStateMenu').show();
+    //         $('.itemOrderPayState').show();
+    //     }
+    // })
     $("#dropdownRevePlace").on('click', ".itemRevePlace", function(){
         $('#revePlaceValue').text( $(this).text() ).val( $(this).val() );
         if($('.itemRevePlace').is(':visible')){
@@ -857,20 +1198,388 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    var dropdownParam = {
-        COM_CD_GRP_ID		:	"OD00001"
-    };
-    // common에 있는 공통 펑션으로 드롭다운 구성
-    setSelboxOrderState("dropdownOrderState", "/common/showCode", dropdownParam);
+    // var dropdownParam = {
+    //     COM_CD_GRP_ID		:	"OD00001"
+    // };
+    // // common에 있는 공통 펑션으로 드롭다운 구성
+    // setSelboxOrderState("dropdownOrderState", "/common/showCode", dropdownParam);
 
-    function setSelboxOrderState(objectId, url, param) {
-        var tagId = "#" + objectId;
-        ajax(url, param, function(returnData){
-            var codeList = returnData.codeList;
-            for(var i = 0; i < codeList.length; i++) {
-                $(tagId).append("<li class = 'dropdown-item itemOrderState' value='" + codeList[i].comCdNm + "'>" + codeList[i].comCdNm + "</li>")
+    // function setSelboxOrderState(objectId, url, param) {
+    //     var tagId = "#" + objectId;
+    //     ajax(url, param, function(returnData){
+    //         var codeList = returnData.codeList;
+    //         for(var i = 0; i < codeList.length; i++) {
+    //             $(tagId).append("<li class = 'dropdown-item itemOrderState' value='" + codeList[i].comCdNm + "'>" + codeList[i].comCdNm + "</li>")
+    //         }
+    //     })
+    // }
+
+    // 맨 처음에 상품조회에서 추가 버튼만 눌렀을때는 일단 할인만 선적용되게
+    function setPriceSumWithoutCoupon() {
+        var priceSum = 0; // 총 결제금액
+        var originalPriceSum = 0; // 총 주문금액 (정가)
+        var discPriceSum = 0; // 총 할인금액
+        var discPrice = 0; // 할인 적용 금액
+        var pdDiscAmt = 0; // 상품 할인 금액
+        var cpnDiscAmt = 0; // 쿠폰 할인 금액
+        for(var i = 0; i < provider.getJsonRows().length; i++) {
+            // pdCount가 undefined면 1개인거니까 그냥 정상적으로 정가 계산해주고
+            // 값이 실려있으면 임의로 수정한거니까 해당 개수만큼 계산해주기
+            if(provider.getJsonRow(i).pdCount != undefined){
+                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+            } else {
+                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice);
             }
-        })
+            if(providerDisc.getJsonRows().length > 0) {
+                // 할인코드가 Null이 아니면, 즉 할인중인 상품이라면 할인가 적용
+                if(providerDisc.getJsonRow(i).discCode != null) {
+                    // 카운트가 있는 경우
+                    if(provider.getJsonRow(i).pdCount != undefined) {
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount);
+                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                    } else { // 카운트 없는 경우
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
+                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                    }
+                    priceSum += parseInt(discPrice);
+                }
+                // 할인코드가 null이면, 즉 할인중이지 않은 상품이라면 상품 정가 그대로 적용
+                else {
+                    // 카운트가 있는 경우
+                    if(provider.getJsonRow(i).pdCount != undefined) {
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+                    } else {
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice);
+                    }
+                    priceSum += parseInt(discPrice);
+                }
+            }
+        }
+        // 만약 총결제금액이 아직 0원으로 계산되었다면 할인이 아예 적용되지 않은 것이므로 총결제금액 = 총주문금액
+        if(priceSum == 0) {
+            priceSum = originalPriceSum;
+        }
+        // 총할인금액 = 총주문금액 - 총결제금액
+        discPriceSum = originalPriceSum - priceSum;
+
+        // 배송비
+        if(originalPriceSum > 30000) {
+            $("#orderDeliPrice").val(0);
+            $("#infoDeliPrice").text(); //배송비 포함여부 info
+        } else {
+            $("#orderDeliPrice").val(3000);
+            $("#infoDeliPrice").text("배송비 포함"); //배송비 포함여부 info
+        }
+        $("#orderTotOdAmt").val(originalPriceSum); // 총주문금액
+        $("#orderPdDiscAmt").val(pdDiscAmt); //상품할인금액
+        $("#orderCpnDiscAmt").val(cpnDiscAmt); //쿠폰할인금액
+        $("#orderTotDiscAmt").val(discPriceSum); //총할인금액
+        $("#orderTotPayAmt").val(priceSum + parseFloat($("#orderDeliPrice").val())); //총결제금액
+    }
+    // 쿠폰 적용하려면 쿠폰 그리드에서 체크박스 선택하고 적용버튼 누르면 쿠폰 할인도 같이 적용
+    function setPriceSumWithCoupon() {
+        var priceSum = 0; // 총 결제금액
+        var originalPriceSum = 0; // 총 주문금액 (정가)
+        var discPriceSum = 0; // 총 할인금액
+        var discPrice = 0; // 할인 적용 금액
+        var pdDiscAmt = 0; // 상품 할인 금액
+        var cpnDiscAmt = 0; // 쿠폰 할인 금액
+        var checkedCpn = gridViewCpn.getCheckedRows();
+        for(var i = 0; i < provider.getJsonRows().length; i++) {
+            // pdCount가 undefined면 1개인거니까 그냥 정상적으로 정가 계산해주고
+            // 카운트 값이 실려있으면 임의로 수정한거니까 해당 개수만큼 계산해주기
+            if(provider.getJsonRow(i).pdCount != undefined){
+                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice) * parseInt(provider.getJsonRow(i).pdCount);
+            } else {
+                originalPriceSum += parseInt(provider.getJsonRow(i).pdPrice);
+            }
+            // 할인 그리드 그려져있을때만
+            if(providerDisc.getJsonRows().length > 0) {
+                // 할인코드가 Null이 아니면, 즉 할인중인 상품이라면 할인가 적용
+                if(providerDisc.getJsonRow(i).discCode != null) {
+                    // 카운트가 있는 경우
+                    if(provider.getJsonRow(i).pdCount != undefined) {
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount);
+                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100 * parseInt(provider.getJsonRow(i).pdCount); // 상품할인으로만 할인된 금액 합
+                    } else { // 카운트 없는 경우
+                        discPrice = parseInt(providerDisc.getJsonRow(i).pdPrice) * (100 - providerDisc.getJsonRow(i).discRatio) / 100;
+                        pdDiscAmt += parseInt(providerDisc.getJsonRow(i).pdPrice) * (providerDisc.getJsonRow(i).discRatio) / 100; // 상품할인으로만 할인된 금액 합
+                    }
+                    // 해당 쿠폰이 체크되어있지 않다면 할인가 적용된 가격 그대로
+                    if(checkedCpn.indexOf(i) < 0) {
+                        priceSum += parseFloat(discPrice);
+                    }
+                    // 해당 쿠폰이 체크되어있다면 다음 조건 적용
+                    else {
+                        if(providerCpn.getJsonRows().length > 0) {
+                            // 쿠폰코드가 null이 아닐때 (쿠폰정보가 있음)
+                            if(providerCpn.getJsonRow(i).cpnCode != null) {
+                                // 사용여부가 Y면 쿠폰할인 적용
+                                if(providerCpn.getJsonRow(i).useYn != null) {
+                                    if(providerCpn.getJsonRow(i).useYn == 'Y') {
+                                        if(providerCpn.getJsonRow(i).minOdAmt != null) {
+                                            // 총주문금액이 최소주문금액보다 작다면 정가 그대로
+                                            if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
+                                                priceSum += parseFloat(discPrice);
+                                            }
+                                            // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
+                                            else {
+                                                // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                                if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                    if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                        // 카운트가 있는 경우
+                                                        if(provider.getJsonRow(i).pdCount != undefined) {
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                        } else { // 카운트 없는 경우
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                        }
+                                                    }
+                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                    else {
+                                                        // 카운트가 있는 경우
+                                                        if(provider.getJsonRow(i).pdCount != undefined) {
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                        } else { // 카운트 없는 경우
+                                                            priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                            cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                        }
+                                                    }
+                                                }
+                                                // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                                else {
+                                                    // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                    if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                        // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                    // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                    else {
+                                                        // 쿠폰 비율형식에선 쿠폰쪽에선 카운트 생각 X
+                                                        priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                        cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
+                                        else {
+                                            // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                            if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                    // 카운트가 있는 경우
+                                                    if(provider.getJsonRow(i).pdCount != undefined) {
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                    } else { // 카운트 없는 경우
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                else {
+                                                    // 카운트가 있는 경우
+                                                    if(provider.getJsonRow(i).pdCount != undefined) {
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                    } else { // 카운트 없는 경우
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                            }
+                                            // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                            else {
+                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                }
+                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                else {
+                                                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                    else {
+                                        priceSum += parseFloat(discPrice);
+                                    }
+                                }
+                                // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
+                                else {
+                                    priceSum += parseFloat(discPrice);
+                                }
+                            }
+                            // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
+                            else {
+                                priceSum += parseFloat(discPrice);
+                            }
+                        }
+                    }
+                }
+                // 할인코드가 null이면, 즉 할인중이지 않은 상품이라면 상품 정가 그대로 적용
+                else {
+                    // 카운트가 있는 경우
+                    if(provider.getJsonRow(i).pdCount != undefined) {
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                    } else { // 카운트 없는 경우
+                        discPrice = parseFloat(providerDisc.getJsonRow(i).pdPrice);
+                    }
+                    // 해당 쿠폰이 체크되어있지 않다면 상품 정가 그대로
+                    if(checkedCpn.indexOf(i) < 0) {
+                        priceSum += parseFloat(discPrice);
+                    }
+                    // 해당 쿠폰이 체크되어있다면 다음 조건 적용
+                    else {
+                        // 쿠폰코드가 null이 아닐때 (쿠폰정보가 있음)
+                        if(providerCpn.getJsonRow(i).cpnCode != null) {
+                            // 사용여부가 Y면 쿠폰할인 적용
+                            if(providerCpn.getJsonRow(i).useYn != null) {
+                                if(providerCpn.getJsonRow(i).useYn == 'Y') {
+                                    if(providerCpn.getJsonRow(i).minOdAmt != null) {
+                                        // 총주문금액이 최소주문금액보다 작다면 정가 그대로
+                                        if(providerCpn.getJsonRow(i).minOdAmt > originalPriceSum) {
+                                            priceSum += parseFloat(discPrice);
+                                        }
+                                        // 총주문금액이 최소주문금액보다 크다면 쿠폰 할인 적용
+                                        else {
+                                            // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                            if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                                // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                    // 카운트가 있는 경우
+                                                    if(provider.getJsonRow(i).pdCount != undefined) {
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                    } else { // 카운트 없는 경우
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                else {
+                                                    // 카운트가 있는 경우
+                                                    if(provider.getJsonRow(i).pdCount != undefined) {
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                    } else { // 카운트 없는 경우
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                            }
+                                            // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                            else {
+                                                // 쿠폰 할인가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                                if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                    // 카운트가 있는 경우
+                                                    if(provider.getJsonRow(i).pdCount != undefined) {
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                    } else { // 카운트 없는 경우
+                                                        priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                        cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                    }
+                                                }
+                                                // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                                else {
+                                                    // 할인쪽에서 이미 카운트를 세서 왔기 떄문에 쿠폰 비율쪽에선 카운트 생각 안해도됨
+                                                    priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                    cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // 최소주문금액이 null이면 최소주문금액 조건 생각할 필요없음
+                                    else {
+                                        // 쿠폰금액이 null이 아니라면 할인 형식이 금액 형식인것
+                                        if(providerCpn.getJsonRow(i).cpnPrice != null) {
+                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                            if(providerCpn.getJsonRow(i).cpnPrice > providerCpn.getJsonRow(i).maxAmt) {
+                                                // 카운트가 있는 경우
+                                                if(provider.getJsonRow(i).pdCount != undefined) {
+                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                } else { // 카운트 없는 경우
+                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                                }
+                                            }
+                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                            else {
+                                                // 카운트가 있는 경우
+                                                if(provider.getJsonRow(i).pdCount != undefined) {
+                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount);
+                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice) * parseFloat(provider.getJsonRow(i).pdCount); // 쿠폰할인으로만 할인된 금액 합
+                                                } else { // 카운트 없는 경우
+                                                    priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).cpnPrice);
+                                                    cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).cpnPrice); // 쿠폰할인으로만 할인된 금액 합
+                                                }
+                                            }
+                                        }
+                                        // 쿠폰금액이 null이라면 할인 형식이 비율 형식인것
+                                        else {
+                                            // 쿠폰가격이 최대할인금액보다 크다면 최대할인금액만큼만 할인
+                                            if( (parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100) > providerCpn.getJsonRow(i).maxAmt ) {
+                                                // 비율 할인 시에는 쿠폰쪽에선 카운트 생각 안해도됨
+                                                priceSum += parseFloat(discPrice) - parseFloat(providerCpn.getJsonRow(i).maxAmt);
+                                                cpnDiscAmt += parseFloat(providerCpn.getJsonRow(i).maxAmt); // 쿠폰할인으로만 할인된 금액 합
+                                            }
+                                            // 쿠폰가격이 최대할인금액보다 작다면 그대로 진행
+                                            else {
+                                                priceSum += parseFloat(discPrice) * (100 - providerCpn.getJsonRow(i).cpnRatio) / 100;
+                                                cpnDiscAmt += parseFloat(discPrice) * (providerCpn.getJsonRow(i).cpnRatio) / 100; // 쿠폰할인으로만 할인된 금액 합
+                                            }
+                                        }
+                                    }
+                                }
+                                // 사용여부가 N이면 쿠폰할인 미적용. 상품정가그대로.
+                                else {
+                                    priceSum += parseFloat(discPrice);
+                                }
+                            }
+                            // 사용여부가 null이면 쿠폰할인 미적용. 상품정가그대로.
+                            else {
+                                priceSum += parseFloat(discPrice);
+                            }
+                        }
+                        // 쿠폰코드가 null이면, 즉 쿠폰 미적용 상품이라면 상품 정가 그대로 적용
+                        else {
+                            priceSum += parseFloat(discPrice);
+                        }
+                    }
+                }
+            }
+        }
+        // 만약 총결제금액이 아직 0원으로 계산되었다면 할인이 아예 적용되지 않은 것이므로 총결제금액 = 총주문금액
+        if(priceSum == 0) {
+            priceSum = originalPriceSum;
+        }
+
+        // 총할인금액 = 총주문금액 - 총결제금액
+        discPriceSum = originalPriceSum - priceSum;
+
+        // 배송비
+        if(originalPriceSum > 30000) {
+            $("#orderDeliPrice").val(0);
+            $("#infoDeliPrice").text(); //배송비 포함여부 info
+        } else {
+            $("#orderDeliPrice").val(3000);
+            $("#infoDeliPrice").text("배송비 포함"); //배송비 포함여부 info
+        }
+        $("#orderTotOdAmt").val(originalPriceSum); // 총주문금액
+        $("#orderPdDiscAmt").val(pdDiscAmt); //상품할인금액
+        $("#orderCpnDiscAmt").val(cpnDiscAmt); //쿠폰할인금액
+        $("#orderTotDiscAmt").val(discPriceSum); //총할인금액
+        $("#orderTotPayAmt").val(priceSum + parseFloat($("#orderDeliPrice").val())); //총결제금액
     }
 
     // 멤버조회 추가 버튼 클릭시
@@ -893,5 +1602,129 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         $("#orderDeliLocCode").val(chkDataDeli);
     });
+    // 상품조회 추가 버튼 클릭시
+    $("#orderOdAdd").click(function(){
+        var checkedRowProd = gridView.getCheckedRows();
+        var checkedProdList = [];
+        var checkedPdCntList = [];
+        for(var i = 0; i < checkedRowProd.length; i++) {
+            checkedProdList.push(provider.getJsonRow(checkedRowProd[i]).pdCode);
+            if(provider.getJsonRow(checkedRowProd[i]).pdCount != null) {
+                checkedPdCntList.push(provider.getJsonRow(checkedRowProd[i]).pdCount);
+            } else {
+                checkedPdCntList.push("1");
+            }
+        }
+        $("#hiddenPdCode").val(checkedProdList);
+        $("#hiddenPdCnt").val(checkedPdCntList);
+        var param = {
+            PD_CODE		:	checkedProdList
+        };
+        // 할인가 조회
+        ajax("/product/showPdDiscPrice", param, function(returnData){
+            var gridDataDisc = returnData.codeList;
+            providerDisc.fillJsonData(gridDataDisc, { fillMode : "insert"});
+        })
+        // 쿠폰가 조회
+        ajax("/product/showPdCpnPrice", param, function(returnData){
+            var gridDataCpn = returnData.codeList;
+            providerCpn.fillJsonData(gridDataCpn, { fillMode : "insert"});
+        })
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSumWithoutCoupon, 1000)
+    });
 
+    // 할인가조회 초기화 버튼 클릭시
+    $("#orderPdDiscReset").click(function(){
+        providerDisc.clearRows(); // 할인가 그리드 비우기
+        providerCpn.clearRows(); // 쿠폰가 그리드 비우기
+        $("#hiddenPdCode").val("");
+
+        var priceSum = 0; // 총 결제금액
+        var originalPriceSum = 0; // 총 주문금액 (정가)
+        var discPriceSum = 0; // 총 할인금액
+        $("#orderTotOdAmt").val(0); // 총주문금액
+        $("#orderTotDiscAmt").val(0); //총할인금액
+        $("#orderTotPayAmt").val(0); //총결제금액
+        $("#orderPdDiscAmt").val(0); //상품할인금액
+        $("#orderCpnDiscAmt").val(0); //쿠폰할인금액
+        $("#orderDeliPrice").val(0); //배송비
+    });
+    // 상품조회 삭제 버튼 클릭시. 어느곳에서 삭제를 하든 같이 삭제되게.
+    $("#orderPdRemove").click(function(){
+        var checkedRowsProRmv = gridView.getCheckedRows();
+        provider.removeRows(checkedRowsProRmv);
+        providerDisc.removeRows(checkedRowsProRmv);
+        providerCpn.removeRows(checkedRowsProRmv);
+
+        var arrPdCode = []
+        var arrPdCnt = []
+        for(var i = 0; i < provider.getJsonRows().length; i++) {
+            arrPdCode.push(provider.getJsonRow(i).pdCode);
+            if(provider.getJsonRow(i).pdCount != null) {
+                arrPdCnt.push(provider.getJsonRow(i).pdCount);
+            } else {
+                arrPdCnt.push("1");
+            }
+        }
+        $("#hiddenPdCode").val(arrPdCode);
+        $("#hiddenPdCnt").val(arrPdCnt);
+
+        // 삭제했으니까 주문금액 계산 다시해주기
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSumWithoutCoupon, 1000)
+    });
+    // 할인가조회 삭제 버튼 클릭시. 할인가 쿠폰가 어느곳에서 삭제를 하든 양쪽에서 같이 삭제되게.
+    $("#orderPdDiscRemove").click(function(){
+        var checkedRowsRmv = gridViewDisc.getCheckedRows();
+        provider.removeRows(checkedRowsRmv);
+        providerDisc.removeRows(checkedRowsRmv);
+        providerCpn.removeRows(checkedRowsRmv);
+
+        var arrPdCode = []
+        var arrPdCnt = []
+        for(var i = 0; i < provider.getJsonRows().length; i++) {
+            arrPdCode.push(provider.getJsonRow(i).pdCode);
+            if(provider.getJsonRow(i).pdCount != null) {
+                arrPdCnt.push(provider.getJsonRow(i).pdCount);
+            } else {
+                arrPdCnt.push("1");
+            }
+        }
+        $("#hiddenPdCode").val(arrPdCode);
+        $("#hiddenPdCnt").val(arrPdCnt);
+
+        // 삭제했으니까 주문금액 계산 다시해주기
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSumWithoutCoupon, 1000)
+    });
+    // 쿠폰가조회 삭제 버튼 클릭시
+    $("#orderPdCpnRemove").click(function(){
+        var checkedRowsCpnRmv = gridViewCpn.getCheckedRows();
+        provider.removeRows(checkedRowsCpnRmv);
+        providerCpn.removeRows(checkedRowsCpnRmv);
+        providerDisc.removeRows(checkedRowsCpnRmv);
+
+        var arrPdCode = []
+        var arrPdCnt = []
+        for(var i = 0; i < provider.getJsonRows().length; i++) {
+            arrPdCode.push(provider.getJsonRow(i).pdCode);
+            if(provider.getJsonRow(i).pdCount != null) {
+                arrPdCnt.push(provider.getJsonRow(i).pdCount);
+            } else {
+                arrPdCnt.push("1");
+            }
+        }
+        $("#hiddenPdCode").val(arrPdCode);
+        $("#hiddenPdCnt").val(arrPdCnt);
+
+        // 삭제했으니까 주문금액 계산 다시해주기
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSumWithoutCoupon, 1000)
+    });
+    // 쿠폰가조회 적용 버튼 클릭시
+    $("#orderPdCpnApply").click(function(){
+        // 타임아웃을 적용하지않으면 ajax가 호출되기전에 function을 호출하므로 1초 타임아웃 지정
+        setTimeout(setPriceSumWithCoupon, 1000)
+    });
 });

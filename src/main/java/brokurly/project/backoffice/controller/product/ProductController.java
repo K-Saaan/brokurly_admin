@@ -403,4 +403,25 @@ public class ProductController {
         result.put("codeList", gridDataList);
         return result;
     }
+
+    // 주문정보등록 할인가조회
+    @ResponseBody
+    @RequestMapping(value = "/showPdDiscPrice")
+    public Map<String, Object> showPdDiscPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+        List<String> pdCode = (List<String>) param.get("PD_CODE");
+        List<ProductDiscPriceDto> gridDataList = productRepository.showPdDiscPrice(pdCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
+        return result;
+    }
+    // 주문정보등록 쿠폰가조회
+    @ResponseBody
+    @RequestMapping(value = "/showPdCpnPrice")
+    public Map<String, Object> showPdCpnPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+        List<String> pdCode = (List<String>) param.get("PD_CODE");
+        List<ProductCpnPriceDto> gridDataList = couponDtlRepository.showPdCpnPrice(pdCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
+        return result;
+    }
 }
