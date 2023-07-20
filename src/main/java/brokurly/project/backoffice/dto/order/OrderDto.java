@@ -29,7 +29,7 @@ public class OrderDto {
     private String tobeReserve;
     private List<String> pdCode;
     private List<String> pdCount;
-    private String pdOptCode;
+    private List<String> pdOptCode;
     private List<String> pdDiscAmtDtl;
     private List<String> cpnDiscAmtDtl;
     private List<String> cpnCode;
@@ -39,7 +39,7 @@ public class OrderDto {
                     String deliLocCode, String reveNm, String reveTelNo, String revePlace,
                     String revePlaceDtl, String deliComMsg, String totPayAmt, String totOdAmt,
                     String cpnDiscAmt, String pdDiscAmt, String totDiscAmt, String deliPrice,
-                    String tobeReserve, List<String> pdCode, List<String> pdCount, String pdOptCode,
+                    String tobeReserve, List<String> pdCode, List<String> pdCount, List<String> pdOptCode,
                     List<String> pdDiscAmtDtl, List<String> cpnDiscAmtDtl, List<String> cpnCode) {
         this.custCode = custCode;
         this.odDate = odDate;

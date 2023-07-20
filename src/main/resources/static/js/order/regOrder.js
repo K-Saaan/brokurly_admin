@@ -1395,6 +1395,8 @@ document.addEventListener('DOMContentLoaded', function () {
             var cpnDiscAmtArr = cpnDiscAmtStr.split(",");
             var cpnCodeStr = $("#hiddenCpnCode").val();
             var cpnCodeArr = cpnCodeStr.split(",");
+            var pdOptCodeStr = $("#hiddenPdOptCode").val();
+            var pdOptCodeArr = pdOptCodeStr.split(",");
             var param = {
                 // od.OD_INFO 관련 파라미터
                 custCode        :   $("#orderMemberCode").val(),
@@ -1417,7 +1419,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // od.OD_INFO_DTL 관련 파라미터
                 pdCode        :   pdCodeArr,
                 pdCount        :   pdCountArr,
-                pdOptCode        :   "",
+                pdOptCode        :   pdOptCodeArr,
                 pdDiscAmtDtl        :   pdDiscAmtArr,
                 cpnCode        :   cpnCodeArr,
                 cpnDiscAmtDtl        :   cpnDiscAmtArr,
@@ -1493,6 +1495,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var cpnDiscAmtArr = [];
         var pdCountArr = [];
         var cpnCodeArr = [];
+        var pdOptCodeArr = [];
         var originalPriceSum = 0;
         for (var i in rowDatas) {
             pdCodeArr.push(rowDatas[i].pdCode);
@@ -1506,6 +1509,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 cpnCodeArr.push("");
             }
+            pdOptCodeArr.push("");
             // 총주문금액 계산
             originalPriceSum += parseFloat(rowDatas[i].pdPrice) * parseFloat(nullToOne(rowDatas[i].pdCount));
             if(rowDatas[i].discCode != null) {
@@ -1562,6 +1566,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#hiddenPdCode").val(pdCodeArr); // 상품코드 배열
         $("#hiddenPdCnt").val(pdCountArr); // 상품개수 배열
         $("#hiddenCpnCode").val(cpnCodeArr); // 쿠폰코드 배열
+        $("#hiddenPdOptCode").val(pdOptCodeArr); // 상품옵션코드 배열
     }
 
     var priceSum = 0; // 총 결제금액

@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
             logger.info("od.OD_INFO_DTL");
             logger.info("상품코드 배열 : " + orderDto.getPdCode().toString());
             logger.info("상품개수 배열 : " + orderDto.getPdCount().toString());
-            logger.info("상품옵션코드 : " + orderDto.getPdOptCode());
+            logger.info("상품옵션코드 : " + orderDto.getPdOptCode().toString());
             logger.info("상품별 할인금액 배열 : " + orderDto.getPdDiscAmtDtl().toString());
             logger.info("상품별 쿠폰할인금액 배열 : " + orderDto.getCpnDiscAmtDtl().toString());
             logger.info("상품별 쿠폰코드 배열 : " + orderDto.getCpnCode().toString());

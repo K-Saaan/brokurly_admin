@@ -208,4 +208,5 @@
 <input id="hiddenPdDiscAmt" type="text" style="display: none;">
 <input id="hiddenCpnDiscAmt" type="text" style="display: none;">
 <input id="hiddenCpnCode" type="text" style="display: none;">
+<input id="hiddenPdOptCode" type="text" style="display: none;">
 <button type="button" style="display: none;" class="btn btn-primary" id="useCpnBtn"></button>
