@@ -44,8 +44,6 @@ public class OrderEntity {
     private String cpnDiscAmt;
     @Column(name = "PD_DISC_AMT")
     private String pdDiscAmt;
-    @Column(name = "CARD_IMMD_DISC")
-    private String cardImmdDisc;
     @Column(name = "USED_RESERVE_AMT")
     private String usedReserveAmt;
     @Column(name = "TOT_DISC_AMT")
