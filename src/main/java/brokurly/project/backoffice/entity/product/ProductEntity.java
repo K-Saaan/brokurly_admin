@@ -1,6 +1,7 @@
 package brokurly.project.backoffice.entity.product;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,10 +58,10 @@ public class ProductEntity {
 	@Column(name = "REG_ID")
 	private String regId;
 	@Column(name = "REG_DATE")
-	private Timestamp regDate;
+	private LocalDateTime regDate;
 	@Column(name = "CHGR_ID")
 	private String chgrId;
 	@Column(name = "CHGR_DATE")
-	private Timestamp chgrDate;
+	private LocalDateTime chgrDate;
 	
 }

@@ -37,6 +37,12 @@ public class OrderController {
         return "order/regOrder";
     }
 
+    // 쿠폰 등록 모달
+    @GetMapping("/coupon/pdCoupon")
+    public String addPdCpnInfo() {
+        return "order/coupon/pdCoupon";
+    }
+
     @ResponseBody
     @PostMapping(value = "/showDeliInfo", produces = "application/json;charset=utf-8")
     public Map<String, Object> showDeliInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {

@@ -2,6 +2,7 @@ package brokurly.project.backoffice.service.order.impl;
 
 import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.order.OrderDto;
+import brokurly.project.backoffice.entity.order.OrderEntity;
 import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.order.OrderService;
 import org.slf4j.Logger;

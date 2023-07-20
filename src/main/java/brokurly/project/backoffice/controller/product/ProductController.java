@@ -406,19 +406,33 @@ public class ProductController {
 
     // 주문정보등록 할인가조회
     @ResponseBody
-    @RequestMapping(value = "/showPdDiscPrice")
-    public Map<String, Object> showPdDiscPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
-        List<String> pdCode = (List<String>) param.get("PD_CODE");
-        List<ProductDiscPriceDto> gridDataList = productRepository.showPdDiscPrice(pdCode);
+    @RequestMapping(value = "/showProductWithDiscount")
+    public Map<String, Object> showProductWithDiscount(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+        String pdNm = (String) param.get("PRODUCT_NAME");
+        int pagingIndex = (int) param.get("pagingIndex");
+        int pagingRows = (int) param.get("pagingRows");
+        PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+        Page<ProductDiscPriceDto> gridDataList = productRepository.showProductWithDiscount(pdNm, page);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
         return result;
     }
+    // 주문정보등록 할인가조회
+//    @ResponseBody
+//    @RequestMapping(value = "/showPdDiscPrice")
+//    public Map<String, Object> showPdDiscPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+//        List<String> pdCode = (List<String>) param.get("PD_CODE");
+////        PageRequest page = PageRequest.of(1, 50);
+//        List<ProductDiscPriceDto> gridDataList = productRepository.showPdDiscPrice(pdCode);
+//        Map<String, Object> result = new HashMap();
+//        result.put("codeList", gridDataList);
+//        return result;
+//    }
     // 주문정보등록 쿠폰가조회
     @ResponseBody
     @RequestMapping(value = "/showPdCpnPrice")
     public Map<String, Object> showPdCpnPrice(@RequestBody Map<String, Object> param, HttpServletRequest request) {
-        List<String> pdCode = (List<String>) param.get("PD_CODE");
+        String pdCode = (String) param.get("PD_CODE");
         String custCode = (String) param.get("CUST_CODE");
         List<ProductCpnPriceDto> gridDataList = couponDtlRepository.showPdCpnPrice(pdCode, custCode);
         Map<String, Object> result = new HashMap();

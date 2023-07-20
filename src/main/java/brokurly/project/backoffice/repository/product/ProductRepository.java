@@ -51,13 +51,15 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String>,
 			"and ( :smallCate is null or pc.cateCode = :smallCate ) ")
 	Page<ProductCateDto> showProductWithCate(@Param("pdNm") String pdNm, @Param("smallCate") String smallCate, @Param("bigCate") String bigCate, Pageable pageable);
 
-	@Query("select new brokurly.project.backoffice.dto.product.ProductDiscPriceDto(p.pdCode, p.pdNm, p.pdPrice, pd.discCode, d.discRatio) " +
+	@Query("select new brokurly.project.backoffice.dto.product.ProductDiscPriceDto(p.pdCode, p.pdNm, p.pdExt, p.pdPrice, p.deliType, p.deliExt, " +
+			"p.pdSeller, p.pakgType, p.pakgExt, p.salesUnit, p.pdWeg, p.orgLoc, p.pdSweet, p.alergInfo, p.expDate, p.extInfo, " +
+			"p.regId, p.regDate, p.chgrId, p.chgrDate, pd.discCode, d.discRatio) " +
 			"from ProductDtlEntity pd " +
 			"right outer join ProductEntity p " +
 			"on p.pdCode = pd.pdCode " +
 			"left outer join DiscInfoEntity d "+
 			"on pd.discCode = d.discCode " +
-			"where p.pdCode in (:pdCode) ")
-	List<ProductDiscPriceDto> showPdDiscPrice(@Param("pdCode") List<String> pdCode);
+			"where p.pdNm like concat('%', :pdNm, '%') ")
+	Page<ProductDiscPriceDto> showProductWithDiscount(@Param("pdNm") String pdNm, Pageable pageable);
 
 }
