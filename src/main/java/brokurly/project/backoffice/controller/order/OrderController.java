@@ -1,8 +1,10 @@
 package brokurly.project.backoffice.controller.order;
 
 import brokurly.project.backoffice.common.Consts;
+import brokurly.project.backoffice.dto.mbrsh.MbrshInfoDto;
 import brokurly.project.backoffice.dto.order.OrderDto;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
+import brokurly.project.backoffice.repository.mbrsh.MbrshInfoRepository;
 import brokurly.project.backoffice.repository.order.DeliLocInfoRepository;
 import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.order.DeliLocInfoService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller // ResponseBody 필요없음
@@ -28,6 +31,7 @@ public class OrderController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final DeliLocInfoRepository deliLocInfoRepository;
+    private final MbrshInfoRepository mbrshInfoRepository;
     private final SequenceService sequenceService;
     private final DeliLocInfoService deliLocInfoService;
     private final OrderService orderService;
@@ -64,5 +68,15 @@ public class OrderController {
     @PostMapping(value = "/addOrder", produces = "application/json;charset=utf-8")
     public int addOrder(@RequestBody OrderDto orderDto, HttpServletRequest request) throws Throwable {
         return orderService.addOrder(orderDto, request);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/calcMbrshInfo", produces = "application/json;charset=utf-8")
+    public Map<String, Object> calcMbrshInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String custCode = (String)param.get("CUST_CODE");
+        List<MbrshInfoDto> dataList = mbrshInfoRepository.calcMbrshInfo(custCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", dataList);
+        return result;
     }
 }

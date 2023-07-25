@@ -117,7 +117,6 @@
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 5%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
-        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdTest">테스트</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdReset">초기화</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdRemove">삭제</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdAdd">추가</button>
@@ -138,7 +137,13 @@
         <b>적립예정금액</b>
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
-        <input id="orderTobeReserve" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+        <input id="orderTobeReserve" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 25%;">
+        <span id="reserveRatio" style="padding-top: 10px; color: red;"></span>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderMbrshCalc">계산</button>
     </div>
 </div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">

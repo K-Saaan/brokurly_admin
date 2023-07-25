@@ -34,6 +34,7 @@ public interface CouponDtlRepository extends JpaRepository<CouponDtlEntity, Coup
             "left outer join CouponHistEntity ch " +
             "on cd.cpnCode = ch.cpnCode " +
             "where p.pdCode = :pdCode " +
-            "and ch.custCode = :custCode ")
+            "and ch.custCode = :custCode " +
+            "and ch.cpnStat in ('10','20','30') ")
     List<ProductCpnPriceDto> showPdCpnPrice(@Param("pdCode") String pdCode, @Param("custCode") String custCode);
 }

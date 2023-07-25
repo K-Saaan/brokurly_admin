@@ -1298,6 +1298,32 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         }
     }
+
+    // 적립예정금액 계산 버튼 클릭시
+    $("#orderMbrshCalc").click(function(){
+        var param = {
+            CUST_CODE		:	$("#orderMemberCode").val()
+        };
+        if($("#orderMemberCode").val() == "") {
+            alert("고객코드를 먼저 입력하십시오.")
+            return;
+        }
+        if($("#orderTotPayAmt").val() == "") {
+            alert("결제할 품목을 먼저 추가하십시오.")
+            return;
+        }
+        ajax("/order/calcMbrshInfo", param, function(returnData){
+            console.log(returnData.codeList)
+            var list = returnData.codeList;
+            var reserveRatio = list[0].reserveRatio;
+            var mbrshGradeNm = list[0].mbrshGradeNm;
+            var totPayAmt = parseInt($("#orderTotPayAmt").val());
+            var tobeReserve = parseInt(totPayAmt * reserveRatio / 100);
+            $("#orderTobeReserve").val(tobeReserve);
+            $("#reserveRatio").text("등급명 : " + mbrshGradeNm + ", " + reserveRatio + "% 적립");
+        })
+    });
+
     // 배송지정보조회 조회버튼 클릭시
     $("#orderDeliSearch").click(function(){
         providerDeli.clearRows(); // 서브 그리드 비우기
@@ -1498,6 +1524,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#orderDeliLocCode").val(chkDataDeli);
     });
 
+
     function calculProduct() {
         var rowDatas = [];
         for(var i = 0; i < providerPdAdd.getJsonRows().length; i++) {
@@ -1621,6 +1648,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#orderPdAdReset").click(function(){
         providerPdAdd.clearRows();
 
+        $("#orderTobeReserve").val(""); // 적립예정금액
         $("#orderDeliPrice").val(""); // 배송비
         $("#orderTotOdAmt").val(""); // 총주문금액
         $("#orderPdDiscAmt").val(""); // 상품할인금액
