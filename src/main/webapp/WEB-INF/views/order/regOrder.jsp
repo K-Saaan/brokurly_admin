@@ -117,6 +117,7 @@
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 5%;"></div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%; flex-direction: row;">
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdTest">테스트</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdReset">초기화</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdRemove">삭제</button>
         <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderPdAdd">추가</button>

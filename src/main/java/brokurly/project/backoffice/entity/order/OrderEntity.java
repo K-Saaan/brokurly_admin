@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "od_info", catalog="od")
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OD_CODE")
     private String odCode;
     @Column(name = "CUST_CODE")
@@ -62,4 +62,32 @@ public class OrderEntity {
     private String chgrId;
     @Column(name = "CHGR_DATE")
     private LocalDateTime chgrDate;
+
+//    @Builder
+//    public OrderEntity(String odCode, String custCode, String odDate, String odState, String payState,
+//                       String deliLocCode, String reveNm, String reveTelno, String revePlace,
+//                       String revePlaceDtl, String deliComMsg, String totPayAmt, String totOdAmt,
+//                       String cpnDiscAmt, String pdDiscAmt, String totDiscAmt, String deliPrice,
+//                       String tobeReserve, String regId, LocalDateTime regDate) {
+//        this.odCode = odCode;
+//        this.custCode = custCode;
+//        this.odDate = odDate;
+//        this.odState = odState;
+//        this.payState = payState;
+//        this.deliLocCode = deliLocCode;
+//        this.reveNm = reveNm;
+//        this.reveTelno = reveTelno;
+//        this.revePlace = revePlace;
+//        this.revePlaceDtl = revePlaceDtl;
+//        this.deliComMsg = deliComMsg;
+//        this.totPayAmt = totPayAmt;
+//        this.totOdAmt = totOdAmt;
+//        this.cpnDiscAmt = cpnDiscAmt;
+//        this.pdDiscAmt = pdDiscAmt;
+//        this.totDiscAmt = totDiscAmt;
+//        this.deliPrice = deliPrice;
+//        this.tobeReserve = tobeReserve;
+//        this.regId = regId;
+//        this.regDate = regDate;
+//    }
 }

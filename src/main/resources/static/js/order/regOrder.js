@@ -43,11 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
     gridViewMember.displayOptions.fitStyle= 'even';
     gridViewDeli.displayOptions.fitStyle= 'even';
 
-    // 직접 수정했을때의 동작
-    gridViewPd.onEditRowChanged = function (grid, itemIndex, dataRow, field, oldValue, newValue) {
-
-    };
-
     function getToday() {
         var today = new Date();
         var year = addZero(today.getFullYear(), 4);
@@ -59,6 +54,17 @@ document.addEventListener('DOMContentLoaded', function () {
         var milSec = addZero(today.getMilliseconds(), 3);
         milSec = milSec.substring(0, 2);
         var nowTime = year + month + date + hour + min + sec + milSec;
+        return nowTime;
+    }
+    function getTodayUntilSec() {
+        var today = new Date();
+        var year = addZero(today.getFullYear(), 4);
+        var month = addZero(today.getMonth() + 1, 2);
+        var date = addZero(today.getDate(), 2);
+        var hour = addZero(today.getHours(), 2);
+        var min = addZero(today.getMinutes(), 2);
+        var sec = addZero(today.getSeconds(), 2);
+        var nowTime = year + month + date + hour + min + sec;
         return nowTime;
     }
     function addZero(x,n) {
@@ -1147,6 +1153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var bindCpnRatio = $("#bindCpnRatio").val();
         var bindMinOdAmt = $("#bindMinOdAmt").val();
         var bindMaxAmt = $("#bindMaxAmt").val();
+
         providerPd.setValue(clickRow, 5, bindCpnCode);
         providerPd.setValue(clickRow, 6, bindCpnNm);
         providerPd.setValue(clickRow, 7, bindCpnPrice);
@@ -1215,11 +1222,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function gridDblCellClicked(){
         gridViewPd.onCellDblClicked = function(grid, clickData){
             var selectOneData = gridViewPd.getDataSource().getJsonRow(gridViewPd.getCurrent().dataRow);
-            // console.log(selectOneData)
-            // console.log(clickData.column)
             var clickRow = clickData.dataRow;
             var clickCol = clickData.column;
+            var clickCellType = clickData.cellType;
             var pdCode = selectOneData.pdCode;
+            if(clickCellType != "data") {
+                return;
+            }
             if(clickCol != "pdCount") {
                 var custCode = $("#orderMemberCode").val();
                 if(custCode == ""){
@@ -1228,7 +1237,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 $("#clickPdCode").val(pdCode);
                 $("#clickCustCode").val(custCode);
-                console.log(clickRow)
                 $("#clickRow").val(clickRow);
                 openPopup(usingUrl + "/coupon/pdCoupon", "주문 상품 적용 쿠폰 선택", 800, 700);
             }
@@ -1357,34 +1365,34 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#regOrder").click(function(){
         var reply = confirm("등록하시겠습니까?");
         if(reply) {
-            // if(!$("#orderMemberCode").val()) {
-            //     alert("고객코드를 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#orderDeliLocCode").val()) {
-            //     alert("배송지코드를 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#orderReveNm").val()) {
-            //     alert("수령인을 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#orderReveTelNo").val()) {
-            //     alert("수령인 전화번호를 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#revePlaceValue").val()) {
-            //     alert("수령장소를 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#orderRevePlaceDtl").val()) {
-            //     alert("수령장소 상세정보를 입력하십시오.")
-            //     return;
-            // }
-            // if(!$("#orderTobeReserve").val()) {
-            //     alert("적립 예정금액을 입력하십시오.")
-            //     return;
-            // }
+            if(!$("#orderMemberCode").val()) {
+                alert("고객코드를 입력하십시오.")
+                return;
+            }
+            if(!$("#orderDeliLocCode").val()) {
+                alert("배송지코드를 입력하십시오.")
+                return;
+            }
+            if(!$("#orderReveNm").val()) {
+                alert("수령인을 입력하십시오.")
+                return;
+            }
+            if(!$("#orderReveTelNo").val()) {
+                alert("수령인 전화번호를 입력하십시오.")
+                return;
+            }
+            if(!$("#revePlaceValue").val()) {
+                alert("수령장소를 입력하십시오.")
+                return;
+            }
+            if(!$("#orderRevePlaceDtl").val()) {
+                alert("수령장소 상세정보를 입력하십시오.")
+                return;
+            }
+            if(!$("#orderTobeReserve").val()) {
+                alert("적립 예정금액을 입력하십시오.")
+                return;
+            }
             var pdCodeStr = $("#hiddenPdCode").val();
             var pdCodeArr = pdCodeStr.split(",")
             var pdCountStr = $("#hiddenPdCnt").val();
@@ -1423,9 +1431,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 pdDiscAmtDtl        :   pdDiscAmtArr,
                 cpnCode        :   cpnCodeArr,
                 cpnDiscAmtDtl        :   cpnDiscAmtArr,
+                // pd.CPN_HIST 관련 파라미터
+                cpnUseDate      :   getTodayUntilSec(),
             }
             ajax("/order/addOrder", param, function(returnData){
-                console.log(returnData)
+                if (returnData == 1) {
+                    goPage("/order/regOrder");
+                    alert("등록이 완료됐습니다.");
+                } else {
+                    alert("register fail!");
+                }
             })
         }
     });
@@ -1489,7 +1504,8 @@ document.addEventListener('DOMContentLoaded', function () {
             var addedData = providerPdAdd.getJsonRow(i);
             rowDatas.push(addedData);
         }
-
+        var pdDiscAmt = 0;
+        var cpnDiscAmt = 0;
         var pdCodeArr = [];
         var pdDiscAmtArr = [];
         var cpnDiscAmtArr = [];

@@ -33,6 +33,7 @@ public class OrderDto {
     private List<String> pdDiscAmtDtl;
     private List<String> cpnDiscAmtDtl;
     private List<String> cpnCode;
+    private String cpnUseDate;
 
     @Builder
     public OrderDto(String custCode, String odDate, String odState, String payState,
@@ -40,7 +41,8 @@ public class OrderDto {
                     String revePlaceDtl, String deliComMsg, String totPayAmt, String totOdAmt,
                     String cpnDiscAmt, String pdDiscAmt, String totDiscAmt, String deliPrice,
                     String tobeReserve, List<String> pdCode, List<String> pdCount, List<String> pdOptCode,
-                    List<String> pdDiscAmtDtl, List<String> cpnDiscAmtDtl, List<String> cpnCode) {
+                    List<String> pdDiscAmtDtl, List<String> cpnDiscAmtDtl, List<String> cpnCode,
+                    String cpnUseDate) {
         this.custCode = custCode;
         this.odDate = odDate;
         this.odState = odState;
@@ -64,5 +66,6 @@ public class OrderDto {
         this.pdDiscAmtDtl = pdDiscAmtDtl;
         this.cpnDiscAmtDtl = cpnDiscAmtDtl;
         this.cpnCode = cpnCode;
+        this.cpnUseDate = cpnUseDate;
     }
 }

@@ -39,6 +39,14 @@ function goMainPage(uri) {
 	document.body.appendChild(form);
 	form.submit();
 }
+function goPage(uri) {
+	var form = document.createElement('form');
+
+	form.setAttribute('method', 'get');
+	form.setAttribute('action', uri);
+	document.body.appendChild(form);
+	form.submit();
+}
 // 새 창으로 팝업 화면을 띄울때 사용하는 펑션
 function openPopup(url, name, width, height){
 	var sw = screen.availWidth; // 스크린 넓이
