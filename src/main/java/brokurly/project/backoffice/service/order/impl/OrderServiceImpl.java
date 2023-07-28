@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
                 .totPayAmt(orderDto.getTotPayAmt()).totOdAmt(orderDto.getTotOdAmt())
                 .cpnDiscAmt(orderDto.getCpnDiscAmt()).pdDiscAmt(orderDto.getPdDiscAmt())
                 .totDiscAmt(orderDto.getTotDiscAmt()).deliPrice(orderDto.getDeliPrice())
-                .tobeReserve(orderDto.getTobeReserve()).regId(regId).regDate(now).build();
+                .tobeReserve(orderDto.getTobeReserve()).reserveYn("N").regId(regId).regDate(now).build();
         orderRepository.save(orderEntity);
 
         // od.OD_INFO_DTL에 들어갈 사항들
