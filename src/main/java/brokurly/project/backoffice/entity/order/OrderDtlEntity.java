@@ -25,9 +25,9 @@ public class OrderDtlEntity implements Serializable {
     @Column(name = "PD_OPT_CODE")
     private String pdOptCode;
     @Column(name = "PD_DISC_AMT")
-    private String pdDiscAmt;
+    private Double pdDiscAmt;
     @Column(name = "CPN_CODE")
     private String cpnCode;
     @Column(name = "CPN_DISC_AMT")
-    private String cpnDiscAmt;
+    private Double cpnDiscAmt;
 }

@@ -20,28 +20,29 @@ public class OrderDto {
     private String revePlace;
     private String revePlaceDtl;
     private String deliComMsg;
-    private String totPayAmt;
-    private String totOdAmt;
-    private String cpnDiscAmt;
-    private String pdDiscAmt;
-    private String totDiscAmt;
-    private String deliPrice;
-    private String tobeReserve;
+    private Double totPayAmt;
+    private Double totOdAmt;
+    private Double cpnDiscAmt;
+    private Double pdDiscAmt;
+    private Double usedReservedAmt;
+    private Double totDiscAmt;
+    private Double deliPrice;
+    private Double tobeReserve;
     private List<String> pdCode;
     private List<String> pdCount;
     private List<String> pdOptCode;
-    private List<String> pdDiscAmtDtl;
-    private List<String> cpnDiscAmtDtl;
+    private List<Double> pdDiscAmtDtl;
+    private List<Double> cpnDiscAmtDtl;
     private List<String> cpnCode;
     private String cpnUseDate;
 
     @Builder
     public OrderDto(String custCode, String odDate, String odState, String payState,
                     String deliLocCode, String reveNm, String reveTelNo, String revePlace,
-                    String revePlaceDtl, String deliComMsg, String totPayAmt, String totOdAmt,
-                    String cpnDiscAmt, String pdDiscAmt, String totDiscAmt, String deliPrice,
-                    String tobeReserve, List<String> pdCode, List<String> pdCount, List<String> pdOptCode,
-                    List<String> pdDiscAmtDtl, List<String> cpnDiscAmtDtl, List<String> cpnCode,
+                    String revePlaceDtl, String deliComMsg, Double totPayAmt, Double totOdAmt,
+                    Double cpnDiscAmt, Double pdDiscAmt, Double usedReservedAmt, Double totDiscAmt, Double deliPrice,
+                    Double tobeReserve, List<String> pdCode, List<String> pdCount, List<String> pdOptCode,
+                    List<Double> pdDiscAmtDtl, List<Double> cpnDiscAmtDtl, List<String> cpnCode,
                     String cpnUseDate) {
         this.custCode = custCode;
         this.odDate = odDate;
@@ -57,6 +58,7 @@ public class OrderDto {
         this.totOdAmt = totOdAmt;
         this.cpnDiscAmt = cpnDiscAmt;
         this.pdDiscAmt = pdDiscAmt;
+        this.usedReservedAmt = usedReservedAmt;
         this.totDiscAmt = totDiscAmt;
         this.deliPrice = deliPrice;
         this.tobeReserve = tobeReserve;

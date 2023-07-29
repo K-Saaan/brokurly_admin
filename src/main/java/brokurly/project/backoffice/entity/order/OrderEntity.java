@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Table(name = "od_info", catalog="od")
 public class OrderEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OD_CODE")
     private String odCode;
     @Column(name = "CUST_CODE")
@@ -37,21 +36,21 @@ public class OrderEntity {
     @Column(name = "DELI_COM_MSG")
     private String deliComMsg;
     @Column(name = "TOT_PAY_AMT")
-    private String totPayAmt;
+    private Double totPayAmt;
     @Column(name = "TOT_OD_AMT")
-    private String totOdAmt;
+    private Double totOdAmt;
     @Column(name = "CPN_DISC_AMT")
-    private String cpnDiscAmt;
+    private Double cpnDiscAmt;
     @Column(name = "PD_DISC_AMT")
-    private String pdDiscAmt;
+    private Double pdDiscAmt;
     @Column(name = "USED_RESERVE_AMT")
-    private String usedReserveAmt;
+    private Double usedReserveAmt;
     @Column(name = "TOT_DISC_AMT")
-    private String totDiscAmt;
+    private Double totDiscAmt;
     @Column(name = "DELI_PRICE")
-    private String deliPrice;
+    private Double deliPrice;
     @Column(name = "TOBE_RESERVE")
-    private String tobeReserve;
+    private Double tobeReserve;
     @Column(name = "RESERVE_YN")
     private String reserveYn;
     @Column(name = "REG_ID")
@@ -63,31 +62,4 @@ public class OrderEntity {
     @Column(name = "CHGR_DATE")
     private LocalDateTime chgrDate;
 
-//    @Builder
-//    public OrderEntity(String odCode, String custCode, String odDate, String odState, String payState,
-//                       String deliLocCode, String reveNm, String reveTelno, String revePlace,
-//                       String revePlaceDtl, String deliComMsg, String totPayAmt, String totOdAmt,
-//                       String cpnDiscAmt, String pdDiscAmt, String totDiscAmt, String deliPrice,
-//                       String tobeReserve, String regId, LocalDateTime regDate) {
-//        this.odCode = odCode;
-//        this.custCode = custCode;
-//        this.odDate = odDate;
-//        this.odState = odState;
-//        this.payState = payState;
-//        this.deliLocCode = deliLocCode;
-//        this.reveNm = reveNm;
-//        this.reveTelno = reveTelno;
-//        this.revePlace = revePlace;
-//        this.revePlaceDtl = revePlaceDtl;
-//        this.deliComMsg = deliComMsg;
-//        this.totPayAmt = totPayAmt;
-//        this.totOdAmt = totOdAmt;
-//        this.cpnDiscAmt = cpnDiscAmt;
-//        this.pdDiscAmt = pdDiscAmt;
-//        this.totDiscAmt = totDiscAmt;
-//        this.deliPrice = deliPrice;
-//        this.tobeReserve = tobeReserve;
-//        this.regId = regId;
-//        this.regDate = regDate;
-//    }
 }

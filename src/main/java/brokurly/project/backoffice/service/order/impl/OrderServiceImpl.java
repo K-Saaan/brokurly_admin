@@ -90,8 +90,8 @@ public class OrderServiceImpl implements OrderService {
         List<String> pdCode = orderDto.getPdCode();
         List<String> pdCount = orderDto.getPdCount();
         List<String> pdOptCode = orderDto.getPdOptCode();
-        List<String> pdDiscAmtDtl = orderDto.getPdDiscAmtDtl();
-        List<String> cpnDiscAmtDtl = orderDto.getCpnDiscAmtDtl();
+        List<Double> pdDiscAmtDtl = orderDto.getPdDiscAmtDtl();
+        List<Double> cpnDiscAmtDtl = orderDto.getCpnDiscAmtDtl();
         List<String> cpnCode = orderDto.getCpnCode();
         for(int i = 0; i< pdCode.size(); i++) {
             OrderDtlEntity orderDtlEntity = OrderDtlEntity.builder()
@@ -123,14 +123,13 @@ public class OrderServiceImpl implements OrderService {
 //                            couponHistRepository.save(couponHistEntity);
                 CouponHistEntity couponHistEntity = couponHistRepository.findByCustCodeAndCpnCode(orderDto.getCustCode(), cpnCode.get(i));
 
-                int cpnUseAmt = 0; // cpn_hist 테이블에 해당 고객+쿠폰의 쿠폰사용금액 정보 가져온값
+                Double cpnUseAmt = 0.0; // cpn_hist 테이블에 해당 고객+쿠폰의 쿠폰사용금액 정보 가져온값
                 if(couponHistEntity.getCpnUseAmt() != null) { // 널이 아니라면 값 가져오고 널이면 그대로 0
-                    cpnUseAmt = Integer.parseInt(couponHistEntity.getCpnUseAmt());
+                    cpnUseAmt = couponHistEntity.getCpnUseAmt();
                 }
-                int nowCpnUseAmt = Integer.parseInt(cpnDiscAmtDtl.get(i)); // 이건 이번에 넣는 쿠폰 사용금액
-                int totalCpnUseAmt = cpnUseAmt + nowCpnUseAmt; // 기존 누적금액에서 이번 금액 합산
-                couponHistEntity.updateCpnHist("40", orderDto.getCpnUseDate(),
-                        Integer.toString(totalCpnUseAmt), regId, now);
+                Double nowCpnUseAmt = cpnDiscAmtDtl.get(i); // 이건 이번에 넣는 쿠폰 사용금액
+                Double totalCpnUseAmt = cpnUseAmt + nowCpnUseAmt; // 기존 누적금액에서 이번 금액 합산
+                couponHistEntity.updateCpnHist("40", orderDto.getCpnUseDate(), totalCpnUseAmt, regId, now);
             }
         }
         return 1;

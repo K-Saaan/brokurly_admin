@@ -1384,7 +1384,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if(str == null) {
             return 0;
         } else {
-            return str;
+            if(typeof str == "String") {
+                return parseFloat(str)
+            } else {
+                return str;
+            }
         }
     }
 
@@ -1447,6 +1451,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 totOdAmt        :   nullToZero($("#orderTotOdAmt").val()),
                 cpnDiscAmt        :   nullToZero($("#orderCpnDiscAmt").val()),
                 pdDiscAmt        :   nullToZero($("#orderPdDiscAmt").val()),
+                usedReservedAmt        :   0,
                 totDiscAmt        :   nullToZero($("#orderTotDiscAmt").val()),
                 deliPrice        :   nullToZero($("#orderDeliPrice").val()),
                 tobeReserve        :   nullToZero($("#orderTobeReserve").val()),

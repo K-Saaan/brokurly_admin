@@ -28,7 +28,7 @@ public class CouponHistEntity implements Serializable {
     @Column(name = "CPN_USE_DATE")
     private String cpnUseDate;
     @Column(name = "CPN_USE_AMT")
-    private String cpnUseAmt;
+    private Double cpnUseAmt;
     @Column(name = "REG_ID")
     private String regId;
     @Column(name = "REG_DATE")
@@ -40,7 +40,7 @@ public class CouponHistEntity implements Serializable {
 
     @Builder
     public CouponHistEntity(String custCode, String cpnCode, String cpnStat,
-                            String cpnUseDate, String cpnUseAmt,
+                            String cpnUseDate, Double cpnUseAmt,
                             String chgrId, LocalDateTime chgrDate) {
         this.custCode = custCode;
         this.cpnCode = cpnCode;
@@ -53,7 +53,7 @@ public class CouponHistEntity implements Serializable {
 
     @Transactional
     public void updateCpnHist(String cpnStat,
-                              String cpnUseDate, String cpnUseAmt,
+                              String cpnUseDate, Double cpnUseAmt,
                               String chgrId, LocalDateTime chgrDate) {
         this.cpnStat = cpnStat;
         this.cpnUseDate = cpnUseDate;
