@@ -2,9 +2,11 @@ package brokurly.project.backoffice.controller.order;
 
 import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.mbrsh.MbrshInfoDto;
+import brokurly.project.backoffice.dto.member.ReserveAmtDto;
 import brokurly.project.backoffice.dto.order.OrderDto;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
 import brokurly.project.backoffice.repository.mbrsh.MbrshInfoRepository;
+import brokurly.project.backoffice.repository.member.MemberRepository;
 import brokurly.project.backoffice.repository.order.DeliLocInfoRepository;
 import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.order.DeliLocInfoService;
@@ -32,6 +34,7 @@ public class OrderController {
 
     private final DeliLocInfoRepository deliLocInfoRepository;
     private final MbrshInfoRepository mbrshInfoRepository;
+    private final MemberRepository memberRepository;
     private final SequenceService sequenceService;
     private final DeliLocInfoService deliLocInfoService;
     private final OrderService orderService;
@@ -75,6 +78,16 @@ public class OrderController {
     public Map<String, Object> calcMbrshInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
         String custCode = (String)param.get("CUST_CODE");
         List<MbrshInfoDto> dataList = mbrshInfoRepository.calcMbrshInfo(custCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", dataList);
+        return result;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/showOwnReserveAmt", produces = "application/json;charset=utf-8")
+    public Map<String, Object> showOwnReserveAmt(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String custCode = (String)param.get("CUST_CODE");
+        List<ReserveAmtDto> dataList = memberRepository.showOwnReserveAmt(custCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", dataList);
         return result;

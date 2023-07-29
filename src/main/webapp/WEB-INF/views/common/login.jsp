@@ -61,7 +61,7 @@
                <input type="checkbox" value="remember-me"> 아이디 저장
             </label>
          </div>
-         <button type="button" class="btn btn-primary" id="loginBtn">로그</button>
+         <button type="button" class="btn btn-primary" id="loginBtn">로그인</button>
          <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
       </form>
    </main>

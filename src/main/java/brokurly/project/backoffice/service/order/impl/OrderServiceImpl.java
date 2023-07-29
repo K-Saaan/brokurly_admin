@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
                 .reveTelno(orderDto.getReveTelNo()).revePlace(orderDto.getRevePlace())
                 .revePlaceDtl(orderDto.getRevePlaceDtl()).deliComMsg(orderDto.getDeliComMsg())
                 .totPayAmt(orderDto.getTotPayAmt()).totOdAmt(orderDto.getTotOdAmt())
-                .cpnDiscAmt(orderDto.getCpnDiscAmt()).pdDiscAmt(orderDto.getPdDiscAmt())
+                .cpnDiscAmt(orderDto.getCpnDiscAmt()).pdDiscAmt(orderDto.getPdDiscAmt()).usedReserveAmt(orderDto.getUsedReservedAmt())
                 .totDiscAmt(orderDto.getTotDiscAmt()).deliPrice(orderDto.getDeliPrice())
                 .tobeReserve(orderDto.getTobeReserve()).reserveYn("N").regId(regId).regDate(now).build();
         orderRepository.save(orderEntity);

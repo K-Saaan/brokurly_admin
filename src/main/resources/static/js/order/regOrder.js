@@ -1299,6 +1299,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // 보유적립금 조회 버튼 클릭시
+    $("#orderShowOwnResAmt").click(function(){
+        var param = {
+            CUST_CODE		:	$("#orderMemberCode").val()
+        };
+        if($("#orderMemberCode").val() == "") {
+            alert("고객코드를 먼저 입력하십시오.")
+            return;
+        }
+        ajax("/order/showOwnReserveAmt", param, function(returnData){
+            var list = returnData.codeList;
+            var reserveAmt = list[0].reserveAmt;
+            $("#orderOwnReservedAmt").val(reserveAmt);
+        })
+    });
+
     // 적립예정금액 계산 버튼 클릭시
     $("#orderMbrshCalc").click(function(){
         var param = {
@@ -1313,7 +1329,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         ajax("/order/calcMbrshInfo", param, function(returnData){
-            console.log(returnData.codeList)
             var list = returnData.codeList;
             var reserveRatio = list[0].reserveRatio;
             var mbrshGradeNm = list[0].mbrshGradeNm;

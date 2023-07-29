@@ -134,6 +134,27 @@
 <div id="orderPdAddGrid" class="bottomSpace" style="height: 300px;"></div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>보유적립금</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderOwnReservedAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 25%;">
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 20%; flex-direction: row;">
+        <button type="button" class="btn btn-primary" style="float: right; margin-right: 10px;" id="orderShowOwnResAmt">조회</button>
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>사용적립금</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="orderUsedReservedAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
         <b>적립예정금액</b>
     </div>
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
