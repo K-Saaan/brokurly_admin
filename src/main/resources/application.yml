@@ -1,26 +1,12 @@
 spring:
-  profiles:
-    default: local
-
-
-server:
-  servlet:
-    jsp:
-      init-parameters:
-        development: true
-
----
-
-spring:
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
     static-path-pattern: /static/**
   profiles:
-    include:
-      secret
-    active: local
+    default: local
+    include: secret
   web:
     resources:
       static-locations:
