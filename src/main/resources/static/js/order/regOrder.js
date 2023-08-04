@@ -1301,6 +1301,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 보유적립금 조회 버튼 클릭시
     $("#orderShowOwnResAmt").click(function(){
+        $("#orderOwnReservedAmt").val("");
         var param = {
             CUST_CODE		:	$("#orderMemberCode").val()
         };
@@ -1310,8 +1311,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         ajax("/order/showOwnReserveAmt", param, function(returnData){
             var list = returnData.codeList;
-            var reserveAmt = list[0].reserveAmt;
-            $("#orderOwnReservedAmt").val(reserveAmt);
+            if(list.length > 0) {
+                var reserveAmt = nullToZero(list[0].reserveAmt);
+                $("#orderOwnReservedAmt").val(reserveAmt);
+                // 보유적립금이 5000원 이상이면 사용적립금 입력할수있게 설정
+                if(reserveAmt >= 5000) {
+                    $("#orderUsedReservedAmt").attr("readonly", false);
+                    $("#reserveAmtInfo").text("");
+                } else {
+                    $("#orderUsedReservedAmt").attr("readonly", true);
+                    $("#reserveAmtInfo").text("보유적립금이 5천원 이하이므로 사용 불가");
+                }
+            } else {
+                $("#orderUsedReservedAmt").val(0);
+                $("#orderUsedReservedAmt").attr("readonly", true);
+                $("#reserveAmtInfo").text("보유적립금이 5천원 이하이므로 사용 불가");
+            }
         })
     });
 
@@ -1400,7 +1415,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return 0;
         } else {
             if(typeof str == "String") {
-                return parseFloat(str)
+                if(str == "") {
+                    return 0;
+                } else {
+                    return parseFloat(str)
+                }
             } else {
                 return str;
             }
@@ -1438,6 +1457,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("적립 예정금액을 입력하십시오.")
                 return;
             }
+            if( nullToZero($("#orderUsedReservedAmt").val()) > nullToZero($("#orderOwnReservedAmt").val()) ) {
+                alert("사용적립금은 보유적립금보다 클 수 없습니다.")
+                return;
+            }
             var pdCodeStr = $("#hiddenPdCode").val();
             var pdCodeArr = pdCodeStr.split(",")
             var pdCountStr = $("#hiddenPdCnt").val();
@@ -1466,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 totOdAmt        :   nullToZero($("#orderTotOdAmt").val()),
                 cpnDiscAmt        :   nullToZero($("#orderCpnDiscAmt").val()),
                 pdDiscAmt        :   nullToZero($("#orderPdDiscAmt").val()),
-                usedReservedAmt        :   0,
+                usedReservedAmt        :   nullToZero($("#orderUsedReservedAmt").val()),
                 totDiscAmt        :   nullToZero($("#orderTotDiscAmt").val()),
                 deliPrice        :   nullToZero($("#orderDeliPrice").val()),
                 tobeReserve        :   nullToZero($("#orderTobeReserve").val()),
@@ -1532,6 +1555,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         $("#orderMemberCode").val(chkDataMember);
+        $("#orderOwnReservedAmt").val("");
+        $("#reserveAmtInfo").text("");
     });
     // 배송지조회 추가 버튼 클릭시
     $("#orderDeliAdd").click(function(){
@@ -1686,6 +1711,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var checkedRows = gridViewPdAdd.getCheckedRows();
         providerPdAdd.removeRows(checkedRows);
         calculProduct();
+    });
+
+    $("#orderUsedReservedAmt").keydown(function (){
+        console.log("key up!")
     });
 
 });

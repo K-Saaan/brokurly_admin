@@ -152,6 +152,9 @@
     <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
         <input id="orderUsedReservedAmt" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
     </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <span id="reserveAmtInfo" style="padding-top: 10px; color: red;"></span>
+    </div>
 </div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
     <div style="padding: 10px 15px; flex: 0 15%;">
