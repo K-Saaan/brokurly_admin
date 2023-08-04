@@ -167,23 +167,24 @@ public class ProductController {
     @ResponseBody
     @PostMapping(value = "/showReview", produces = "application/json;charset=utf-8")
     public Map<String, Object> findReview(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
-        String pdNm = (String) param.get("PD_NM");
-        String custNm = (String) param.get("CUST_NM");
-        String custNmChanged = AES256Util.enCode(custNm, key);
+//        String pdNm = (String) param.get("PD_NM");
+//        String custNm = (String) param.get("CUST_NM");
+//        String custNmChanged = AES256Util.enCode(custNm, key);
         int pagingIndex = (int) param.get("pagingIndex");
         int pagingRows = (int) param.get("pagingRows");
         Specification<ReviewEntity> spec = (root, query, criteriaBuilder) -> null;
         Map<String, Object> result = new HashMap();
-        if (pdNm != "") {
-            spec = spec.and(reviewService.getByPdNm(pdNm));
-        }
-        if (custNm != "") {
-            spec = spec.and(reviewService.getByCustNm(custNmChanged));
-        }
+//        if (pdNm != "") {
+//            spec = spec.and(reviewService.getByPdNm(pdNm));
+//        }
+//        if (custNm != "") {
+//            spec = spec.and(reviewService.getByCustNm(custNmChanged));
+//        }
         PageRequest page = PageRequest.of(pagingIndex, pagingRows);
         Page<ReviewEntity> specProduct = reviewRepository.findAll(spec, page);
 
-        result.put("codeList", CipherUtil.changeDecodeObjectList(specProduct, ReviewEntity.class, key));
+        result.put("codeList", specProduct);
+//        result.put("codeList", CipherUtil.changeDecodeObjectList(specProduct, ReviewEntity.class, key));
         return result;
     }
 

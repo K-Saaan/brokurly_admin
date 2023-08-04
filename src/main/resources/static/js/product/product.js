@@ -295,15 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "cpnCode",
-			dataType: "text",
-		},
-		{
 			fieldName: "discYn",
-			dataType: "text",
-		},
-		{
-			fieldName: "cpnYn",
 			dataType: "text",
 		},
 		{
@@ -348,30 +340,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "cpnCode",
-			fieldName: "cpnCode",
-			type: "data",
-			width: "120",
-			header: {
-				text: "쿠폰코드",
-			},
-		},
-		{
 			name: "discYn",
 			fieldName: "discYn",
 			type: "data",
 			width: "120",
 			header: {
 				text: "할인적용여부",
-			},
-		},
-		{
-			name: "cpnYn",
-			fieldName: "cpnYn",
-			type: "data",
-			width: "120",
-			header: {
-				text: "쿠폰적용여부",
 			},
 		},
 		{

@@ -13,6 +13,7 @@ import brokurly.project.backoffice.service.order.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -133,5 +134,10 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return 1;
+    }
+
+    @Override
+    public Specification<OrderEntity> getByOdCode(String odCode) {
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("odCode"), "%" + odCode + "%"));
     }
 }

@@ -25,12 +25,8 @@ public class ProductDtlEntity {
 	
 	@Column(name = "DISC_CODE")
 	private String discCode;
-	@Column(name = "CPN_CODE")
-	private String cpnCode;
 	@Column(name = "DISC_YN")
 	private String discYn;
-	@Column(name = "CPN_YN")
-	private String cpnYn;
 	@Column(name = "RESERVE_YN")
 	private String reserveYn;
 	@Column(name = "REG_ID")

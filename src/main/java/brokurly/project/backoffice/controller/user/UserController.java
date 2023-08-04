@@ -71,9 +71,9 @@ public class UserController {
             for (int i = 0; i < reviewList.size(); i++) {
                 logger.info("start userNm");
                 String custCode = reviewList.get(i).getCustCode();
-                String custNm = reviewList.get(i).getCustNm();
+//                String custNm = reviewList.get(i).getCustNm();
                 String userId = reviewList.get(i).getUserId();
-                String nm = AES256Util.enCode(custNm, key);
+//                String nm = AES256Util.enCode(custNm, key);
                 String telNo = getTelNo();
                 String enTelNo = AES256Util.enCode(telNo, key);
                 String email = userId + "@naver.com";
@@ -81,7 +81,7 @@ public class UserController {
                 int day = (int) (Math.random() * (12 - 1) + 1);
                 int m = (int) (Math.random() * (28 - 1) + 1);
                 String birth = "19" + String.valueOf((int) (Math.random() * (99 - 65) + 65)) + String.format("%02d", day) + String.format("%02d", m);
-                MemberEntity member = MemberEntity.builder().custCode(custCode).custNm(nm).custTel(enTelNo).custEmail(enEmail)
+                MemberEntity member = MemberEntity.builder().custCode(custCode).custTel(enTelNo).custEmail(enEmail)
                         .custBirth(birth).siteCode("").custAddrDtl("").regId("ADMIN").regDate(today)
                         .chgrId("ADMIN").chgrDate(today).build();
                 memberRepository.save(member);
@@ -105,8 +105,8 @@ public class UserController {
         List<ReviewEntity> reviewList = reviewRepository.findAll();
         if (reviewList.size() > 0) {
             for (int i = 0; i < reviewList.size(); i++) {
-                String userNm = reviewList.get(i).getCustNm();
-                String nm = AES256Util.enCode(userNm, key);
+//                String userNm = reviewList.get(i).getCustNm();
+//                String nm = AES256Util.enCode(userNm, key);
                 int seqNo = reviewList.get(i).getReviewSeqNo();
                 ReviewEntity user = reviewRepository.findByReviewSeqNo(seqNo);
 //                user.updateUserNm(nm);

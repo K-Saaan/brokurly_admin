@@ -22,7 +22,7 @@ public class ReviewDto {
     // DTO -> ENTITY
     public ReviewEntity toEntity() {
         return ReviewEntity.builder()
-                .custNm(custNm)
+//                .custNm(custNm)
                 .build();
     }
 }

@@ -31,15 +31,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType: "text",
 		},
 		{
-			fieldName: "custNm",
-			dataType: "text",
-		},
-		{
 			fieldName: "pdCode",
 			dataType: "text",
 		},
 		{
-			fieldName: "pdNm",
+			fieldName: "reviewTyp",
 			dataType: "text",
 		},
 		{
@@ -53,6 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		{
 			fieldName: "reviewLike",
 			dataType: "int",
+		},
+		{
+			fieldName: "reserveYn",
+			dataType: "text",
 		},
 		{
 			fieldName: "regId",
@@ -101,15 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "custNm",
-			fieldName: "custNm",
-			type: "data",
-			width: "120",
-			header: {
-				text: "고객이름",
-			},
-		},
-		{
 			name: "pdCode",
 			fieldName: "pdCode",
 			type: "data",
@@ -119,12 +110,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		},
 		{
-			name: "pdNm",
-			fieldName: "pdNm",
+			name: "reviewTyp",
+			fieldName: "reviewTyp",
 			type: "data",
 			width: "120",
 			header: {
-				text: "상품이름",
+				text: "후기타입",
 			},
 		},
 		{
@@ -152,6 +143,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			width: "120",
 			header: {
 				text: "좋아요수",
+			},
+		},
+		{
+			name: "reserveYn",
+			fieldName: "reserveYn",
+			type: "data",
+			width: "120",
+			header: {
+				text: "적립여부",
 			},
 		},
 		{
@@ -197,17 +197,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	var pagingIndex = 0;
 	var pagingRows = 50;
 	
-	// 이름 입력하고 엔터키 눌렀을시 조회되게
-	$('#reviewPdName').keypress(function(event) {
-		if(event.keyCode == 13){
-			$("#reviewSearch").trigger("click");
-		}
-	});
-	$('#reviewCustName').keypress(function(event) {
-		if(event.keyCode == 13){
-			$("#reviewSearch").trigger("click");
-		}
-	});
+	// // 이름 입력하고 엔터키 눌렀을시 조회되게
+	// $('#reviewPdName').keypress(function(event) {
+	// 	if(event.keyCode == 13){
+	// 		$("#reviewSearch").trigger("click");
+	// 	}
+	// });
+	// $('#reviewCustName').keypress(function(event) {
+	// 	if(event.keyCode == 13){
+	// 		$("#reviewSearch").trigger("click");
+	// 	}
+	// });
 	
 	// 후기조회 조회버튼 클릭시 // 테스트
 	$("#reviewSearch").click(function(){
@@ -215,8 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		pagingIndex = 0;
 		pagingRows = 50;
 		var param = {
-				PD_NM		:	$("#reviewPdName").val(),
-				CUST_NM		:	$("#reviewCustName").val(),
 				pagingIndex		:	pagingIndex,
 				pagingRows		:	pagingRows
 		};
@@ -291,8 +289,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				return;
 			}
 			var param = {
-					PD_NM		:	$("#reviewPdName").val(),
-					CUST_NM		:	$("#reviewCustName").val(),
 					pagingIndex		:	pagingIndex,
 					pagingRows		:	pagingRows
 			};

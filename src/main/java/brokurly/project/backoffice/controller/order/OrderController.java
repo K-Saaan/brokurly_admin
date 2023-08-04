@@ -5,9 +5,14 @@ import brokurly.project.backoffice.dto.mbrsh.MbrshInfoDto;
 import brokurly.project.backoffice.dto.member.ReserveAmtDto;
 import brokurly.project.backoffice.dto.order.OrderDto;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
+import brokurly.project.backoffice.entity.order.OrderDtlEntity;
+import brokurly.project.backoffice.entity.order.OrderEntity;
+import brokurly.project.backoffice.entity.product.CouponEntity;
 import brokurly.project.backoffice.repository.mbrsh.MbrshInfoRepository;
 import brokurly.project.backoffice.repository.member.MemberRepository;
 import brokurly.project.backoffice.repository.order.DeliLocInfoRepository;
+import brokurly.project.backoffice.repository.order.OrderDtlRepository;
+import brokurly.project.backoffice.repository.order.OrderRepository;
 import brokurly.project.backoffice.service.common.SequenceService;
 import brokurly.project.backoffice.service.order.DeliLocInfoService;
 import brokurly.project.backoffice.service.order.OrderService;
@@ -34,6 +39,8 @@ public class OrderController {
 
     private final DeliLocInfoRepository deliLocInfoRepository;
     private final MbrshInfoRepository mbrshInfoRepository;
+    private final OrderRepository orderRepository;
+    private final OrderDtlRepository orderDtlRepository;
     private final MemberRepository memberRepository;
     private final SequenceService sequenceService;
     private final DeliLocInfoService deliLocInfoService;
@@ -42,6 +49,10 @@ public class OrderController {
     @GetMapping("/regOrder")
     public String regOrder() {
         return "order/regOrder";
+    }
+    @GetMapping("/showOrder")
+    public String showOrder() {
+        return "order/showOrder";
     }
 
     // 쿠폰 등록 모달
@@ -90,6 +101,35 @@ public class OrderController {
         List<ReserveAmtDto> dataList = memberRepository.showOwnReserveAmt(custCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", dataList);
+        return result;
+    }
+
+    // 주문 조회 specification 이용 다중 조회조건으로 검색
+    @ResponseBody
+    @PostMapping(value = "/showOrder", produces = "application/json;charset=utf-8")
+    public Map<String, Object> showOrder(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String odCode = (String) param.get("OD_CODE");
+        int pagingIndex = (int) param.get("pagingIndex");
+        int pagingRows = (int) param.get("pagingRows");
+        Specification<OrderEntity> spec = (root, query, criteriaBuilder) -> null;
+        Map<String, Object> result = new HashMap();
+        if(odCode != "") {
+            spec = spec.and(orderService.getByOdCode(odCode));
+        }
+        PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+        Page<OrderEntity> specOrder = orderRepository.findAll(spec, page);
+        result.put("codeList", specOrder);
+        return result;
+    }
+
+    // 특정 주문 세부정보 조회. ajax로 STRINGIFY.json 형태로 param 받을때는 @RequestBody 사용할것
+    @ResponseBody
+    @RequestMapping(value = "/showOrderDtl")
+    public Map<String, Object> showOrderDtl(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+        String odCode = (String) param.get("OD_CODE");
+        List<OrderDtlEntity> gridDataList = orderDtlRepository.findByOdCode(odCode);
+        Map<String, Object> result = new HashMap();
+        result.put("codeList", gridDataList);
         return result;
     }
 }
