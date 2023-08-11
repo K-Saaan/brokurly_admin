@@ -8,6 +8,7 @@ public abstract class Consts {
         public static final String CPN_INFO = "PD0002";     // 쿠폰 테이블
         public static final String QNA = "PD0003";          // QnA 테이블
         public static final String OD_INFO = "OD0001";      // 주문 테이블
+        public static final String PYM_INFO = "CS0002";     // 납부 테이블
 
     }
 }
