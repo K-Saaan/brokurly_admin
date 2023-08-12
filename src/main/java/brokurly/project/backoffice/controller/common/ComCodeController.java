@@ -32,7 +32,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/showCode")
 	public Map<String, Object> findCode(@RequestBody Map<String, Object> param, HttpServletRequest request){
 		String comCdGrpId = (String)param.get("COM_CD_GRP_ID");
-		logger.info("comCode : " + comCdGrpId);
+//		logger.info("comCode : " + comCdGrpId);
 
 		List<ComCodeListDto> gridDataList = comCodeRepository.findAllByComCdGrpId(comCdGrpId);
 

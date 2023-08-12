@@ -35,6 +35,23 @@ public class OrderDto {
     private List<Double> cpnDiscAmtDtl;
     private List<String> cpnCode;
     private String cpnUseDate;
+    private String payAcntNm;
+    private String payAcntTel;
+    private String payAcntEmail;
+    private String payAcntBirth;
+    private String payWay;
+    private String bankNm;
+    private String acntHolder;
+    private String acntNo;
+    private String cardExpDt;
+    private String installYn;
+    private String installM;
+    private String virtualAcntNo;
+    private String bankCd;
+    private String cardNo;
+    private String cardDueYy;
+    private String cardDueMm;
+    private Double vat;
 
     @Builder
     public OrderDto(String custCode, String odDate, String odState, String payState,
@@ -43,7 +60,10 @@ public class OrderDto {
                     Double cpnDiscAmt, Double pdDiscAmt, Double usedReservedAmt, Double totDiscAmt, Double deliPrice,
                     Double tobeReserve, List<String> pdCode, List<String> pdCount, List<String> pdOptCode,
                     List<Double> pdDiscAmtDtl, List<Double> cpnDiscAmtDtl, List<String> cpnCode,
-                    String cpnUseDate) {
+                    String cpnUseDate, String payAcntNm, String payAcntTel, String payAcntEmail,
+                    String payAcntBirth, String payWay, String bankNm, String acntHolder,
+                    String acntNo, String cardExpDt, String installYn, String installM, String virtualAcntNo,
+                    String bankCd, String cardNo, String cardDueYy, String cardDueMm, Double vat) {
         this.custCode = custCode;
         this.odDate = odDate;
         this.odState = odState;
@@ -69,5 +89,22 @@ public class OrderDto {
         this.cpnDiscAmtDtl = cpnDiscAmtDtl;
         this.cpnCode = cpnCode;
         this.cpnUseDate = cpnUseDate;
+        this.payAcntNm = payAcntNm;
+        this.payAcntTel = payAcntTel;
+        this.payAcntEmail = payAcntEmail;
+        this.payAcntBirth = payAcntBirth;
+        this.payWay = payWay;
+        this.bankNm = bankNm;
+        this.acntHolder = acntHolder;
+        this.acntNo = acntNo;
+        this.cardExpDt = cardExpDt;
+        this.installYn = installYn;
+        this.installM = installM;
+        this.virtualAcntNo = virtualAcntNo;
+        this.bankCd = bankCd;
+        this.cardNo = cardNo;
+        this.cardDueYy = cardDueYy;
+        this.cardDueMm = cardDueMm;
+        this.vat = vat;
     }
 }

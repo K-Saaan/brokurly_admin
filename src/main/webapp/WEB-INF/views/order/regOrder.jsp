@@ -219,6 +219,142 @@
     </div>
     <span id="infoDeliPrice" style="padding-top: 10px; color: red;"></span>
 </div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>납부자명</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="payAcntNm" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>핸드폰번호</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="payAcntTel" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>이메일</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="payAcntEmail" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>생년월일</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="payAcntBirth" class="form-control me-2" type="text" placeholder="YYYYMMDD" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>납부방법</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split togglePayWay" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="payWayValue" class="visually-hidden"></span>
+            </button>
+            <ul class="dropdown-menu payWayMenu" id="dropdownPayWay">
+                <li class="dropdown-item itemPayWay" value="">선택하세요</li>
+                <li class="dropdown-item itemPayWay" value="01">계좌이체</li>
+                <li class="dropdown-item itemPayWay" value="02">카드</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>은행</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split toggleBank" style="width: 200px; border: 1px solid lightgrey;" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="bankValue" class="visually-hidden"></span>
+            </button>
+            <ul class="dropdown-menu bankMenu" id="dropdownBank">
+                <li class="dropdown-item itemBank" value="">선택하세요</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>예금주</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="acntHolder" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>계좌번호</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="acntNo" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>카드번호</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="cardNo" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>카드만료일자</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="cardExpDt" class="form-control me-2" type="text" readonly="readonly" placeholder="YYYYMMDD" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>할부여부</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="installYn" type="checkbox" disabled="disabled">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>할부개월</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="installM" class="form-control me-2" type="text" readonly="readonly" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>가상계좌번호</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="virtualAcntNo" class="form-control me-2" type="text" placeholder="입력해주세요" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>카드유효년</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="cardDueYy" class="form-control me-2" type="text" readonly="readonly" placeholder="YY" aria-label="Search">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>카드유효월</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="cardDueMm" class="form-control me-2" type="text" readonly="readonly" placeholder="MM" aria-label="Search">
+    </div>
+</div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit;">
     <div class="container bottomSpace" style="float:right;">
         <button type="button" style="float: right; margin-bottom: 10px;" class="btn btn-primary" id="regOrder">등록</button>

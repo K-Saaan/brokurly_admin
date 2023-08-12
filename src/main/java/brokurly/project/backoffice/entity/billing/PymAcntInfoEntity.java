@@ -3,6 +3,7 @@ package brokurly.project.backoffice.entity.billing;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -35,11 +36,19 @@ public class PymAcntInfoEntity {
     @Column(name = "CARD_EXP_DT")
     private String cardExpDt;
     @Column(name = "CHRG_DATE")
-    private String chrgDate;
+    private LocalDateTime chrgDate;
     @Column(name = "INSTALL_YN")
     private String installYn;
     @Column(name = "INSTALL_M")
     private String installM;
     @Column(name = "VIRTUAL_ACNT_NO")
     private String virtualAcntNo;
+    @Column(name = "REG_ID")
+    private String regId;
+    @Column(name = "REG_DATE")
+    private LocalDateTime regDate;
+    @Column(name = "CHGR_ID")
+    private String chgrId;
+    @Column(name = "CHGR_DATE")
+    private LocalDateTime chgrDate;
 }

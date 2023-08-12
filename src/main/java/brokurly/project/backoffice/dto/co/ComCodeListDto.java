@@ -11,15 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 아무런 값도 갖지 않는 의미 없는 객체의 생성을 막아줌
 public class ComCodeListDto {
 
+    public String comCd;
     public String comCdNm;
 
     @Builder
-    public ComCodeListDto(String comCdNm){
+    public ComCodeListDto(String comCd, String comCdNm){
+        this.comCd = comCd;
         this.comCdNm = comCdNm;
     }
 
     public ComCodeEntity toEntity() {
         return ComCodeEntity.builder()
-                .comCdNm(comCdNm).build();
+                .comCd(comCd).comCdNm(comCdNm).build();
     }
 }

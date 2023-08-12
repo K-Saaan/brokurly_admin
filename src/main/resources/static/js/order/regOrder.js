@@ -1323,6 +1323,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     $("#reserveAmtInfo").text("보유적립금이 5천원 이하이므로 사용 불가");
                 }
             } else {
+                $("#orderOwnReservedAmt").val(0);
                 $("#orderUsedReservedAmt").val(0);
                 $("#orderUsedReservedAmt").attr("readonly", true);
                 $("#reserveAmtInfo").text("보유적립금이 5천원 이하이므로 사용 불가");
@@ -1345,12 +1346,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         ajax("/order/calcMbrshInfo", param, function(returnData){
             var list = returnData.codeList;
-            var reserveRatio = list[0].reserveRatio;
-            var mbrshGradeNm = list[0].mbrshGradeNm;
-            var totPayAmt = parseInt($("#orderTotPayAmt").val());
-            var tobeReserve = parseInt(totPayAmt * reserveRatio / 100);
-            $("#orderTobeReserve").val(tobeReserve);
-            $("#reserveRatio").text("등급명 : " + mbrshGradeNm + ", " + reserveRatio + "% 적립");
+            if(list.length > 0) {
+                var reserveRatio = list[0].reserveRatio;
+                var mbrshGradeNm = list[0].mbrshGradeNm;
+                var totPayAmt = parseInt($("#orderTotPayAmt").val());
+                var tobeReserve = parseInt(totPayAmt * reserveRatio / 100);
+                $("#orderTobeReserve").val(tobeReserve);
+                $("#reserveRatio").text("등급명 : " + mbrshGradeNm + ", " + reserveRatio + "% 적립");
+            } else {
+                $("#orderTobeReserve").val(0);
+            }
         })
     });
 
@@ -1453,14 +1458,62 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("수령장소 상세정보를 입력하십시오.")
                 return;
             }
-            if(!$("#orderTobeReserve").val()) {
-                alert("적립 예정금액을 입력하십시오.")
-                return;
-            }
             if( nullToZero($("#orderUsedReservedAmt").val()) > nullToZero($("#orderOwnReservedAmt").val()) ) {
                 alert("사용적립금은 보유적립금보다 클 수 없습니다.")
                 return;
             }
+            if(!$("#payAcntNm").val()) {
+                alert("납부자명을 입력하십시오.")
+                return;
+            }
+            if(!$("#payAcntTel").val()) {
+                alert("납부자 핸드폰번호를 입력하십시오.")
+                return;
+            }
+            if(!$("#payAcntEmail").val()) {
+                alert("납부자 이메일을 입력하십시오.")
+                return;
+            }
+            if(!$("#payAcntBirth").val()) {
+                alert("납부자 생년월일을 입력하십시오.")
+                return;
+            }
+            if(!$("#payWayValue").val()) {
+                alert("납부방법을 선택하십시오.")
+                return;
+            }
+            if(!$("#bankValue").val()) {
+                alert("은행을 선택하십시오.")
+                return;
+            }
+            if($("#payWayValue").text() == "계좌이체") {
+                if(!$("#acntHolder").val()) {
+                    alert("예금주를 입력하십시오.")
+                    return;
+                }
+                if(!$("#acntNo").val()) {
+                    alert("계좌번호를 입력하십시오.")
+                    return;
+                }
+            } else if($("#payWayValue").text() == "카드") {
+                if(!$("#cardNo").val()) {
+                    alert("카드번호를 입력하십시오.")
+                    return;
+                }
+                if(!$("#cardExpDt").val()) {
+                    alert("카드만료일자를 입력하십시오.")
+                    return;
+                }
+                if(!$("#cardDueYy").val()) {
+                    alert("카드유효년을 입력하십시오.")
+                    return;
+                }
+                if(!$("#cardDueMm").val()) {
+                    alert("카드유효월을 입력하십시오.")
+                    return;
+                }
+            }
+
             var pdCodeStr = $("#hiddenPdCode").val();
             var pdCodeArr = pdCodeStr.split(",")
             var pdCountStr = $("#hiddenPdCnt").val();
@@ -1502,6 +1555,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 cpnDiscAmtDtl        :   cpnDiscAmtArr,
                 // pd.CPN_HIST 관련 파라미터
                 cpnUseDate      :   getTodayUntilSec(),
+                // cs.PYM_ACNT_INFO 관련 파라미터
+                payAcntNm     :   $("#payAcntNm").val(),
+                payAcntTel     :   $("#payAcntTel").val(),
+                payAcntEmail     :   $("#payAcntEmail").val(),
+                payAcntBirth     :   $("#payAcntBirth").val(),
+                payWay     :   $("#payWayValue").val(),
+                bankNm     :   $("#bankValue").text(),
+                acntHolder     :   $("#acntHolder").val(),
+                acntNo     :   $("#acntNo").val() == "" ? $("#cardNo").val() : $("#acntNo").val(),
+                cardExpDt     :   $("#cardExpDt").val(),
+                installYn     :   $("#installYn").is(':checked') == true ? 'Y' : 'N',
+                installM     :   $("#installM").val(),
+                virtualAcntNo     :   $("#virtualAcntNo").val(),
+                // bl.CHRG_INFO 관련 파라미터
+                bankCd      :   $("#bankValue").val(),
+                cardNo      :   $("#cardNo").val(),
+                cardDueYy   :   $("#cardDueYy").val(),
+                cardDueMm   :   $("#cardDueMm").val(),
+                vat   :   parseFloat($("#orderTotPayAmt").val() * 0.1),
             }
             ajax("/order/addOrder", param, function(returnData){
                 if (returnData == 1) {
@@ -1523,6 +1595,24 @@ document.addEventListener('DOMContentLoaded', function () {
             $('.itemRevePlace').show();
         }
     });
+    $(".togglePayWay").click(function(){
+        if($('.payWayMenu').is(':visible')){
+            $('.payWayMenu').hide();
+            $('.itemPayWay').hide();
+        } else {
+            $('.payWayMenu').show();
+            $('.itemPayWay').show();
+        }
+    });
+    $(".toggleBank").click(function(){
+        if($('.bankMenu').is(':visible')){
+            $('.bankMenu').hide();
+            $('.itemBank').hide();
+        } else {
+            $('.bankMenu').show();
+            $('.itemBank').show();
+        }
+    });
 
     $(".toggleRevePlace").mouseleave(function(){
         $(".revePlaceMenu").mouseover(function(){
@@ -1532,6 +1622,26 @@ document.addEventListener('DOMContentLoaded', function () {
         $(".revePlaceMenu").mouseleave(function(){
             $('.revePlaceMenu').hide();
             $('.itemRevePlace').hide();
+        })
+    });
+    $(".togglePayWay").mouseleave(function(){
+        $(".payWayMenu").mouseover(function(){
+            $('.payWayMenu').show();
+            $('.itemPayWay').show();
+        });
+        $(".payWayMenu").mouseleave(function(){
+            $('.payWayMenu').hide();
+            $('.itemPayWay').hide();
+        })
+    });
+    $(".toggleBank").mouseleave(function(){
+        $(".bankMenu").mouseover(function(){
+            $('.bankMenu').show();
+            $('.itemBank').show();
+        });
+        $(".bankMenu").mouseleave(function(){
+            $('.bankMenu').hide();
+            $('.itemBank').hide();
         })
     });
 
@@ -1545,6 +1655,70 @@ document.addEventListener('DOMContentLoaded', function () {
             $('.itemRevePlace').show();
         }
     })
+    $("#dropdownPayWay").on('click', ".itemPayWay", function(){
+        $('#payWayValue').text( $(this).text() ).val( $(this).val() );
+        if($('.itemPayWay').is(':visible')){
+            $('.payWayMenu').hide();
+            $('.itemPayWay').hide();
+        } else {
+            $('.payWayMenu').show();
+            $('.itemPayWay').show();
+        }
+
+        if($(this).text() == "계좌이체") {
+            $("#cardNo").attr("readonly", true);
+            $("#cardExpDt").attr("readonly", true);
+            $("#installYn").attr("disabled", true);
+            $("#installM").attr("readonly", true);
+            $("#cardDueYy").attr("readonly", true);
+            $("#cardDueMm").attr("readonly", true);
+            $("#acntHolder").attr("readonly", false);
+            $("#acntNo").attr("readonly", false);
+        } else if ($(this).text() == "카드") {
+            $("#cardNo").attr("readonly", false);
+            $("#cardExpDt").attr("readonly", false);
+            $("#installYn").attr("disabled", false);
+            $("#installM").attr("readonly", true);
+            $("#cardDueYy").attr("readonly", false);
+            $("#cardDueMm").attr("readonly", false);
+            $("#acntHolder").attr("readonly", true);
+            $("#acntNo").attr("readonly", true);
+        } else {
+            $("#cardNo").attr("readonly", true);
+            $("#cardExpDt").attr("readonly", true);
+            $("#installYn").attr("disabled", true);
+            $("#installM").attr("readonly", true);
+            $("#cardDueYy").attr("readonly", true);
+            $("#cardDueMm").attr("readonly", true);
+            $("#acntHolder").attr("readonly", true);
+            $("#acntNo").attr("readonly", true);
+        }
+    })
+    $("#dropdownBank").on('click', ".itemBank", function(){
+        $('#bankValue').text( $(this).text() ).val( $(this).val() );
+        if($('.itemBank').is(':visible')){
+            $('.bankMenu').hide();
+            $('.itemBank').hide();
+        } else {
+            $('.bankMenu').show();
+            $('.itemBank').show();
+        }
+    })
+
+    var dropdownParam = {
+        COM_CD_GRP_ID		:	"BL00001"
+    };
+    function setSelboxOrder(objectId, url, param) {
+        var tagId = "#" + objectId;
+        ajax(url, param, function(returnData){
+            var codeList = returnData.codeList;
+            for(var i = 0; i < codeList.length; i++) {
+                $(tagId).append("<li class = 'dropdown-item itemBank' value='" + codeList[i].comCd + "'>" + codeList[i].comCdNm + "</li>")
+            }
+        })
+    }
+    // common에 있는 공통 펑션으로 드롭다운 구성
+    setSelboxOrder("dropdownBank", "/common/showCode", dropdownParam);
 
     // 멤버조회 추가 버튼 클릭시
     $("#orderMemberAdd").click(function(){
@@ -1713,8 +1887,12 @@ document.addEventListener('DOMContentLoaded', function () {
         calculProduct();
     });
 
-    $("#orderUsedReservedAmt").keydown(function (){
-        console.log("key up!")
-    });
+    $("#installYn").change(function () {
+        if($("#installYn").is(":checked") == true) {
+            $("#installM").attr("readonly", false);
+        } else {
+            $("#installM").attr("readonly", true);
+        }
+    })
 
 });

@@ -2,9 +2,13 @@ package brokurly.project.backoffice.service.order.impl;
 
 import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.order.OrderDto;
+import brokurly.project.backoffice.entity.billing.ChrgInfoEntity;
+import brokurly.project.backoffice.entity.billing.PymAcntInfoEntity;
 import brokurly.project.backoffice.entity.order.OrderDtlEntity;
 import brokurly.project.backoffice.entity.order.OrderEntity;
 import brokurly.project.backoffice.entity.product.CouponHistEntity;
+import brokurly.project.backoffice.repository.billing.ChrgInfoRepository;
+import brokurly.project.backoffice.repository.billing.PymAcntInfoRepository;
 import brokurly.project.backoffice.repository.order.OrderDtlRepository;
 import brokurly.project.backoffice.repository.order.OrderRepository;
 import brokurly.project.backoffice.repository.product.CouponHistRepository;
@@ -35,6 +39,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderDtlRepository orderDtlRepository;
     @Autowired
     private CouponHistRepository couponHistRepository;
+    @Autowired
+    private PymAcntInfoRepository pymAcntInfoRepository;
+    @Autowired
+    private ChrgInfoRepository chrgInfoRepository;
 
     @Transactional
     public int addOrder(OrderDto orderDto, HttpServletRequest request) {
@@ -67,6 +75,7 @@ public class OrderServiceImpl implements OrderService {
 //            logger.info("등록자 : " + regId);
 //            logger.info("등록일시 : " + now);
 
+        // 주문 정보 테이블
         OrderEntity orderEntity = OrderEntity.builder().odCode(orderCode).custCode(orderDto.getCustCode())
                 .odDate(orderDto.getOdDate()).odState(orderDto.getOdState()).payState(orderDto.getPayState())
                 .deliLocCode(orderDto.getDeliLocCode()).reveNm(orderDto.getReveNm())
@@ -88,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
 //            logger.info("상품별 쿠폰할인금액 배열 : " + orderDto.getCpnDiscAmtDtl().toString());
 //            logger.info("상품별 쿠폰코드 배열 : " + orderDto.getCpnCode().toString());
 
+        // 주문 상세정보 테이블
         List<String> pdCode = orderDto.getPdCode();
         List<String> pdCount = orderDto.getPdCount();
         List<String> pdOptCode = orderDto.getPdOptCode();
@@ -114,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
 //            logger.info("등록자 : " + regId);
 //            logger.info("등록일시 : " + now);
 
+        // 쿠폰 이력 테이블
         for(int i = 0; i< pdCode.size(); i++) {
             if(cpnCode.get(i) != "") {
 //                            CouponHistEntity couponHistEntity = CouponHistEntity.builder()
@@ -133,6 +144,30 @@ public class OrderServiceImpl implements OrderService {
                 couponHistEntity.updateCpnHist("40", orderDto.getCpnUseDate(), totalCpnUseAmt, regId, now);
             }
         }
+
+        // 납부자 테이블
+        String pymAcntCode = sequenceService.createNewSequence(Consts.TBL_CODE.PYM_INFO, 10);
+        PymAcntInfoEntity pymAcntInfoEntity = PymAcntInfoEntity.builder().pymAcntCode(pymAcntCode)
+                .custCode(orderDto.getCustCode()).pymAcntNm(orderDto.getPayAcntNm())
+                .pymAcntTel(orderDto.getPayAcntTel()).pymAcntEmail(orderDto.getPayAcntEmail())
+                .pymAcntBirth(orderDto.getPayAcntBirth()).payWay(orderDto.getPayWay())
+                .bankNm(orderDto.getBankNm()).acntHolder(orderDto.getAcntHolder())
+                .acntNo(orderDto.getAcntNo()).cardExpDt(orderDto.getCardExpDt())
+                .chrgDate(now).installYn(orderDto.getInstallYn()).installM(orderDto.getInstallM())
+                .virtualAcntNo(orderDto.getVirtualAcntNo()).regId(regId).regDate(now).build();
+        pymAcntInfoRepository.save(pymAcntInfoEntity);
+
+        // 결제 정보 테이블
+        ChrgInfoEntity chrgInfoEntity = ChrgInfoEntity.builder().pymAcntCode(pymAcntCode)
+                .custCode(orderDto.getCustCode()).odCode(orderCode).pymTyp("1")
+                .payWay(orderDto.getPayWay()).payStat("10").cnclYn("N")
+                .chrgDate(now).bankCd(orderDto.getBankCd()).bankNm(orderDto.getBankNm())
+                .cardNo(orderDto.getCardNo()).cardDueYy(orderDto.getCardDueYy())
+                .cardDueMm(orderDto.getCardDueMm()).acntNo(orderDto.getAcntNo())
+                .acntHolder(orderDto.getAcntHolder()).chrgAmt(orderDto.getTotPayAmt())
+                .vat(orderDto.getVat()).fee(100.0).regId(regId).regDate(now).build();
+        chrgInfoRepository.save(chrgInfoEntity);
+
         return 1;
     }
 

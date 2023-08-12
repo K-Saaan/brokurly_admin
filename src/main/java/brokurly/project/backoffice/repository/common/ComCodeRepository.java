@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComCodeRepository extends JpaRepository<ComCodeEntity, ComCodeList> {
 
-    @Query("select new brokurly.project.backoffice.dto.co.ComCodeListDto(c.comCdNm) from ComCodeEntity c where c.comCodeList.comCdGrpId = :comCdGrpId order by c.index")
+    @Query("select new brokurly.project.backoffice.dto.co.ComCodeListDto(c.comCd, c.comCdNm) from ComCodeEntity c where c.comCodeList.comCdGrpId = :comCdGrpId order by c.index")
     List<ComCodeListDto> findAllByComCdGrpId(String comCdGrpId);
 }
