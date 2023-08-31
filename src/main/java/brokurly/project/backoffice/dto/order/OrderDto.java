@@ -47,6 +47,12 @@ public class OrderDto {
     private String installYn;
     private String installM;
     private String virtualAcntNo;
+    private String agreTerms;
+    private String agrePrivacyEss;
+    private String agrePrivacyOpt;
+    private String agreSms;
+    private String agreEmail;
+    private String ageYn;
     private String bankCd;
     private String cardNo;
     private String cardDueYy;
@@ -63,6 +69,8 @@ public class OrderDto {
                     String cpnUseDate, String payAcntNm, String payAcntTel, String payAcntEmail,
                     String payAcntBirth, String payWay, String bankNm, String acntHolder,
                     String acntNo, String cardExpDt, String installYn, String installM, String virtualAcntNo,
+                    String agreTerms, String agrePrivacyEss, String agrePrivacyOpt, String agreSms,
+                    String agreEmail, String ageYn,
                     String bankCd, String cardNo, String cardDueYy, String cardDueMm, Double vat) {
         this.custCode = custCode;
         this.odDate = odDate;
@@ -101,6 +109,12 @@ public class OrderDto {
         this.installYn = installYn;
         this.installM = installM;
         this.virtualAcntNo = virtualAcntNo;
+        this.agreTerms = agreTerms;
+        this.agrePrivacyEss = agrePrivacyEss;
+        this.agrePrivacyOpt = agrePrivacyOpt;
+        this.agreSms = agreSms;
+        this.agreEmail = agreEmail;
+        this.ageYn = ageYn;
         this.bankCd = bankCd;
         this.cardNo = cardNo;
         this.cardDueYy = cardDueYy;

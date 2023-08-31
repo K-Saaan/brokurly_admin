@@ -1513,6 +1513,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
             }
+            if(!$('#agreTerms').is(":checked")) {
+                alert("이용약관동의(필수)를 체크하십시오.")
+                return;
+            }
+            if(!$('#agrePrivacyEss').is(":checked")) {
+                alert("개인정보 수집이용동의(필수)를 체크하십시오.")
+                return;
+            }
 
             var pdCodeStr = $("#hiddenPdCode").val();
             var pdCodeArr = pdCodeStr.split(",")
@@ -1568,6 +1576,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 installYn     :   $("#installYn").is(':checked') == true ? 'Y' : 'N',
                 installM     :   $("#installM").val(),
                 virtualAcntNo     :   $("#virtualAcntNo").val(),
+                // cs.PYM_ACNT_INFO_DTL 관련 파라미터
+                agreTerms   :   $("#agreTerms").is(':checked') == true ? 'Y' : 'N',
+                agrePrivacyEss   :   $("#agrePrivacyEss").is(':checked') == true ? 'Y' : 'N',
+                agrePrivacyOpt   :   $("#agrePrivacyOpt").is(':checked') == true ? 'Y' : 'N',
+                agreSms   :   $("#agreSms").is(':checked') == true ? 'Y' : 'N',
+                agreEmail   :   $("#agreEmail").is(':checked') == true ? 'Y' : 'N',
+                ageYn   :   $("#ageYn").is(':checked') == true ? 'Y' : 'N',
                 // bl.CHRG_INFO 관련 파라미터
                 bankCd      :   $("#bankValue").val(),
                 cardNo      :   $("#cardNo").val(),

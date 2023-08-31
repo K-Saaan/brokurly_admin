@@ -355,6 +355,54 @@
         <input id="cardDueMm" class="form-control me-2" type="text" readonly="readonly" placeholder="MM" aria-label="Search">
     </div>
 </div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>이용약관동의(필수)</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="agreTerms" type="checkbox">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>개인정보 수집이용동의(필수)</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="agrePrivacyEss" type="checkbox">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>개인정보 수집이용동의(선택)</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="agrePrivacyOpt" type="checkbox">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>광고성 SMS수신동의(선택)</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="agreSms" type="checkbox">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>광고성 Email수신동의(선택)</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="agreEmail" type="checkbox">
+    </div>
+</div>
+<div class="container bottomSpace" style="display: flex; flex-wrap: inherit; border: 1px solid lightgrey;">
+    <div style="padding: 10px 15px; flex: 0 15%;">
+        <b>만 14세이상</b>
+    </div>
+    <div style="display: flex; flex-wrap: inherit; padding: 5px 15px; padding: 5px 15px; flex: 0 40%;">
+        <input id="ageYn" type="checkbox">
+    </div>
+</div>
 <div class="container bottomSpace" style="display: flex; flex-wrap: inherit;">
     <div class="container bottomSpace" style="float:right;">
         <button type="button" style="float: right; margin-bottom: 10px;" class="btn btn-primary" id="regOrder">등록</button>
