@@ -8,5 +8,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface OrderService {
     public int addOrder(OrderDto orderDto, HttpServletRequest request); // 쿠폰 수정 처리
-    Specification<OrderEntity> getByOdCode(String odCdoe);
+    Specification<OrderEntity> getByOdCode(String odCode);
 }

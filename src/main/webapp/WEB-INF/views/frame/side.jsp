@@ -15,6 +15,7 @@
 	      <li><a href="#" class="menu2_down" style="display: none; padding-left: 20px;">할인조회</a></li>
       <li><a href="#" class="menu3">주문</a></li>
 		  <li><a href="${pageContext.request.contextPath}/order/showOrder" class="menu3_down" style="display: none; padding-left: 20px;">주문정보조회</a></li>
+		  <li><a href="${pageContext.request.contextPath}/order/showChrg" class="menu3_down" style="display: none; padding-left: 20px;">결제정보조회</a></li>
 	      <li><a href="#" class="menu3_down" style="display: none; padding-left: 20px;">배송정보조회</a></li>
 	      <li><a href="${pageContext.request.contextPath}/order/regOrder" class="menu3_down" style="display: none; padding-left: 20px;">주문정보등록</a></li>
       <li><a href="#" class="menu4">빌링</a></li>

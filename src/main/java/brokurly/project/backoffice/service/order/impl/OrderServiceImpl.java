@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
         chrgInfoRepository.save(chrgInfoEntity);
 
         // 납부 정보 테이블
-        PayInfoEntity payInfoEntity = PayInfoEntity.builder().chrgSeqNo(chrgInfoEntity.getChgrSeqNo())
+        PayInfoEntity payInfoEntity = PayInfoEntity.builder().chrgSeqNo(chrgInfoEntity.getChrgSeqNo())
                 .payStat("10").payCnclYn("N").payDate(null).fullPayYn("N").payProcYn("N")
                 .payProcDate(null).chrgAmt(orderDto.getTotPayAmt()).rcptAmt(0.0)
                 .regId(regId).regDate(now).build();

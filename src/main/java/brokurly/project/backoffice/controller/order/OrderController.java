@@ -4,16 +4,19 @@ import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.mbrsh.MbrshInfoDto;
 import brokurly.project.backoffice.dto.member.ReserveAmtDto;
 import brokurly.project.backoffice.dto.order.OrderDto;
+import brokurly.project.backoffice.entity.billing.ChrgInfoEntity;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
 import brokurly.project.backoffice.entity.order.OrderDtlEntity;
 import brokurly.project.backoffice.entity.order.OrderEntity;
 import brokurly.project.backoffice.entity.product.CouponEntity;
+import brokurly.project.backoffice.repository.billing.ChrgInfoRepository;
 import brokurly.project.backoffice.repository.mbrsh.MbrshInfoRepository;
 import brokurly.project.backoffice.repository.member.MemberRepository;
 import brokurly.project.backoffice.repository.order.DeliLocInfoRepository;
 import brokurly.project.backoffice.repository.order.OrderDtlRepository;
 import brokurly.project.backoffice.repository.order.OrderRepository;
 import brokurly.project.backoffice.service.common.SequenceService;
+import brokurly.project.backoffice.service.order.ChrgService;
 import brokurly.project.backoffice.service.order.DeliLocInfoService;
 import brokurly.project.backoffice.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +48,8 @@ public class OrderController {
     private final SequenceService sequenceService;
     private final DeliLocInfoService deliLocInfoService;
     private final OrderService orderService;
+    private final ChrgService chrgService;
+    private final ChrgInfoRepository chrgInfoRepository;
 
     @GetMapping("/regOrder")
     public String regOrder() {
@@ -53,6 +58,10 @@ public class OrderController {
     @GetMapping("/showOrder")
     public String showOrder() {
         return "order/showOrder";
+    }
+    @GetMapping("/showChrg")
+    public String showChrg() {
+        return "order/showChrg";
     }
 
     // 쿠폰 등록 모달
@@ -130,6 +139,24 @@ public class OrderController {
         List<OrderDtlEntity> gridDataList = orderDtlRepository.findByOdCode(odCode);
         Map<String, Object> result = new HashMap();
         result.put("codeList", gridDataList);
+        return result;
+    }
+
+    // 결제 조회 specification 이용 다중 조회조건으로 검색
+    @ResponseBody
+    @PostMapping(value = "/getChrgInfo", produces = "application/json;charset=utf-8")
+    public Map<String, Object> getChrgInfo(@RequestBody Map<String, Object> param, HttpServletRequest request) throws Throwable {
+        String odCode = (String) param.get("OD_CODE");
+        int pagingIndex = (int) param.get("pagingIndex");
+        int pagingRows = (int) param.get("pagingRows");
+        Specification<ChrgInfoEntity> spec = (root, query, criteriaBuilder) -> null;
+        Map<String, Object> result = new HashMap();
+        if(odCode != "") {
+            spec = spec.and(chrgService.getByOdCode(odCode));
+        }
+        PageRequest page = PageRequest.of(pagingIndex, pagingRows);
+        Page<ChrgInfoEntity> specChrg = chrgInfoRepository.findAll(spec, page);
+        result.put("codeList", specChrg);
         return result;
     }
 }

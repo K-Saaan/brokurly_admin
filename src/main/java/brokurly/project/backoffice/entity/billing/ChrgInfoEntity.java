@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class ChrgInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CHGR_SEQ_NO")
-    private int chgrSeqNo;
+    @Column(name = "CHRG_SEQ_NO")
+    private int chrgSeqNo;
     @Column(name = "PYM_ACNT_CODE")
     private String pymAcntCode;
     @Column(name = "CUST_CODE")
