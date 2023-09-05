@@ -3,6 +3,7 @@ package brokurly.project.backoffice.controller.order;
 import brokurly.project.backoffice.common.Consts;
 import brokurly.project.backoffice.dto.mbrsh.MbrshInfoDto;
 import brokurly.project.backoffice.dto.member.ReserveAmtDto;
+import brokurly.project.backoffice.dto.order.ChrgPayInfoDto;
 import brokurly.project.backoffice.dto.order.OrderDto;
 import brokurly.project.backoffice.entity.billing.ChrgInfoEntity;
 import brokurly.project.backoffice.entity.order.DeliLocInfoEntity;
@@ -149,14 +150,15 @@ public class OrderController {
         String odCode = (String) param.get("OD_CODE");
         int pagingIndex = (int) param.get("pagingIndex");
         int pagingRows = (int) param.get("pagingRows");
-        Specification<ChrgInfoEntity> spec = (root, query, criteriaBuilder) -> null;
+//        Specification<ChrgInfoEntity> spec = (root, query, criteriaBuilder) -> null;
         Map<String, Object> result = new HashMap();
-        if(odCode != "") {
-            spec = spec.and(chrgService.getByOdCode(odCode));
-        }
+//        if(odCode != "") {
+//            spec = spec.and(chrgService.getByOdCode(odCode));
+//        }
         PageRequest page = PageRequest.of(pagingIndex, pagingRows);
-        Page<ChrgInfoEntity> specChrg = chrgInfoRepository.findAll(spec, page);
-        result.put("codeList", specChrg);
+//        Page<ChrgInfoEntity> specChrg = chrgInfoRepository.findAll(spec, page);
+        Page<ChrgPayInfoDto> gridDataList = chrgInfoRepository.showChrgAndPayInfo(odCode, page);
+        result.put("codeList", gridDataList);
         return result;
     }
 }

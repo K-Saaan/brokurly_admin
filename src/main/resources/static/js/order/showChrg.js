@@ -3,9 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('realgridChrg');
     const provider = new RealGrid.LocalDataProvider(false);
     const gridView = new RealGrid.GridView(container);
+    // 서브그리드를 그리기 위한 사전 설정
+    const subcontainer = document.getElementById('subgridChrg');
+    const subprovider = new RealGrid.LocalDataProvider(false);
+    const subgridView = new RealGrid.GridView(subcontainer);
 
     gridView.setDataSource(provider);
     gridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
+    subgridView.setDataSource(subprovider);
+    subgridView.setEditOptions({editable : false}); // 더블클릭시 그리드 셀 수정 불가능하게 설정
 
     var realPath = location.href; // http://localhost:8080/member/show 같은 full URL
     var urlIndex = realPath.lastIndexOf("/");
@@ -80,6 +86,10 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             fieldName: "chrgAmt",
+            dataType: "number",
+        },
+        {
+            fieldName: "rcptAmt",
             dataType: "number",
         },
         {
@@ -266,6 +276,16 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
         {
+            name: "rcptAmt",
+            fieldName: "rcptAmt",
+            type: "number",
+            width: "120",
+            numberFormat: "#,##0",
+            header: {
+                text: "납부금액",
+            },
+        },
+        {
             name: "vat",
             fieldName: "vat",
             type: "number",
@@ -322,6 +342,38 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
     ]);
+    // 서브그리드 컬럼
+    subprovider.setFields([
+        {
+            fieldName: "pdCode",
+            dataType: "text",
+        },
+        {
+            fieldName: "pdCnt",
+            dataType: "text",
+        },
+    ]);
+
+    subgridView.setColumns([
+        {
+            name: "pdCode",
+            fieldName: "pdCode",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품코드",
+            },
+        },
+        {
+            name: "pdCnt",
+            fieldName: "pdCnt",
+            type: "data",
+            width: "120",
+            header: {
+                text: "상품개수",
+            },
+        },
+    ]);
 
     var totalCount = 0;
     var countData = 0;
@@ -368,17 +420,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // 메인그리드 클릭했을때 해당 데이터의 세부정보를 서브그리드에 보여주기위함
     function gridCellClicked(){
         gridView.onCellClicked = function(grid, clickData){
-            // var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
-            // var odCode = selectOneData.odCode;
-            // $("#clickOrderCd").val(odCode);
-            // var param = {
-            //     OD_CODE	:	odCode
-            // }
-            // ajax("/order/showOrderDtl", param, function(returnData){
-            //     var detailData = returnData.codeList;
-            //     subprovider.fillJsonData(detailData, { fillMode : "set"});
-            //     subgridCellClicked();
-            // })
+            var selectOneData = gridView.getDataSource().getJsonRow(gridView.getCurrent().dataRow);
+            var odCode = selectOneData.odCode;
+            $("#clickOrderCd").val(odCode);
+            var param = {
+                OD_CODE	:	odCode
+            }
+            ajax("/order/showOrderDtl", param, function(returnData){
+                var detailData = returnData.codeList;
+                subprovider.fillJsonData(detailData, { fillMode : "set"});
+                // subgridCellClicked();
+            })
         }
     }
     // 메인그리드 더블클릭했을때 모달 호출
