@@ -31,6 +31,8 @@ public class PayInfoEntity {
     private Double chrgAmt;
     @Column(name = "RCPT_AMT")
     private Double rcptAmt;
+    @Column(name = "INSTL_MM")
+    private String instlMm;
     @Column(name = "REG_ID")
     private String regId;
     @Column(name = "REG_DATE")

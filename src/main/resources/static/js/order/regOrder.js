@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
     gridViewMember.displayOptions.fitStyle= 'even';
     gridViewDeli.displayOptions.fitStyle= 'even';
 
+    var now = new Date();
+
     function getToday() {
         var today = new Date();
         var year = addZero(today.getFullYear(), 4);
@@ -1589,6 +1591,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 cardDueYy   :   $("#cardDueYy").val(),
                 cardDueMm   :   $("#cardDueMm").val(),
                 vat   :   parseFloat($("#orderTotPayAmt").val() * 0.1),
+                // bl.PAY_INFO 관련 파라미터
+                fullPayYn   :   $("#installYn").is(':checked') == true ? 'N' : 'Y',
+                payProcDate   :   $("#installYn").is(':checked') == true ? '' : now,
+                rcptAmt   :   $("#installYn").is(':checked') == true ? parseFloat(nullToZero($("#orderTotPayAmt").val()) / $("#installM").val()) : nullToZero($("#orderTotPayAmt").val()),
+                instlMm   :   $("#installYn").is(':checked') == true ? $("#installM").val() : 0,
             }
             ajax("/order/addOrder", param, function(returnData){
                 if (returnData == 1) {
@@ -1689,6 +1696,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#cardDueMm").attr("readonly", true);
             $("#acntHolder").attr("readonly", false);
             $("#acntNo").attr("readonly", false);
+            $("#cardNo").val("");
+            $("#cardExpDt").val("");
+            $("#installM").val("");
+            $("#cardDueYy").val("");
+            $("#cardDueMm").val("");
         } else if ($(this).text() == "카드") {
             $("#cardNo").attr("readonly", false);
             $("#cardExpDt").attr("readonly", false);
@@ -1697,7 +1709,10 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#cardDueYy").attr("readonly", false);
             $("#cardDueMm").attr("readonly", false);
             $("#acntHolder").attr("readonly", true);
+            $("#acntHolder").val("");
             $("#acntNo").attr("readonly", true);
+            $("#acntNo").val("");
+            $("#installM").val("");
         } else {
             $("#cardNo").attr("readonly", true);
             $("#cardExpDt").attr("readonly", true);
@@ -1707,6 +1722,14 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#cardDueMm").attr("readonly", true);
             $("#acntHolder").attr("readonly", true);
             $("#acntNo").attr("readonly", true);
+            $("#acntHolder").val("");
+            $("#acntNo").val("");
+            $("#installM").val("");
+            $("#cardNo").val("");
+            $("#cardExpDt").val("");
+            $("#installM").val("");
+            $("#cardDueYy").val("");
+            $("#cardDueMm").val("");
         }
     })
     $("#dropdownBank").on('click', ".itemBank", function(){

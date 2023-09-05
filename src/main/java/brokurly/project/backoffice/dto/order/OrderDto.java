@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -58,6 +59,10 @@ public class OrderDto {
     private String cardDueYy;
     private String cardDueMm;
     private Double vat;
+    private String fullPayYn;
+    private LocalDateTime payProcDate;
+    private Double rcptAmt;
+    private String instlMm;
 
     @Builder
     public OrderDto(String custCode, String odDate, String odState, String payState,
@@ -70,8 +75,9 @@ public class OrderDto {
                     String payAcntBirth, String payWay, String bankNm, String acntHolder,
                     String acntNo, String cardExpDt, String installYn, String installM, String virtualAcntNo,
                     String agreTerms, String agrePrivacyEss, String agrePrivacyOpt, String agreSms,
-                    String agreEmail, String ageYn,
-                    String bankCd, String cardNo, String cardDueYy, String cardDueMm, Double vat) {
+                    String agreEmail, String ageYn, String bankCd, String cardNo, String cardDueYy,
+                    String cardDueMm, Double vat, String fullPayYn, LocalDateTime payProcDate,
+                    Double rcptAmt, String instlMm) {
         this.custCode = custCode;
         this.odDate = odDate;
         this.odState = odState;
@@ -120,5 +126,9 @@ public class OrderDto {
         this.cardDueYy = cardDueYy;
         this.cardDueMm = cardDueMm;
         this.vat = vat;
+        this.fullPayYn = fullPayYn;
+        this.payProcDate = payProcDate;
+        this.rcptAmt = rcptAmt;
+        this.instlMm = instlMm;
     }
 }
