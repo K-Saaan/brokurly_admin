@@ -32,11 +32,14 @@
 <img src="https://user-images.githubusercontent.com/111870436/229355057-6491fde4-53d3-42cb-a9ee-0453be58577c.png"/></a>
 
 ##### 프로젝트 ERD
-<img width="754" alt="스크린샷 2023-11-21 오후 4 26 55" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/ddacfb83-ed41-4e00-864c-0a1c1b5e8dc6">
-<img width="889" alt="스크린샷 2023-11-21 오후 4 27 03" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/93ac6936-715b-4d76-a374-a91b5494eaa0">
-<img width="667" alt="스크린샷 2023-11-21 오후 4 27 12" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/cc09e9e2-7a39-4dc0-9f5a-cd6a79ec5028">
-<img width="662" alt="스크린샷 2023-11-21 오후 4 27 25" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/e800d496-7b74-4560-afa7-ea8e5afd2fb2">
-<img width="378" alt="스크린샷 2023-11-21 오후 4 27 35" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/1f990248-4895-4adf-b212-19530d3689a0">
+<img width="500" alt="스크린샷 2023-11-21 오후 4 26 55" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/ddacfb83-ed41-4e00-864c-0a1c1b5e8dc6">
+<img width="500" alt="스크린샷 2023-11-21 오후 4 27 03" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/93ac6936-715b-4d76-a374-a91b5494eaa0">
+<img width="500" alt="스크린샷 2023-11-21 오후 4 27 12" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/cc09e9e2-7a39-4dc0-9f5a-cd6a79ec5028">
+<img width="500" alt="스크린샷 2023-11-21 오후 4 27 25" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/e800d496-7b74-4560-afa7-ea8e5afd2fb2">
+<img width="500" alt="스크린샷 2023-11-21 오후 4 27 35" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/1f990248-4895-4adf-b212-19530d3689a0">
+
+##### 프로젝트 메인 화면
+<img width="1106" alt="스크린샷 2023-11-21 오후 5 48 11" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/d089db89-aec1-493a-8f04-59bb98604480">
 
 
 </div>
