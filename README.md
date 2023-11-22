@@ -3,7 +3,8 @@
 #### 프로젝트 소개 : 마켓컬리를 참고한 백오피스 개발
 #### 주제 선정 이유 : 이커머스의 프론트는 개발했지만 실제 직원들이 사용하는 백오피스는 사이드프로젝트 개발 경험이 없어서 백오피스를 개발하게 되었다.
 <div align=center>
-#### Development_Skills 👇🏻
+
+### Development_Skills 👇🏻
 
 ##### BACK-END
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/>
@@ -39,11 +40,11 @@
 <img width="500" alt="스크린샷 2023-11-21 오후 4 27 35" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/1f990248-4895-4adf-b212-19530d3689a0">
 
 ##### 프로젝트 메인 화면
-<img width="1106" alt="스크린샷 2023-11-21 오후 5 48 11" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/d089db89-aec1-493a-8f04-59bb98604480">
+<img width="500" alt="스크린샷 2023-11-21 오후 5 48 11" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/d089db89-aec1-493a-8f04-59bb98604480">
 
 ##### 프로젝트 작업 화면
-<img width="450" alt="스크린샷 2023-11-22 오후 4 17 20" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/634ff674-3ea8-40c1-8c92-e9f666528d71">
-<img width="450" alt="스크린샷 2023-11-22 오후 4 18 25" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/0c16dfcd-54b1-4ae9-9508-bf567cf16f42">
-<img width="450" alt="스크린샷 2023-11-22 오후 4 19 47" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/04014364-317f-4f72-adf0-46140535809e">
-<img width="450" alt="스크린샷 2023-11-22 오후 4 20 04" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/43be596d-ad47-4938-b3c6-4c44837d168f">
+<img width="500" alt="스크린샷 2023-11-22 오후 4 17 20" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/634ff674-3ea8-40c1-8c92-e9f666528d71">
+<img width="500" alt="스크린샷 2023-11-22 오후 4 18 25" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/0c16dfcd-54b1-4ae9-9508-bf567cf16f42">
+<img width="500" alt="스크린샷 2023-11-22 오후 4 19 47" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/04014364-317f-4f72-adf0-46140535809e">
+<img width="500" alt="스크린샷 2023-11-22 오후 4 20 04" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/43be596d-ad47-4938-b3c6-4c44837d168f">
 </div>
