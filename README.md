@@ -30,8 +30,10 @@
 
 </div>
 
-##### 프로젝트 CI/CD  아키텍쳐
-<img src="https://user-images.githubusercontent.com/111870436/229355057-6491fde4-53d3-42cb-a9ee-0453be58577c.png"/></a>
+<details>
+  <summary>프로젝트 CI/CD  아키텍쳐</summary>
+  <img src="https://user-images.githubusercontent.com/111870436/229355057-6491fde4-53d3-42cb-a9ee-0453be58577c.png"/></a>
+</details>
 
 ##### 프로젝트 ERD
 <img width="500" alt="스크린샷 2023-11-21 오후 4 26 55" src="https://github.com/K-Saaan/brokurly_admin/assets/111870436/ddacfb83-ed41-4e00-864c-0a1c1b5e8dc6">
